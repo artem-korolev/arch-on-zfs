@@ -1,2 +1,3 @@
 # arch-on-zfs
-archiso config to install Arch Linux on ZFS
+
+Scripts to automate Arch Linux installation on ZFS. Written for archiso tool
