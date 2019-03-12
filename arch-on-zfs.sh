@@ -18,7 +18,9 @@ echo "create zpool"
 zpool create -f -o ashift=12 -m /zroot zroot /dev/disk/by-id/ata-VBOX_HARDDISK_VB09aeb64a-c95d6fd9-part2
 # create swap for target system
 echo "creating swap"
-zfs create -V 64G -b $(getconf PAGESIZE) -o logbias=throughput -o sync=always -o primarycache=metadata -o com.sun:auto-snapshot=false zroot/archlinux-swap
+zfs create -V 32G -b $(getconf PAGESIZE) -o logbias=throughput -o sync=always -o primarycache=metadata -o com.sun:auto-snapshot=false zroot/archlinux-swap
+zfs create -V 34G -b $(getconf PAGESIZE) -o logbias=throughput -o sync=always -o primarycache=metadata -o com.sun:auto-snapshot=false zroot/archlinux-hibernate
+
 
 echo "creating sys/data datasets"
 # create sys and data datasets
@@ -75,7 +77,8 @@ cp /etc/zfs/zpool.cache /mnt/etc/zfs/zpool.cache
 mkdir /mnt/boot
 mount ${HDD}1 /mnt/boot
 genfstab -U -p /mnt | grep "/boot" >> /mnt/etc/fstab
-pacstrap /mnt base zfs-linux git base-devel refind-efi dhclient  
+locale-gen en_US en_US.UTF-8
+pacstrap /mnt base zfs-linux git base-devel refind-efi parted dhclient
 cp postinstall.sh /mnt/root/
 cp refind.conf /mnt/root/
 chmod a+x /mnt/root/postinstall.sh
