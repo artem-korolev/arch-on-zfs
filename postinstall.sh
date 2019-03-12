@@ -15,7 +15,7 @@ echo "KEYMAP=us" >> /etc/vconsole.conf
 echo "archlinux" >> /etc/hostname
 echo -e "\n127.0.0.1	localhost\n::1		localhost\n127.0.1.1	archlinux.localdomain	archlinux\n" >> /etc/hosts
 cp /etc/mkinitcpio.conf /etc/mkinitcpio.conf.original
-sed -i 's/^HOOKS=\(base udev autodetect modconf block filesystems keyboard shutdown usr fsck\)$/HOOKS=(base udev autodetect modconf block keyboard zfs filesystems)/' /etc/mkinitcpio.conf
+sed -i 's/^HOOKS=\(.+\)$/HOOKS=(base udev autodetect modconf block keyboard zfs filesystems)/' /etc/mkinitcpio.conf
 
 echo -e "\n[archzfs]\nSigLevel = Optional TrustAll\nServer = http://archzfs.com/\$repo/x86_64\n" >> /etc/pacman.conf
 mkinitcpio -p linux
