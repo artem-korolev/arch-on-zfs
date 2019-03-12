@@ -24,5 +24,7 @@ refind-install --usedefault /dev/sda1
 umount /dev/sda1
 mount /dev/sda1 /boot
 cp /root/refind.conf /boot/EFI/BOOT/refind.conf
+rm -f /root/postinstall.sh
+rm -f /root/refind.conf
 #findmnt /boot
 #efibootmgr --create --disk /dev/sda --part 1 --loader /EFI/BOOT/refind_x64.efi --label "rEFInd Boot Manager" --verbose

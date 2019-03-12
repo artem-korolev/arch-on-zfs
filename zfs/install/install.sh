@@ -41,7 +41,7 @@ zfs create -o compression=gzip-9 -o mountpoint=/etc zroot/sys/archlinux/etc
 # /home
 zfs create -o compression=lz4 -o mountpoint=/home zroot/sys/archlinux/home
 # /repos
-#zfs create -o compression=lz4 -o mountpoint=/repos zroot/data/repos
+zfs create -o compression=lz4 -o mountpoint=/repos zroot/data/repos
 # /usr
 zfs create -o compression=lz4 -o mountpoint=/usr zroot/sys/archlinux/usr
 # /usr/local
@@ -79,12 +79,11 @@ mount ${HDD}1 /mnt/boot
 genfstab -U -p /mnt | grep "/boot" >> /mnt/etc/fstab
 locale-gen en_US en_US.UTF-8
 pacstrap /mnt base zfs-linux git base-devel refind-efi parted dhclient
-cp postinstall.sh /mnt/root/
-cp refind.conf /mnt/root/
+cp ./installer/zfs/install/postinstall.sh /mnt/root/
+cp ./installer/zfs/install/refind.conf /mnt/root/
+cp ./installer/zfs/postinstall /mnt/root/
 chmod a+x /mnt/root/postinstall.sh
 arch-chroot /mnt /root/postinstall.sh
 umount /mnt/boot
 zfs umount -a
 zpool export zroot
-
-#/tmp/root.x86_64/bin/arch-chroot /tmp/root.x86_64/
