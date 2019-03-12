@@ -14,4 +14,4 @@ rm -Rf arch-install-iso
 cp -r /usr/share/archiso/configs/releng ./arch-install-iso
 cd ./arch-install-iso
 cp -R ${ARCH_INSTALLER_REPO_DIR} ./airootfs/root/installer
-./build -v
+./build.sh -v
