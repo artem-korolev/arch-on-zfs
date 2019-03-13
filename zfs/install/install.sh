@@ -81,7 +81,7 @@ locale-gen en_US en_US.UTF-8
 pacstrap /mnt base zfs-linux git base-devel refind-efi parted dhclient
 cp ./installer/zfs/install/postinstall.sh /mnt/root/
 cp ./installer/zfs/install/refind.conf /mnt/root/
-cp ./installer/zfs/postinstall /mnt/root/
+cp -R ./installer/zfs/postinstall /mnt/root/
 chmod a+x /mnt/root/postinstall.sh
 arch-chroot /mnt /root/postinstall.sh
 umount /mnt/boot
