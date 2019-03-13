@@ -13,5 +13,7 @@ cd /tmp
 rm -Rf arch-install-iso
 cp -r /usr/share/archiso/configs/releng ./arch-install-iso
 cd ./arch-install-iso
+echo -e "\nzfs-linux" >> ./packages.x86_64
+echo -e "\n[archzfs]\nSigLevel = Optional TrustAll\nServer = http://archzfs.com/\$repo/x86_64\n" >> ./pacman.conf
 cp -R ${ARCH_INSTALLER_REPO_DIR} ./airootfs/root/installer
 ./build.sh -v
