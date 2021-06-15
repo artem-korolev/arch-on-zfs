@@ -26,6 +26,7 @@ echo "sys-boot/grub libzfs" > /etc/portage/package.use/grub
 
 
 # kernel
+echo 'sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE' >> /etc/portage/package.license
 emerge -uvDN sys-kernel/gentoo-sources sys-kernel/genkernel
 eselect kernel list
 eselect kernel set 1
@@ -35,6 +36,7 @@ cd /usr/src/linux
 cp /.config ./
 make && make modules_install
 make install
+exit
 
 
 # soft
