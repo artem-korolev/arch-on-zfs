@@ -36,7 +36,6 @@ cd /usr/src/linux
 cp /.config ./
 make && make modules_install
 make install
-exit
 
 
 # soft
