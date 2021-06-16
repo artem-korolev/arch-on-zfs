@@ -53,6 +53,17 @@ systemctl enable zfs-import-cache
 systemctl enable zfs-mount
 systemctl enable zfs-import.target
 
+########################## SYSTEMD + ZFS
+## Create a service to import /boot automatically and enable it:
+# cp /installation_files/systemd/zfs-import-bpool.service /etc/systemd/system/
+# systemctl enable zfs-import-bpool.service
+
+
+########################## NETWORK
+## enable network service
+cp /installation_files/systemd/50-dhcp.network /etc/systemd/network/
+systemctl enable systemd-networkd.service
+
 
 mkdir /etc/portage/package.mask
 echo '>=x11-drivers/nvidia-drivers-460.67 ~amd64' > /etc/portage/package.accept_keywords/nvidia
