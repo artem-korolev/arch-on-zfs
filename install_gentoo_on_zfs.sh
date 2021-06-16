@@ -169,6 +169,7 @@ chroot /mnt/gentoo /in_chroot.sh
 umount /mnt/gentoo/boot/efi
 umount -l /mnt/gentoo/{dev,sys,proc}
 zfs umount -a
+zfs set mountpoint=legacy bpool/BOOT/gentoo
 zpool export -a
 
 

@@ -49,19 +49,23 @@ emerge -v grub:2
 
 
 
+systemctl enable zfs.target
+systemctl enable zfs-import-cache
+systemctl enable zfs-mount
+systemctl enable zfs-import.target
+
+
 mkdir /etc/portage/package.mask
-echo '>=x11-drivers/nvidia-drivers-460.67 ~amd64' > /etc/portage/package.mask/nvidia
+echo '>=x11-drivers/nvidia-drivers-460.67 ~amd64' > /etc/portage/package.accept_keywords/nvidia
 echo 'x11-drivers/nvidia-drivers NVIDIA-r2' >> /etc/portage/package.license
 
 cp /grub /etc/default/grub
 
 mount -o remount,rw /sys/firmware/efi/efivars/
 
-#emerge @module-rebuild
+emerge @module-rebuild
 genkernel initramfs --kernel-config=/usr/src/linux/.config --keymap --makeopts=-j12 --mountboot --no-clean --zfs
 mkdir /boot/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GentooOnZFS --recheck --no-floppy
-
-zfs set mountpoint=legacy bpool/BOOT/gentoo
 passwd
