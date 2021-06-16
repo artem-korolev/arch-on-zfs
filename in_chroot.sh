@@ -39,7 +39,6 @@ make install
 
 
 # soft
-echo 'VIDEO_CARDS="nvidia"' >> /etc/portage/make.conf
 emerge dev-vcs/git
 #echo 'sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE' >> /etc/portage/package.license
 #echo 'virtual/linux-sources firmware' >> /etc/portage/package.use/kernel
