@@ -18,15 +18,15 @@ emerge --verbose --update --deep --newuse @world
 ln -sf ../usr/share/zoneinfo/Europe/Tallinn /etc/localtime
 env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
 
-mkdir /etc/portage/package.accept_keywords
-echo "sys-fs/zfs ~amd64" >> /etc/portage/package.accept_keywords/zfs
-echo "sys-fs/zfs-kmod ~amd64" >> /etc/portage/package.accept_keywords/zfs-kmod
-echo "sys-boot/grub ~amd64" >> /etc/portage/package.accept_keywords/grub
-echo "sys-boot/grub libzfs" > /etc/portage/package.use/grub
+#mkdir /etc/portage/package.accept_keywords
+#echo "sys-fs/zfs ~amd64" >> /etc/portage/package.accept_keywords/zfs
+#echo "sys-fs/zfs-kmod ~amd64" >> /etc/portage/package.accept_keywords/zfs-kmod
+#echo "sys-boot/grub ~amd64" >> /etc/portage/package.accept_keywords/grub
+#echo "sys-boot/grub libzfs" > /etc/portage/package.use/grub
 
 
 # kernel
-echo 'sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE' >> /etc/portage/package.license
+#echo 'sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE' >> /etc/portage/package.license
 emerge -uvDN sys-kernel/gentoo-sources sys-kernel/genkernel
 eselect kernel list
 eselect kernel set 1
@@ -71,9 +71,9 @@ systemctl enable systemd-resolved.service
 systemctl enable systemd-networkd.service
 
 
-mkdir /etc/portage/package.mask
-echo '>=x11-drivers/nvidia-drivers-460.67 ~amd64' > /etc/portage/package.accept_keywords/nvidia
-echo 'x11-drivers/nvidia-drivers NVIDIA-r2' >> /etc/portage/package.license
+#mkdir /etc/portage/package.mask
+#echo '>=x11-drivers/nvidia-drivers-460.67 ~amd64' > /etc/portage/package.accept_keywords/nvidia
+#echo 'x11-drivers/nvidia-drivers NVIDIA-r2' >> /etc/portage/package.license
 
 cp /grub /etc/default/grub
 

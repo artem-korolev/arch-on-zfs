@@ -167,6 +167,7 @@ chmod 1777 /dev/shm
 mkdir /mnt/gentoo/etc/zfs
 mkdir /mnt/gentoo/install
 cp -R configs/systemd /mnt/gentoo/installation_files/
+cp -R configs/portage/* /mnt/gentoo/etc/portage/
 cp /tmp/zpool.cache /mnt/gentoo/etc/zfs/
 cp configs/locale.gen /mnt/gentoo/etc/locale.gen
 cp configs/fstab /mnt/gentoo/etc/
