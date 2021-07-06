@@ -1,0 +1,3 @@
+media-sound/pulseaudio equalizer webrtc-aec -bluetooth
+dev-cpp/gtkmm X
+media-libs/libcanberra alsa

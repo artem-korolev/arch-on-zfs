@@ -2,12 +2,12 @@
 
 source /etc/profile
 export PS1="(chroot) ${PS1}"
-DISK=/dev/disk/by-id/nvme-eui.0025385891502595
 
 emerge --sync
 emerge app-portage/mirrorselect
+emerge sys-fs/dosfstools
 emerge net-misc/dhcpcd
-#mirrorselect -s4 -b10 -D
+mirrorselect -s4 -b10 -D
 
 ## nano -w /etc/locale.gen
 locale-gen
@@ -45,6 +45,10 @@ emerge dev-vcs/git
 #emerge --ask sys-kernel/linux-firmware
 emerge -v zfs
 emerge -v grub:2
+emerge -v sys-fs/ntfs3g
+
+
+emerge -v media-sound/pavucontrol media-sound/pulsemixer media-sound/paprefs media-sound/pulseaudio-modules-bt i3 openbox xorg-x11 twm xterm xclock
 
 
 
@@ -55,13 +59,15 @@ systemctl enable zfs-import.target
 
 ########################## SYSTEMD + ZFS
 ## Create a service to import /boot automatically and enable it:
-# cp /installation_files/systemd/zfs-import-bpool.service /etc/systemd/system/
-# systemctl enable zfs-import-bpool.service
+cp /installation_files/zfs-import-bpool.service /etc/systemd/system/
+systemctl enable zfs-import-bpool.service
 
 
 ########################## NETWORK
 ## enable network service
-cp /installation_files/systemd/50-dhcp.network /etc/systemd/network/
+cp /installation_files/50-dhcp.network /etc/systemd/network/
+ln -snf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+systemctl enable systemd-resolved.service
 systemctl enable systemd-networkd.service
 
 

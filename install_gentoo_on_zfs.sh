@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+
+### README
+### For temporary installation run like that:
+### ```
+### RPOOL=rpooltmp BPOOL=bpooltmp DISK=/dev/disk/by-id/ata-INTEL_SSDSCKGF180A4L_CVDA342501A4180W ./install_gentoo_on_zfs.sh
+### ```
+DISK=${DISK:=/dev/disk/by-id/nvme-eui.0025385891502595}
+RPOOL=${RPOOL:=rpool}
+BPOOL=${BPOOL:=bpool}
+# echo ${DISK}
+# echo ${RPOOL}
+# echo ${BPOOL}
+# exit 1
+
 cwd=$(pwd)
 
 apt update
@@ -7,7 +21,6 @@ apt install -y curl
 
 mkdir /mnt/gentoo
 
-DISK=/dev/disk/by-id/nvme-eui.0025385891502595
 mkfs.fat -F 32 ${DISK}-part1
 mkswap ${DISK}-part2
 
@@ -18,7 +31,7 @@ mkswap ${DISK}-part2
 #    -O acltype=posixacl -O canmount=off -O compression=lz4 \
 #    -O dnodesize=auto -O normalization=formD -O relatime=on \
 #    -O xattr=sa -O mountpoint=/ -R /mnt/gentoo \
-#    rpool ${DISK}-part3
+#    ${RPOOL} ${DISK}-part3
 
 # * Messages for package sys-fs/zfs-kmod-2.0.4-r1:
 #
@@ -72,7 +85,7 @@ zpool create -d -o feature@allocation_classes=enabled \
                       -O normalization=formD                \
                       -O xattr=sa                           \
                       -R /mnt/gentoo                        \
-                      bpool ${DISK}-part3
+                      ${BPOOL} ${DISK}-part3
 ## RPOOL - root pool
 zpool create -f -o ashift=12 \
                       -o autotrim=on                        \
@@ -88,49 +101,49 @@ zpool create -f -o ashift=12 \
                       -O normalization=formD                \
                       -O xattr=sa                           \
                       -R /mnt/gentoo                        \
-                      rpool ${DISK}-part4
+                      ${RPOOL} ${DISK}-part4
 
 
 ### BOOT
-zfs create -o canmount=off -o mountpoint=none bpool/BOOT
-zfs create -o canmount=noauto -o dnodesize=legacy -o mountpoint=/boot bpool/BOOT/gentoo
+zfs create -o canmount=off -o mountpoint=none ${BPOOL}/BOOT
+zfs create -o canmount=noauto -o dnodesize=legacy -o mountpoint=/boot ${BPOOL}/BOOT/gentoo
 
 ### ROOT
-zfs create -o canmount=off -o mountpoint=none rpool/ROOT
-zfs create -o canmount=noauto -o mountpoint=/ rpool/ROOT/gentoo
+zfs create -o canmount=off -o mountpoint=none ${RPOOL}/ROOT
+zfs create -o canmount=noauto -o mountpoint=/ ${RPOOL}/ROOT/gentoo
 
 
 
-zfs mount rpool/ROOT/gentoo
-zfs mount bpool/BOOT/gentoo
+zfs mount ${RPOOL}/ROOT/gentoo
+zfs mount ${BPOOL}/BOOT/gentoo
 
 
 
 
 
-zfs create                                 rpool/home
-zfs create -o mountpoint=/root             rpool/home/root
+zfs create                                 ${RPOOL}/home
+zfs create -o mountpoint=/root             ${RPOOL}/home/root
 chmod 700 /mnt/gentoo/root
-zfs create -o canmount=off                 rpool/var
-zfs create -o canmount=off                 rpool/var/lib
-zfs create                                 rpool/var/log
-zfs create                                 rpool/var/spool
-zfs create -o com.sun:auto-snapshot=false  rpool/var/cache
-zfs create -o com.sun:auto-snapshot=false  rpool/var/tmp
+zfs create -o canmount=off                 ${RPOOL}/var
+zfs create -o canmount=off                 ${RPOOL}/var/lib
+zfs create                                 ${RPOOL}/var/log
+zfs create                                 ${RPOOL}/var/spool
+zfs create -o com.sun:auto-snapshot=false  ${RPOOL}/var/cache
+zfs create -o com.sun:auto-snapshot=false  ${RPOOL}/var/tmp
 chmod 1777 /mnt/gentoo/var/tmp
-zfs create                                 rpool/opt
-zfs create                                 rpool/srv
-zfs create -o canmount=off                 rpool/usr
-zfs create                                 rpool/usr/local
-zfs create                                 rpool/var/games
-zfs create                                 rpool/var/mail
-zfs create                                 rpool/var/snap
-zfs create                                 rpool/var/www
-zfs create                                 rpool/var/lib/AccountsService
-zfs create -o com.sun:auto-snapshot=false  rpool/var/lib/docker
-zfs create -o com.sun:auto-snapshot=false  rpool/var/lib/nfs
-zfs create -o com.sun:auto-snapshot=false -o compression=off -o relatime=off -o atime=off rpool/chiatmp
-zfs create -o com.sun:auto-snapshot=false -o relatime=off -o atime=off rpool/tmp
+zfs create                                 ${RPOOL}/opt
+zfs create                                 ${RPOOL}/srv
+zfs create -o canmount=off                 ${RPOOL}/usr
+zfs create                                 ${RPOOL}/usr/local
+zfs create                                 ${RPOOL}/var/games
+zfs create                                 ${RPOOL}/var/mail
+zfs create                                 ${RPOOL}/var/snap
+zfs create                                 ${RPOOL}/var/www
+zfs create                                 ${RPOOL}/var/lib/AccountsService
+zfs create -o com.sun:auto-snapshot=false  ${RPOOL}/var/lib/docker
+zfs create -o com.sun:auto-snapshot=false  ${RPOOL}/var/lib/nfs
+zfs create -o com.sun:auto-snapshot=false -o compression=off -o relatime=off -o atime=off ${RPOOL}/chiatmp
+zfs create -o com.sun:auto-snapshot=false -o relatime=off -o atime=off ${RPOOL}/tmp
 
 
 cd /mnt/gentoo
@@ -171,8 +184,11 @@ chroot /mnt/gentoo /in_chroot.sh
 
 umount /mnt/gentoo/boot/efi
 umount -l /mnt/gentoo/{dev,sys,proc}
-zfs umount -a
-zfs set mountpoint=legacy bpool/BOOT/gentoo
-zpool export -a
+zfs umount /mnt/gentoo/boot
+zfs umount /mnt/gentoo
+zfs set mountpoint=legacy ${BPOOL}/BOOT/gentoo
+rm -R /mnt/gentoo
+zpool export ${BPOOL}
+zpool export ${RPOOL}
 
 
