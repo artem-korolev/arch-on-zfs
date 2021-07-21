@@ -2,3 +2,5 @@ sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE
 x11-drivers/nvidia-drivers NVIDIA-r2
 media-fonts/font-bh-ttf bh-luxi
 media-fonts/font-bh-type1 bh-luxi
+dev-util/nvidia-cuda-toolkit NVIDIA-CUDA
+app-editors/vscode Microsoft-vscode

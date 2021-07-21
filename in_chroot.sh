@@ -46,6 +46,19 @@ emerge dev-vcs/git
 emerge -v zfs
 emerge -v grub:2
 emerge -v sys-fs/ntfs3g
+emerge -v dev-util/nvidia-cuda-toolkit
+emerge -v python
+emerge -v python:3.8
+emerge -v app-shells/bash-completion
+emerge -v x11-wm/i3
+emerge -v polybar
+emerge -v htop
+emerge -v dmenu
+emerge -v usbutils
+emerge -v inotify-tools
+emerge -v vscode
+emerge -v sudo
+emerge -v wcalc speedcrunch
 
 
 emerge -v media-sound/pavucontrol media-sound/pulsemixer media-sound/paprefs media-sound/pulseaudio-modules-bt i3 openbox xorg-x11 twm xterm xclock

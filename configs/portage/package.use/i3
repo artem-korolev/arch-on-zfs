@@ -2,3 +2,4 @@ media-sound/pulseaudio bluetooth equalizer webrtc-aec
 # required by x11-wm/i3-4.18::gentoo
 # required by i3 (argument)
 >=x11-libs/libxkbcommon-1.3.0 X
+x11-misc/polybar i3wm curl ipc mpd network
