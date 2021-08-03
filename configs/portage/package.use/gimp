@@ -1,0 +1,7 @@
+media-gfx/gimp aalib doc heif mng openexr postscript vector-icons wmf xpm unwind
+# required by media-gfx/gimp-2.10.22-r2::gentoo
+# required by gimp (argument)
+>=app-text/poppler-21.05.0 cairo
+# required by media-gfx/gimp-2.10.22-r2::gentoo
+# required by gimp (argument)
+>=media-libs/gegl-0.4.26-r1 cairo

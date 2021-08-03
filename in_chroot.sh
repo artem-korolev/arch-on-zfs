@@ -59,6 +59,9 @@ emerge -v inotify-tools
 emerge -v vscode
 emerge -v sudo
 emerge -v wcalc speedcrunch
+emerge -v corefonts xfontsel
+emerge -v qbittorrent
+emerge -v gimp
 
 
 emerge -v media-sound/pavucontrol media-sound/pulsemixer media-sound/paprefs media-sound/pulseaudio-modules-bt i3 openbox xorg-x11 twm xterm xclock
