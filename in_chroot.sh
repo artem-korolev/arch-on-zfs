@@ -59,7 +59,8 @@ emerge -v inotify-tools
 emerge -v vscode
 emerge -v sudo
 emerge -v wcalc speedcrunch
-emerge -v corefonts xfontsel
+emerge -v xfontsel
+emerge -v media-fonts/liberation-fonts media-fonts/noto media-fonts/paratype
 emerge -v qbittorrent
 emerge -v gimp
 paperconfig -p letter
