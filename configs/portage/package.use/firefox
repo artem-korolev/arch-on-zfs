@@ -1,1 +1,2 @@
-www-client/firefox geckodriver
+www-client/firefox geckodriver lto pgo
+>=x11-base/xorg-server-1.20.11 xvfb

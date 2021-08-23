@@ -66,6 +66,7 @@ emerge -v gimp
 paperconfig -p letter
 
 emerge -v media-sound/pavucontrol media-sound/pulsemixer media-sound/paprefs media-sound/pulseaudio-modules-bt i3 openbox xorg-x11 twm xterm xclock
+emerge -v app-emulation/docker
 
 
 

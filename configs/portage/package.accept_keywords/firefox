@@ -1,0 +1,3 @@
+>=www-client/firefox-90.0.2 ~amd64
+>=dev-libs/nss-3.68::gentoo ~amd64
+>=dev-libs/nspr-4.32::gentoo ~amd64
