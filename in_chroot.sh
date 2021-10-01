@@ -69,6 +69,14 @@ emerge -v media-sound/pavucontrol media-sound/pulsemixer media-sound/paprefs med
 emerge -v app-emulation/docker
 emerge -v x11-terms/kitty terminus-font zsh zsh-completions
 emerge -v vim
+emerge -v powerline-symbols
+emerge -v media-fonts/source-code-pro media-fonts/fira-code
+emerge -v virtual/jdk
+emerge -v net-print/cups
+emerge -v --noreplace net-wireless/bluez
+emerge -v media-video/guvcview
+emerge -v media-video/obs-studio
+LDFLAGS_amd64="" emerge -v media-video/v4l2loopback
 
 
 
