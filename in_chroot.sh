@@ -86,7 +86,7 @@ emerge -v dev-java/maven-bin
 emerge -v kde-apps/umbrello
 emerge -v app-office/dia
 emerge -v app-office/dia2code
-emerge -v app-emulation/docker
+emerge -v app-emulation/docker app-emulation/docker-compose
 
 # SWAY
 emerge -v gui-wm/sway x11-terms/alacritty x11-terms/st
