@@ -4,9 +4,10 @@ source /etc/profile
 export PS1="(chroot) ${PS1}"
 
 emerge --sync
-emerge app-portage/mirrorselect
-emerge sys-fs/dosfstools
-emerge net-misc/dhcpcd
+emerge -v app-portage/gentoolkit
+emerge -v app-portage/mirrorselect
+emerge -v sys-fs/dosfstools
+emerge -v net-misc/dhcpcd
 mirrorselect -s4 -b10 -D
 
 ## nano -w /etc/locale.gen
@@ -77,6 +78,18 @@ emerge -v --noreplace net-wireless/bluez
 emerge -v media-video/guvcview
 emerge -v media-video/obs-studio
 LDFLAGS_amd64="" emerge -v media-video/v4l2loopback
+emerge -v virtual/imagemagick-tools
+emerge -v sys-apps/etckeeper
+emerge -v sys-apps/dmidecode
+emerge -v dev-java/openjdk
+emerge -v dev-java/maven-bin
+emerge -v kde-apps/umbrello
+emerge -v app-office/dia
+emerge -v app-office/dia2code
+emerge -v app-emulation/docker
+
+# SWAY
+emerge -v gui-wm/sway x11-terms/alacritty x11-terms/st
 
 
 
