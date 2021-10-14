@@ -1,0 +1,24 @@
+[Unit]
+Description=Etherium Miner service
+# After=network.target
+# After=systemd-user-sessions.service
+# After=network-online.target
+
+[Service]
+#User=ethminer
+# TODO: Problem is that gminer with cclock option is running only from root user account,
+# so need to find a way how to avoid it
+User=root
+# Type=simple
+# PIDFile=/run/my-service.pid
+ExecStart=/home/ethminer/systemd/start.sh
+# ExecReload=/home/transang/startup.sh reload
+# ExecStop=/home/chiafarmer/systemd/stop.sh
+TimeoutSec=30
+Restart=on-failure
+RestartSec=30
+# StartLimitInterval=350
+# StartLimitBurst=10
+
+[Install]
+WantedBy=multi-user.target
