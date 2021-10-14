@@ -53,6 +53,7 @@ emerge -v python:3.8
 emerge -v app-shells/bash-completion
 emerge -v x11-wm/i3
 emerge -v polybar
+emerge -v x11-misc/picom
 emerge -v htop
 emerge -v dmenu
 emerge -v usbutils
@@ -87,6 +88,30 @@ emerge -v kde-apps/umbrello
 emerge -v app-office/dia
 emerge -v app-office/dia2code
 emerge -v app-emulation/docker app-emulation/docker-compose
+emerge -v net-im/telegram-desktop
+emerge -v app-crypt/gorilla
+emerge -v app-arch/p7zip
+emerge -v www-client/chromium
+emerge -v mail-client/kube mail-client/thunderbird mail-client/evolution mail-client/claws-mail
+
+# Antivirus
+emerge -v app-antivirus/clamav
+emerge -v app-antivirus/clamtk
+
+# Screenshot apps
+emerge -v media-gfx/scrot
+emerge -v x11-misc/shutter
+
+# ASCII GENERATORS
+emerge -v app-misc/figlet
+emerge -v app-misc/toilet
+emerge -v games-misc/cowsay
+emerge -v app-misc/jq
+emerge -v media-sound/lilypond media-gfx/imagemagick dev-texlive/texlive-latex app-text/dvipng app-text/dvisvgm
+
+# IDEA
+emerge -v sys-libs/gdbm
+emerge -v dev-util/idea-community
 
 # SWAY
 emerge -v gui-wm/sway x11-terms/alacritty x11-terms/st

@@ -136,7 +136,10 @@ zfs create                                 ${RPOOL}/srv
 zfs create -o canmount=off                 ${RPOOL}/usr
 zfs create                                 ${RPOOL}/usr/local
 zfs create                                 ${RPOOL}/var/games
-zfs create                                 ${RPOOL}/var/mail
+# TODO: WARNING: net-mail/mailbase prevents mounting /var/mail as filesystem
+# so if you want to claws-mail and its dependencies, then do not create
+# /var/mail as separate filesystem
+zfs create                                 ${RPOOL}/var/spool/mail
 zfs create                                 ${RPOOL}/var/snap
 zfs create                                 ${RPOOL}/var/www
 zfs create                                 ${RPOOL}/var/lib/AccountsService
