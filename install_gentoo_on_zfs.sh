@@ -6,9 +6,69 @@
 ### ```
 ### RPOOL=rpooltmp BPOOL=bpooltmp DISK=/dev/disk/by-id/ata-INTEL_SSDSCKGF180A4L_CVDA342501A4180W ./install_gentoo_on_zfs.sh
 ### ```
-DISK=${DISK:=/dev/disk/by-id/nvme-eui.0025385891502595}
+
+DEFAULT_SWAPSIZE=40GB
+
+function show_usage() {
+	echo "Usage:"
+	echo "install_gentoo_on_zfs [OPTION=VALUE] ..."
+	echo
+	echo "Options:"
+	echo "  -n, --name:  machine name"
+	echo "  -d, --disk:  absolute path to disk device (use by-id. Example, -d=/dev/disk/by-id/nvme-eui.0025385891502595)"
+	echo "  -s, --swap:  swap filesystem size (Example: -s=64GB)"
+	echo "               Default: ${DEFAULT_SWAPSIZE}"
+	echo "  -h, --help:  show help"
+}
+
 RPOOL=${RPOOL:=rpool}
 BPOOL=${BPOOL:=bpool}
+
+POSITIONAL=()
+for i in "$@"; do
+	case $i in
+		-d=*|--disk=*)
+			DISK="${i#*=}"
+			shift # past argument=value
+			;;
+		-n=*|--name=*)
+			MACHINENAME="${i#*=}"
+			shift # past argument=value
+			;;
+		-s=*|--swap=*)
+			SWAPSIZE="${i#*=}"
+			shift # past argument=value
+			;;
+		-h|--help)
+			show_usage
+			exit 0
+			;;
+		*)
+			echo "ERROR: Unknown option $i"
+			echo
+			show_usage
+			exit 1
+			;;
+	esac
+done
+
+if [ -z "$DISK" ]; then
+	show_usage
+	exit 1
+fi
+
+if [ -z "$MACHINENAME" ]; then
+	show_usage
+	exit 1
+fi
+
+if [ -z "$SWAPSIZE" ]; then
+	SWAPSIZE=${DEFAULT_SWAPSIZE}
+fi
+
+echo "DISK=${DISK} MACHINE_NAME=${MACHINE_NAME} SWAPSIZE=${SWAPSIZE}"
+exit 1
+
 # echo ${DISK}
 # echo ${RPOOL}
 # echo ${BPOOL}
@@ -16,8 +76,8 @@ BPOOL=${BPOOL:=bpool}
 
 cwd=$(pwd)
 
-apt update
-apt install -y curl
+# apt update
+# apt install -y curl
 
 mkdir /mnt/gentoo
 
@@ -53,55 +113,55 @@ mkswap ${DISK}-part2
 # * GRUB2 support will be updated as soon as either the GRUB2
 # * developers do a tag or the Gentoo developers find time to backport
 # * support from GRUB2 HEAD.
-    
-    
+	
+	
 ## BPOOL - boot pool
 zpool create -d -o feature@allocation_classes=enabled \
-                      -o feature@async_destroy=enabled      \
-                      -o feature@bookmarks=enabled          \
-                      -o feature@embedded_data=enabled      \
-                      -o feature@empty_bpobj=enabled        \
-                      -o feature@enabled_txg=enabled        \
-                      -o feature@extensible_dataset=enabled \
-                      -o feature@filesystem_limits=enabled  \
-                      -o feature@hole_birth=enabled         \
-                      -o feature@large_blocks=enabled       \
-                      -o feature@lz4_compress=enabled       \
-                      -o feature@project_quota=enabled      \
-                      -o feature@resilver_defer=enabled     \
-                      -o feature@spacemap_histogram=enabled \
-                      -o feature@spacemap_v2=enabled        \
-                      -o feature@userobj_accounting=enabled \
-                      -o feature@zpool_checkpoint=enabled   \
-                      -f -o ashift=12                       \
-                      -o autotrim=on                        \
-                      -o cachefile=/tmp/zpool.cache         \
-                      -O aclinherit=passthrough             \
-                      -O acltype=posixacl                   \
-                      -O atime=off                          \
-                      -O canmount=off                       \
-                      -O devices=off                        \
-                      -O mountpoint=/                       \
-                      -O normalization=formD                \
-                      -O xattr=sa                           \
-                      -R /mnt/gentoo                        \
-                      ${BPOOL} ${DISK}-part3
+					  -o feature@async_destroy=enabled      \
+					  -o feature@bookmarks=enabled          \
+					  -o feature@embedded_data=enabled      \
+					  -o feature@empty_bpobj=enabled        \
+					  -o feature@enabled_txg=enabled        \
+					  -o feature@extensible_dataset=enabled \
+					  -o feature@filesystem_limits=enabled  \
+					  -o feature@hole_birth=enabled         \
+					  -o feature@large_blocks=enabled       \
+					  -o feature@lz4_compress=enabled       \
+					  -o feature@project_quota=enabled      \
+					  -o feature@resilver_defer=enabled     \
+					  -o feature@spacemap_histogram=enabled \
+					  -o feature@spacemap_v2=enabled        \
+					  -o feature@userobj_accounting=enabled \
+					  -o feature@zpool_checkpoint=enabled   \
+					  -f -o ashift=12                       \
+					  -o autotrim=on                        \
+					  -o cachefile=/tmp/zpool.cache         \
+					  -O aclinherit=passthrough             \
+					  -O acltype=posixacl                   \
+					  -O atime=off                          \
+					  -O canmount=off                       \
+					  -O devices=off                        \
+					  -O mountpoint=/                       \
+					  -O normalization=formD                \
+					  -O xattr=sa                           \
+					  -R /mnt/gentoo                        \
+					  ${BPOOL} ${DISK}-part3
 ## RPOOL - root pool
 zpool create -f -o ashift=12 \
-                      -o autotrim=on                        \
-                      -o cachefile=/tmp/zpool.cache         \
-                      -O acltype=posixacl                   \
-                      -O aclinherit=passthrough             \
-                      -O atime=off                          \
-                      -O canmount=off                       \
-                      -O devices=off                        \
-                      -O dnodesize=auto                     \
-                      -O compression=lz4                    \
-                      -O mountpoint=/                       \
-                      -O normalization=formD                \
-                      -O xattr=sa                           \
-                      -R /mnt/gentoo                        \
-                      ${RPOOL} ${DISK}-part4
+					  -o autotrim=on                        \
+					  -o cachefile=/tmp/zpool.cache         \
+					  -O acltype=posixacl                   \
+					  -O aclinherit=passthrough             \
+					  -O atime=off                          \
+					  -O canmount=off                       \
+					  -O devices=off                        \
+					  -O dnodesize=auto                     \
+					  -O compression=lz4                    \
+					  -O mountpoint=/                       \
+					  -O normalization=formD                \
+					  -O xattr=sa                           \
+					  -R /mnt/gentoo                        \
+					  ${RPOOL} ${DISK}-part4
 
 
 ### BOOT
