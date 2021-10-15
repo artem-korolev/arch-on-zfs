@@ -7,7 +7,7 @@ function show_usage() {
     echo "Options:"
     echo "  -n, --name:  machine name"
     echo "  -d, --disk:  absolute path to disk device (use by-id. Example, -d=/dev/disk/by-id/nvme-eui.0025385891502595)"
-    echo "  -s, --swap:  swap filesystem size (Example: -s=64GB)"
+    echo "  -s, --swap:  swap filesystem size in K/M/G/T (Example: -s=64G)"
     echo "               Default: ${DEFAULT_SWAPSIZE}"
     echo "  -h, --help:  show help"
 }
