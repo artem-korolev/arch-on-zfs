@@ -338,7 +338,7 @@ else
 fi
 zpool export installation_${RPOOL}
 if [[ $? -eq 0 ]]; then
-    echo "SUCCESS: BPOOL is successfully exported"
+    echo "SUCCESS: RPOOL is successfully exported"
 else
     echo "Error: Cannot	export RPOOL (installation_${RPOOL})"
     exit 1
