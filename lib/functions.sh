@@ -11,3 +11,8 @@ echo "Usage:"
 	echo "               Default: ${DEFAULT_SWAPSIZE}"
 	echo "  -h, --help:  show help"
 }
+
+function modprobe_disk() {
+	part_probe_result=$(partprobe -d -s "${DISK}")
+	echo "${part_probe_result}"
+}

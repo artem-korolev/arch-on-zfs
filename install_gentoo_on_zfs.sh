@@ -66,11 +66,11 @@ echo "DISK=${DISK} MACHINE_NAME=${MACHINENAME} SWAPSIZE=${SWAPSIZE}"
 ## INITIALIZE DISK LAYOUT
 source ./lib/partiotion_all_disk_for_installation.sh "${MACHINENAME}" "${DISK}" "${SWAPSIZE}" 1>/dev/null 2>&1
 if [[ $? -eq 0 ]]; then
-	echo "SUCCESS: disk layout for ZFS instalaltion is written to ${DISK}"
+	echo "SUCCESS: disk layout for ZFS instalaltion is written to ${DISK}. Output of 'partprobe' command:"
+	modprobe_disk "${DISK}"
 else
 	echo "Error: cannot create disk layout for ZFS installation. Output of 'partprobe' command:"
-	part_probe_result=$(partprobe -d -s "${DISK}")
-	echo "${part_probe_result}"
+	modprobe_disk "${DISK}"
 	exit 1
 fi
 
