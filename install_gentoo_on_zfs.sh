@@ -320,14 +320,24 @@ else
 fi
 umount -R /mnt/gentoo/boot || true
 zfs set mountpoint=legacy installation_${BPOOL}/BOOT/gentoo
-zfs umount /mnt/gentoo
+
+# UNMOUNT DATASETS FROM RPOOL pool
+# TODO: find a way how to unmount dataset with all nested datasets
+# using zfs utility, or unmount it one by one, if there is no other way
+# Currently I decided to use 'umount -R ...', cause it just works.
+# zfs umount /mnt/gentoo
+# /root
+# /home
+# /var/lib
+# /var/log
+# /var
+umount -R /mnt/gentoo
 if [[ $? -eq 0 ]]; then
     echo "SUCCESS: RPOOL datasets are successfully unmounted from /mnt/gentoo"
 else
     echo "Error: Cannot unmount rpool datasets from /mnt/gentoo"
     exit 1
 fi
-umount -R /mnt/gentoo || true
 rm -R /mnt/gentoo
 zpool export installation_${BPOOL}
 if [[ $? -eq 0 ]]; then
