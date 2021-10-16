@@ -1,0 +1,3 @@
+${DISK}-part1		/boot/efi		vfat	noauto,noatime			1 2
+bpool/BOOT/gentoo	/boot			zfs		noauto,nodev,relatime	1 2
+${DISK}-part2		none			swap	sw						0 0

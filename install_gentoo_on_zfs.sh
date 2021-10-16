@@ -78,19 +78,12 @@ else
     exit 1
 fi
 
-exit 1
-
-# echo ${DISK}
-# echo ${RPOOL}
-# echo ${BPOOL}
-# exit 1
-
 cwd=$(pwd)
 
 # apt update
 # apt install -y curl
 
-mkdir /mnt/gentoo
+mkdir -p /mnt/gentoo
 
 mkfs.fat -F 32 ${DISK}-part1
 mkswap ${DISK}-part2
@@ -156,6 +149,7 @@ zpool create -d -o feature@allocation_classes=enabled \
 -O normalization=formD                \
 -O xattr=sa                           \
 -R /mnt/gentoo                        \
+-t installation_${BPOOL}              \
 ${BPOOL} ${DISK}-part3
 ## RPOOL - root pool
 zpool create -f -o ashift=12 \
@@ -172,52 +166,53 @@ zpool create -f -o ashift=12 \
 -O normalization=formD                \
 -O xattr=sa                           \
 -R /mnt/gentoo                        \
+-t installation_${RPOOL}              \
 ${RPOOL} ${DISK}-part4
 
 
 ### BOOT
-zfs create -o canmount=off -o mountpoint=none ${BPOOL}/BOOT
-zfs create -o canmount=noauto -o dnodesize=legacy -o mountpoint=/boot ${BPOOL}/BOOT/gentoo
+zfs create -o canmount=off -o mountpoint=none installation_${BPOOL}/BOOT
+zfs create -o canmount=noauto -o dnodesize=legacy -o mountpoint=/boot installation_${BPOOL}/BOOT/gentoo
 
 ### ROOT
-zfs create -o canmount=off -o mountpoint=none ${RPOOL}/ROOT
-zfs create -o canmount=noauto -o mountpoint=/ ${RPOOL}/ROOT/gentoo
+zfs create -o canmount=off -o mountpoint=none installation_${RPOOL}/ROOT
+zfs create -o canmount=noauto -o mountpoint=/ installation_${RPOOL}/ROOT/gentoo
 
 
 
-zfs mount ${RPOOL}/ROOT/gentoo
-zfs mount ${BPOOL}/BOOT/gentoo
+zfs mount installation_${RPOOL}/ROOT/gentoo
+zfs mount installation_${BPOOL}/BOOT/gentoo
 
 
 
 
 
-zfs create                                 ${RPOOL}/home
-zfs create -o mountpoint=/root             ${RPOOL}/home/root
+zfs create                                 installation_${RPOOL}/home
+zfs create -o mountpoint=/root             installation_${RPOOL}/home/root
 chmod 700 /mnt/gentoo/root
-zfs create -o canmount=off                 ${RPOOL}/var
-zfs create -o canmount=off                 ${RPOOL}/var/lib
-zfs create                                 ${RPOOL}/var/log
-zfs create                                 ${RPOOL}/var/spool
-zfs create -o com.sun:auto-snapshot=false  ${RPOOL}/var/cache
-zfs create -o com.sun:auto-snapshot=false  ${RPOOL}/var/tmp
+zfs create -o canmount=off                 installation_${RPOOL}/var
+zfs create -o canmount=off                 installation_${RPOOL}/var/lib
+zfs create                                 installation_${RPOOL}/var/log
+zfs create                                 installation_${RPOOL}/var/spool
+zfs create -o com.sun:auto-snapshot=false  installation_${RPOOL}/var/cache
+zfs create -o com.sun:auto-snapshot=false  installation_${RPOOL}/var/tmp
 chmod 1777 /mnt/gentoo/var/tmp
-zfs create                                 ${RPOOL}/opt
-zfs create                                 ${RPOOL}/srv
-zfs create -o canmount=off                 ${RPOOL}/usr
-zfs create                                 ${RPOOL}/usr/local
-zfs create                                 ${RPOOL}/var/games
+zfs create                                 installation_${RPOOL}/opt
+zfs create                                 installation_${RPOOL}/srv
+zfs create -o canmount=off                 installation_${RPOOL}/usr
+zfs create                                 installation_${RPOOL}/usr/local
+zfs create                                 installation_${RPOOL}/var/games
 # TODO: WARNING: net-mail/mailbase prevents mounting /var/mail as filesystem
 # so if you want to claws-mail and its dependencies, then do not create
 # /var/mail as separate filesystem
-zfs create                                 ${RPOOL}/var/spool/mail
-zfs create                                 ${RPOOL}/var/snap
-zfs create                                 ${RPOOL}/var/www
-zfs create                                 ${RPOOL}/var/lib/AccountsService
-zfs create -o com.sun:auto-snapshot=false  ${RPOOL}/var/lib/docker
-zfs create -o com.sun:auto-snapshot=false  ${RPOOL}/var/lib/nfs
-zfs create -o com.sun:auto-snapshot=false -o compression=off -o relatime=off -o atime=off ${RPOOL}/chiatmp
-zfs create -o com.sun:auto-snapshot=false -o relatime=off -o atime=off ${RPOOL}/tmp
+zfs create                                 installation_${RPOOL}/var/spool/mail
+zfs create                                 installation_${RPOOL}/var/snap
+zfs create                                 installation_${RPOOL}/var/www
+zfs create                                 installation_${RPOOL}/var/lib/AccountsService
+zfs create -o com.sun:auto-snapshot=false  installation_${RPOOL}/var/lib/docker
+zfs create -o com.sun:auto-snapshot=false  installation_${RPOOL}/var/lib/nfs
+zfs create -o com.sun:auto-snapshot=false -o compression=off -o relatime=off -o atime=off installation_${RPOOL}/chiatmp
+zfs create -o com.sun:auto-snapshot=false -o relatime=off -o atime=off installation_${RPOOL}/tmp
 
 
 cd /mnt/gentoo
@@ -240,13 +235,13 @@ chmod 1777 /dev/shm
 
 mkdir /mnt/gentoo/etc/zfs
 mkdir /mnt/gentoo/install
-cp -R configs/systemd /mnt/gentoo/installation_files/
+cp -R configs/systemd/* /etc/systemd/
 cp -R configs/portage/* /mnt/gentoo/etc/portage/
-cp /tmp/zpool.cache /mnt/gentoo/etc/zfs/
+# cp /tmp/zpool.cache /mnt/gentoo/etc/zfs/
 cp configs/locale.gen /mnt/gentoo/etc/locale.gen
-cp configs/fstab /mnt/gentoo/etc/
-cp configs/kernel/.config /mnt/gentoo/
-cp configs/grub /mnt/gentoo/
+cat ./templates/fstab | envsubst > /mnt/gentoo/etc/fstab
+cp configs/kernel/.config /mnt/gentoo/kconfig
+cp configs/grub /mnt/gentoo/etc/default/grub
 
 
 mkdir /mnt/gentoo/boot/efi
@@ -255,15 +250,15 @@ mount ${DISK}-part1 /mnt/gentoo/boot/efi
 
 cp ./in_chroot.sh /mnt/gentoo
 chroot /mnt/gentoo /in_chroot.sh
-
+rm /mnt/gentoo/in_chroot.sh
 
 umount /mnt/gentoo/boot/efi
 umount -l /mnt/gentoo/{dev,sys,proc}
 zfs umount /mnt/gentoo/boot
 zfs umount /mnt/gentoo
-zfs set mountpoint=legacy ${BPOOL}/BOOT/gentoo
+zfs set mountpoint=legacy installation_${BPOOL}/BOOT/gentoo
 rm -R /mnt/gentoo
-zpool export ${BPOOL}
-zpool export ${RPOOL}
+zpool export installation_${BPOOL}
+zpool export installation_${RPOOL}
 
 

@@ -1,3 +1,0 @@
-/dev/disk/by-id/nvme-eui.0025385891502595-part1          /boot/efi               vfat            noauto,noatime         1 2
-bpool/BOOT/gentoo       /boot                   zfs             noauto,nodev,relatime                                   1 2
-/dev/disk/by-id/nvme-eui.0025385891502595-part2    none swap         sw                                                 0 0
