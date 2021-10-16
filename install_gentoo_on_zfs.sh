@@ -50,7 +50,11 @@ if [ -z "$MACHINENAME" ]; then
 	exit 1
 fi
 
-if [[ -z "${SWAPSIZE}" ]] || [[ ! "${SWAPSIZE}" =~ [0-9]+[K|M|G|T]$ ]]; then
+if [[ -z "${SWAPSIZE}" ]]; then
+	SWAPSIZE=${DEFAULT_SWAPSIZE}
+fi
+
+if [[ ! "${SWAPSIZE}" =~ [0-9]+[K|M|G|T]$ ]]; then
 	echo "Swapsize incorrectly specified: ${SWAPSIZE}"
 	echo "Example: 512K, 32G, 1T"
 	echo "Default: ${DEFAULT_SWAPSIZE}"
