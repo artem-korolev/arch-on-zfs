@@ -12,20 +12,21 @@ RPOOL=${RPOOL:=rpool}
 BPOOL=${BPOOL:=bpool}
 
 POSITIONAL=()
-for i in "$@"; do
-    case $i in
+while [[ $# -gt 0 ]]; do
+    key="$1"
+    case $key in
         -d|--disk)
-            DISK="2"
+            DISK="$2"
             shift # past argument
             shift # past value
         ;;
         -n|--name)
-            MACHINENAME="2"
+            MACHINENAME="$2"
             shift # past argument
             shift # past value
         ;;
         -s|--swap)
-            SWAPSIZE="2"
+            SWAPSIZE="$2"
             shift # past argument
             shift # past value
         ;;
