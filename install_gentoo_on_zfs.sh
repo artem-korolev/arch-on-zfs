@@ -13,52 +13,55 @@ BPOOL=${BPOOL:=bpool}
 
 POSITIONAL=()
 for i in "$@"; do
-	case $i in
-		-d=*|--disk=*)
-			DISK="${i#*=}"
-			shift # past argument=value
-			;;
-		-n=*|--name=*)
-			MACHINENAME="${i#*=}"
-			shift # past argument=value
-			;;
-		-s=*|--swap=*)
-			SWAPSIZE="${i#*=}"
-			shift # past argument=value
-			;;
-		-h|--help)
-			show_usage
-			exit 0
-			;;
-		*)
-			echo "ERROR: Unknown option $i"
-			echo
-			show_usage
-			exit 1
-			;;
-	esac
+    case $i in
+        -d|--disk)
+            DISK="2"
+            shift # past argument
+            shift # past value
+        ;;
+        -n|--name)
+            MACHINENAME="2"
+            shift # past argument
+            shift # past value
+        ;;
+        -s|--swap)
+            SWAPSIZE="2"
+            shift # past argument
+            shift # past value
+        ;;
+        -h|--help)
+            show_usage
+            exit 0
+        ;;
+        *)
+            echo "ERROR: Unknown option $i"
+            echo
+            show_usage
+            exit 1
+        ;;
+    esac
 done
 
 ## CHECK INPUT PARAMETERS
 if [ -z "$DISK" ]; then
-	show_usage
-	exit 1
+    show_usage
+    exit 1
 fi
 
 if [ -z "$MACHINENAME" ]; then
-	show_usage
-	exit 1
+    show_usage
+    exit 1
 fi
 
 if [[ -z "${SWAPSIZE}" ]]; then
-	SWAPSIZE=${DEFAULT_SWAPSIZE}
+    SWAPSIZE=${DEFAULT_SWAPSIZE}
 fi
 
 if [[ ! "${SWAPSIZE}" =~ [0-9]+[K|M|G|T]$ ]]; then
-	echo "Swapsize incorrectly specified: ${SWAPSIZE}"
-	echo "Example: 512K, 32G, 1T"
-	echo "Default: ${DEFAULT_SWAPSIZE}"
-	exit 1
+    echo "Swapsize incorrectly specified: ${SWAPSIZE}"
+    echo "Example: 512K, 32G, 1T"
+    echo "Default: ${DEFAULT_SWAPSIZE}"
+    exit 1
 fi
 
 echo "DISK=${DISK} MACHINE_NAME=${MACHINENAME} SWAPSIZE=${SWAPSIZE}"
@@ -66,12 +69,12 @@ echo "DISK=${DISK} MACHINE_NAME=${MACHINENAME} SWAPSIZE=${SWAPSIZE}"
 ## INITIALIZE DISK LAYOUT
 source ./lib/partiotion_all_disk_for_installation.sh "${MACHINENAME}" "${DISK}" "${SWAPSIZE}" 1>/dev/null 2>&1
 if [[ $? -eq 0 ]]; then
-	echo "SUCCESS: disk layout for ZFS instalaltion is written to ${DISK}. Output of 'partprobe' command:"
-	modprobe_disk "${DISK}"
+    echo "SUCCESS: disk layout for ZFS instalaltion is written to ${DISK}. Output of 'partprobe' command:"
+    modprobe_disk "${DISK}"
 else
-	echo "Error: cannot create disk layout for ZFS installation. Output of 'partprobe' command:"
-	modprobe_disk "${DISK}"
-	exit 1
+    echo "Error: cannot create disk layout for ZFS installation. Output of 'partprobe' command:"
+    modprobe_disk "${DISK}"
+    exit 1
 fi
 
 exit 1
@@ -108,67 +111,67 @@ mkswap ${DISK}-part2
 # * Do *NOT* upgrade root pools to use the new feature flags.
 # * Any new pools will be created with the new feature flags by default
 # * and will not be compatible with older versions of ZFSOnLinux. To
-# * create a newpool that is backward compatible wih GRUB2, use 
-# * 
-# * zpool create -d -o feature@async_destroy=enabled 
+# * create a newpool that is backward compatible wih GRUB2, use
+# *
+# * zpool create -d -o feature@async_destroy=enabled
 # * 	-o feature@empty_bpobj=enabled -o feature@lz4_compress=enabled
 # * 	-o feature@spacemap_histogram=enabled
-# * 	-o feature@enabled_txg=enabled 
+# * 	-o feature@enabled_txg=enabled
 # * 	-o feature@extensible_dataset=enabled -o feature@bookmarks=enabled
 # * 	...
-# * 
+# *
 # * GRUB2 support will be updated as soon as either the GRUB2
 # * developers do a tag or the Gentoo developers find time to backport
 # * support from GRUB2 HEAD.
-	
-	
+
+
 ## BPOOL - boot pool
 zpool create -d -o feature@allocation_classes=enabled \
-					  -o feature@async_destroy=enabled      \
-					  -o feature@bookmarks=enabled          \
-					  -o feature@embedded_data=enabled      \
-					  -o feature@empty_bpobj=enabled        \
-					  -o feature@enabled_txg=enabled        \
-					  -o feature@extensible_dataset=enabled \
-					  -o feature@filesystem_limits=enabled  \
-					  -o feature@hole_birth=enabled         \
-					  -o feature@large_blocks=enabled       \
-					  -o feature@lz4_compress=enabled       \
-					  -o feature@project_quota=enabled      \
-					  -o feature@resilver_defer=enabled     \
-					  -o feature@spacemap_histogram=enabled \
-					  -o feature@spacemap_v2=enabled        \
-					  -o feature@userobj_accounting=enabled \
-					  -o feature@zpool_checkpoint=enabled   \
-					  -f -o ashift=12                       \
-					  -o autotrim=on                        \
-					  -o cachefile=/tmp/zpool.cache         \
-					  -O aclinherit=passthrough             \
-					  -O acltype=posixacl                   \
-					  -O atime=off                          \
-					  -O canmount=off                       \
-					  -O devices=off                        \
-					  -O mountpoint=/                       \
-					  -O normalization=formD                \
-					  -O xattr=sa                           \
-					  -R /mnt/gentoo                        \
-					  ${BPOOL} ${DISK}-part3
+-o feature@async_destroy=enabled      \
+-o feature@bookmarks=enabled          \
+-o feature@embedded_data=enabled      \
+-o feature@empty_bpobj=enabled        \
+-o feature@enabled_txg=enabled        \
+-o feature@extensible_dataset=enabled \
+-o feature@filesystem_limits=enabled  \
+-o feature@hole_birth=enabled         \
+-o feature@large_blocks=enabled       \
+-o feature@lz4_compress=enabled       \
+-o feature@project_quota=enabled      \
+-o feature@resilver_defer=enabled     \
+-o feature@spacemap_histogram=enabled \
+-o feature@spacemap_v2=enabled        \
+-o feature@userobj_accounting=enabled \
+-o feature@zpool_checkpoint=enabled   \
+-f -o ashift=12                       \
+-o autotrim=on                        \
+-o cachefile=/tmp/zpool.cache         \
+-O aclinherit=passthrough             \
+-O acltype=posixacl                   \
+-O atime=off                          \
+-O canmount=off                       \
+-O devices=off                        \
+-O mountpoint=/                       \
+-O normalization=formD                \
+-O xattr=sa                           \
+-R /mnt/gentoo                        \
+${BPOOL} ${DISK}-part3
 ## RPOOL - root pool
 zpool create -f -o ashift=12 \
-					  -o autotrim=on                        \
-					  -o cachefile=/tmp/zpool.cache         \
-					  -O acltype=posixacl                   \
-					  -O aclinherit=passthrough             \
-					  -O atime=off                          \
-					  -O canmount=off                       \
-					  -O devices=off                        \
-					  -O dnodesize=auto                     \
-					  -O compression=lz4                    \
-					  -O mountpoint=/                       \
-					  -O normalization=formD                \
-					  -O xattr=sa                           \
-					  -R /mnt/gentoo                        \
-					  ${RPOOL} ${DISK}-part4
+-o autotrim=on                        \
+-o cachefile=/tmp/zpool.cache         \
+-O acltype=posixacl                   \
+-O aclinherit=passthrough             \
+-O atime=off                          \
+-O canmount=off                       \
+-O devices=off                        \
+-O dnodesize=auto                     \
+-O compression=lz4                    \
+-O mountpoint=/                       \
+-O normalization=formD                \
+-O xattr=sa                           \
+-R /mnt/gentoo                        \
+${RPOOL} ${DISK}-part4
 
 
 ### BOOT
