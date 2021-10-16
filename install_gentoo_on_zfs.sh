@@ -96,7 +96,7 @@ cwd=$(pwd)
 # apt update
 # apt install -y curl
 
-# umount and export all pools after failed installation
+## umount and export all pools after failed installation
 umount /mnt/gentoo/boot/efi 1>/dev/null 2>&1 || true
 zfs umount /mnt/gentoo/boot 1>/dev/null 2>&1 || true
 umount /mnt/gentoo/boot 1>/dev/null 2>&1 || true
@@ -312,11 +312,36 @@ rm /mnt/gentoo/in_chroot.sh
 umount /mnt/gentoo/boot/efi
 umount -l /mnt/gentoo/{dev,sys,proc}
 zfs umount /mnt/gentoo/boot
-zfs umount /mnt/gentoo
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: BPOOL datasets are successfully unmounted from /mnt/gentoo/boot"
+else
+    echo "Error: Cannot unmount bpool datasets from /mnt/gentoo/boot"
+    exit 1
+fi
+umount -R /mnt/gentoo/boot || true
 zfs set mountpoint=legacy installation_${BPOOL}/BOOT/gentoo
+zfs umount /mnt/gentoo
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: RPOOL datasets are successfully unmounted from /mnt/gentoo"
+else
+    echo "Error: Cannot unmount rpool datasets from /mnt/gentoo"
+    exit 1
+fi
 umount -R /mnt/gentoo || true
 rm -R /mnt/gentoo
 zpool export installation_${BPOOL}
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: BPOOL is successfully exported"
+else
+    echo "Error: Cannot export BPOOL (installation_${BPOOL})"
+    exit 1
+fi
 zpool export installation_${RPOOL}
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: BPOOL is successfully exported"
+else
+    echo "Error: Cannot	export RPOOL (installation_${RPOOL})"
+    exit 1
+fi
 
 
