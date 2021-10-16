@@ -117,6 +117,7 @@ make install
 # emerge -v gui-wm/sway x11-terms/alacritty x11-terms/st
 
 emerge -v --changed-use net-misc/openssh
+echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 
 systemctl enable sshd.service
 

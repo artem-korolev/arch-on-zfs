@@ -30,6 +30,11 @@ while [[ $# -gt 0 ]]; do
             shift # past argument
             shift # past value
         ;;
+		-k|--key)
+            AUTHORIZED_KEY_FILE="$2"
+            shift # past argument
+            shift # past value
+        ;;
         -h|--help)
             show_usage
             exit 0
@@ -220,6 +225,9 @@ latest_stage3=$(curl http://distfiles.gentoo.org/releases/amd64/autobuilds/lates
 wget http://distfiles.gentoo.org/releases/amd64/autobuilds/$latest_stage3
 tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
 cd ${cwd}
+mkdir -p /mnt/gentoo/root/.ssh/
+cat ${AUTHORIZED_KEY_FILE} > /mnt/gentoo/root/.ssh/authorized_keys
+chmod -R go-rwx /mnt/gentoo/root/.ssh/
 cp configs/make.conf /mnt/gentoo/etc/portage/make.conf
 mkdir --parents /mnt/gentoo/etc/portage/repos.conf
 cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
