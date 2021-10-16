@@ -97,6 +97,9 @@ cwd=$(pwd)
 # apt install -y curl
 
 # umount and export all pools after failed installation
+umount /mnt/gentoo/boot/efi || true
+zfs umount /mnt/gentoo/boot || true
+zfs umount /mnt/gentoo || true
 umount /mnt/gentoo/boot || true
 umount -R /mnt/gentoo || true
 zpool export installation_bpool || true
@@ -275,8 +278,9 @@ rm /mnt/gentoo/in_chroot.sh
 umount /mnt/gentoo/boot/efi
 umount -l /mnt/gentoo/{dev,sys,proc}
 zfs umount /mnt/gentoo/boot
-#zfs umount -R /mnt/gentoo
+umount -R /mnt/gentoo/boot || true
 zfs set mountpoint=legacy installation_${BPOOL}/BOOT/gentoo
+zfs umount /mnt/gentoo
 umount -R /mnt/gentoo || true
 rm -R /mnt/gentoo
 zpool export installation_${BPOOL}
