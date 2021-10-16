@@ -7,7 +7,7 @@ source "lib/functions.sh"
 ### RPOOL=rpooltmp BPOOL=bpooltmp DISK=/dev/disk/by-id/ata-INTEL_SSDSCKGF180A4L_CVDA342501A4180W ./install_gentoo_on_zfs.sh
 ### ```
 
-DEFAULT_SWAPSIZE=40GB
+DEFAULT_SWAPSIZE=40G
 RPOOL=${RPOOL:=rpool}
 BPOOL=${BPOOL:=bpool}
 
