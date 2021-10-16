@@ -39,6 +39,7 @@ for i in "$@"; do
 	esac
 done
 
+## CHECK INPUT PARAMETERS
 if [ -z "$DISK" ]; then
 	show_usage
 	exit 1
@@ -49,11 +50,26 @@ if [ -z "$MACHINENAME" ]; then
 	exit 1
 fi
 
-if [ -z "$SWAPSIZE" ]; then
-	SWAPSIZE=${DEFAULT_SWAPSIZE}
+if [[ -z "${SWAPSIZE}" ]] || [[ ! "${SWAPSIZE}" =~ [0-9]+[K|M|G|T]$ ]]; then
+	echo "Swapsize incorrectly specified: ${SWAPSIZE}"
+	echo "Example: 512K, 32G, 1T"
+	echo "Default: ${DEFAULT_SWAPSIZE}"
+	exit 1
 fi
 
-echo "DISK=${DISK} MACHINE_NAME=${MACHINE_NAME} SWAPSIZE=${SWAPSIZE}"
+echo "DISK=${DISK} MACHINE_NAME=${MACHINENAME} SWAPSIZE=${SWAPSIZE}"
+
+## INITIALIZE DISK LAYOUT
+source ./lib/partiotion_all_disk_for_installation.sh "${MACHINENAME}" "${DISK}" "${SWAPSIZE}" 1>/dev/null 2>&1
+if [[ $? -eq 0 ]]; then
+	echo "SUCCESS: disk layout for ZFS instalaltion is written to ${DISK}"
+else
+	echo "Error: cannot create disk layout for ZFS installation. Output of 'partprobe' command:"
+	part_probe_result=$(partprobe -d -s "${DISK}")
+	echo "${part_probe_result}"
+	exit 1
+fi
+
 exit 1
 
 # echo ${DISK}
