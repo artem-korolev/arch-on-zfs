@@ -97,16 +97,39 @@ cwd=$(pwd)
 # apt install -y curl
 
 # umount and export all pools after failed installation
-umount /mnt/gentoo/boot || true
-umount -R /mnt/gentoo || true
-zpool export installation_bpool || true
-zpool export installation_rpool || true
+umount /mnt/gentoo/boot/efi 1>/dev/null 2>&1 || true
+zfs umount /mnt/gentoo/boot 1>/dev/null 2>&1 || true
+umount /mnt/gentoo/boot 1>/dev/null 2>&1 || true
+umount -l /mnt/gentoo/{dev,sys,proc} 1>/dev/null 2>&1 || true
+zfs umount /mnt/gentoo 1>/dev/null 2>&1 || true
+umount -R /mnt/gentoo 1>/dev/null 2>&1 || true
+zpool export installation_bpool 1>/dev/null 2>&1 || true
+zpool export installation_rpool 1>/dev/null 2>&1 || true
 
 rm -Rf /mnt/gentoo
 mkdir -p /mnt/gentoo
 
+
+## FORMAT SWAP AND EFI Boot partiotions
+
 mkfs.fat -F 32 "${DISK}-part1"
+
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: EFI Boot partition is formatted as FAT32 on ${DISK}-part1"
+else
+    echo "Error: Cannot format ${DISK}-part1 as FAT32"
+    exit 1
+fi
+
 mkswap "${DISK}-part2"
+
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: ${DISK}-part2 parition is formatted as swap"
+else
+    echo "Error: Cannot format ${DISK}-part2 as swap"
+    exit 1
+fi
+
 
 
 #zpool create \
@@ -171,6 +194,14 @@ zpool create -d -o feature@allocation_classes=enabled \
 -R /mnt/gentoo                        \
 -t installation_${BPOOL}              \
 ${BPOOL} "${DISK}-part3"
+
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: Created ZFS bpool on ${DISK}-part3"
+else
+    echo "Error: Cannot create ZFS bpool on ${DISK}-part3"
+    exit 1
+fi
+
 ## RPOOL - root pool
 zpool create -f -o ashift=12 \
 -o autotrim=on                        \
@@ -189,6 +220,12 @@ zpool create -f -o ashift=12 \
 -t installation_${RPOOL}              \
 ${RPOOL} "${DISK}-part4"
 
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: Created ZFS rpool on ${DISK}-part4"
+else
+    echo "Error: Cannot create ZFS rpool on ${DISK}-part4"
+    exit 1
+fi
 
 ### BOOT
 zfs create -o canmount=off -o mountpoint=none installation_${BPOOL}/BOOT
@@ -275,7 +312,7 @@ rm /mnt/gentoo/in_chroot.sh
 umount /mnt/gentoo/boot/efi
 umount -l /mnt/gentoo/{dev,sys,proc}
 zfs umount /mnt/gentoo/boot
-#zfs umount -R /mnt/gentoo
+zfs umount /mnt/gentoo
 zfs set mountpoint=legacy installation_${BPOOL}/BOOT/gentoo
 umount -R /mnt/gentoo || true
 rm -R /mnt/gentoo
