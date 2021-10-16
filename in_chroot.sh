@@ -44,9 +44,9 @@ make install
 # #echo 'sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE' >> /etc/portage/package.license
 # #echo 'virtual/linux-sources firmware' >> /etc/portage/package.use/kernel
 # #emerge --ask sys-kernel/linux-firmware
-# emerge -v zfs
-# emerge -v grub:2
-# emerge -v sys-fs/ntfs3g
+emerge -v zfs
+emerge -v grub:2
+emerge -v sys-fs/ntfs3g
 # emerge -v dev-util/nvidia-cuda-toolkit
 # emerge -v python
 # emerge -v python:3.8

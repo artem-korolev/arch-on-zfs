@@ -240,12 +240,9 @@ latest_stage3=$(curl http://distfiles.gentoo.org/releases/amd64/autobuilds/lates
 wget http://distfiles.gentoo.org/releases/amd64/autobuilds/$latest_stage3
 tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
 cd ${cwd}
-mkdir -p /mnt/gentoo/root/.ssh/
+mkdir /mnt/gentoo/root/.ssh/
 cat ${AUTHORIZED_KEY_FILE} > /mnt/gentoo/root/.ssh/authorized_keys
 chmod -R go-rwx /mnt/gentoo/root/.ssh/
-cp configs/make.conf /mnt/gentoo/etc/portage/make.conf
-mkdir --parents /mnt/gentoo/etc/portage/repos.conf
-cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
 cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
 mount --types proc /proc /mnt/gentoo/proc
 mount --rbind /sys /mnt/gentoo/sys
@@ -278,8 +275,9 @@ rm /mnt/gentoo/in_chroot.sh
 umount /mnt/gentoo/boot/efi
 umount -l /mnt/gentoo/{dev,sys,proc}
 zfs umount /mnt/gentoo/boot
-zfs umount /mnt/gentoo
+#zfs umount -R /mnt/gentoo
 zfs set mountpoint=legacy installation_${BPOOL}/BOOT/gentoo
+umount -R /mnt/gentoo || true
 rm -R /mnt/gentoo
 zpool export installation_${BPOOL}
 zpool export installation_${RPOOL}
