@@ -30,7 +30,7 @@ while [[ $# -gt 0 ]]; do
             shift # past argument
             shift # past value
         ;;
-		-k|--key)
+        -k|--key)
             AUTHORIZED_KEY_FILE="$2"
             shift # past argument
             shift # past value
@@ -55,6 +55,12 @@ if [ -z "$DISK" ]; then
 fi
 
 if [ -z "$MACHINENAME" ]; then
+    show_usage
+    exit 1
+fi
+
+if [ -z "$AUTHORIZED_KEY_FILE=" ]; then
+    "Error: path to ssh public key for root access is not specified"
     show_usage
     exit 1
 fi

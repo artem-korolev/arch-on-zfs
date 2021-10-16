@@ -9,6 +9,7 @@ echo "Usage:"
 	echo "  -d <block_device>, --disk <block_device>:  absolute path to disk device (use by-id. Example, -d=/dev/disk/by-id/nvme-eui.0025385891502595)"
 	echo "  -s <size>, --swap <size>:  swap filesystem size in K/M/G/T (Example: -s=64G)"
 	echo "               Default: ${DEFAULT_SWAPSIZE}"
+        echo "  -k <path>, --key <path> : path to ssh public key (Gives root access to the system)"
 	echo "  -h, --help:  show help"
 }
 
