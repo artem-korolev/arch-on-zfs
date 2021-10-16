@@ -10,6 +10,8 @@ source "lib/functions.sh"
 DEFAULT_SWAPSIZE=40G
 RPOOL=${RPOOL:=rpool}
 BPOOL=${BPOOL:=bpool}
+AUTHORIZED_KEY_FILE=
+SWAPSIZE=
 
 POSITIONAL=()
 while [[ $# -gt 0 ]]; do
@@ -59,8 +61,8 @@ if [ -z "$MACHINENAME" ]; then
     exit 1
 fi
 
-if [ -z "$AUTHORIZED_KEY_FILE=" ]; then
-    "Error: path to ssh public key for root access is not specified"
+if [ -z "$AUTHORIZED_KEY_FILE" ]; then
+    echo "Error: path to ssh public key for root access is not specified"
     show_usage
     exit 1
 fi
@@ -94,10 +96,17 @@ cwd=$(pwd)
 # apt update
 # apt install -y curl
 
+# umount and export all pools after failed installation
+umount /mnt/gentoo/boot || true
+umount -R /mnt/gentoo || true
+zpool export installation_bpool || true
+zpool export installation_rpool || true
+
+rm -Rf /mnt/gentoo
 mkdir -p /mnt/gentoo
 
-mkfs.fat -F 32 ${DISK}-part1
-mkswap ${DISK}-part2
+mkfs.fat -F 32 "${DISK}-part1"
+mkswap "${DISK}-part2"
 
 
 #zpool create \
@@ -161,7 +170,7 @@ zpool create -d -o feature@allocation_classes=enabled \
 -O xattr=sa                           \
 -R /mnt/gentoo                        \
 -t installation_${BPOOL}              \
-${BPOOL} ${DISK}-part3
+${BPOOL} "${DISK}-part3"
 ## RPOOL - root pool
 zpool create -f -o ashift=12 \
 -o autotrim=on                        \
@@ -178,7 +187,7 @@ zpool create -f -o ashift=12 \
 -O xattr=sa                           \
 -R /mnt/gentoo                        \
 -t installation_${RPOOL}              \
-${RPOOL} ${DISK}-part4
+${RPOOL} "${DISK}-part4"
 
 
 ### BOOT
@@ -259,7 +268,7 @@ cp configs/grub /mnt/gentoo/etc/default/grub
 
 
 mkdir /mnt/gentoo/boot/efi
-mount ${DISK}-part1 /mnt/gentoo/boot/efi
+mount "${DISK}-part1" /mnt/gentoo/boot/efi
 
 
 cp ./in_chroot.sh /mnt/gentoo
