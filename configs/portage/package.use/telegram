@@ -1,0 +1,14 @@
+net-im/telegram-desktop -screencast webkit wayland
+# required by net-im/telegram-desktop-2.9.3-r1::gentoo
+# required by net-im/telegram-desktop (argument)
+>=dev-qt/qtgui-5.15.2-r2 jpeg
+# required by net-im/telegram-desktop-2.9.3-r1::gentoo
+# required by net-im/telegram-desktop (argument)
+>=media-video/ffmpeg-4.4-r1 opus
+# required by net-im/telegram-desktop-2.9.3-r1::gentoo
+# required by net-im/telegram-desktop (argument)
+>=media-libs/tg_owt-0_pre20210626-r1 -screencast
+# required by net-libs/webkit-gtk-2.32.4::gentoo
+# required by net-im/telegram-desktop-2.9.3-r1::gentoo[webkit]
+# required by net-im/telegram-desktop (argument)
+>=media-libs/harfbuzz-2.9.1 icu

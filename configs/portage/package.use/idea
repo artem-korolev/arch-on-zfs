@@ -1,0 +1,4 @@
+# required by dev-util/lldb-10.0.1::gentoo
+# required by dev-util/idea-community-2021.2.2.212.5284.40::gentoo
+# required by dev-util/idea-community (argument)
+>=sys-devel/clang-10.0.1:10 xml

@@ -1,0 +1,10 @@
+# required by gnome-base/gnome-keyring-40.0::gentoo
+# required by app-crypt/libsecret-0.20.4::gentoo
+# required by app-editors/vscode-1.57.1::gentoo
+# required by vscode (argument)
+>=app-crypt/gcr-3.40.0 gtk
+# required by x11-libs/pango-1.48.7-r1::gentoo
+# required by app-editors/vscode-1.59.1::gentoo
+# required by @selected
+# required by @world (argument)
+>=media-libs/freetype-2.11.0-r1 harfbuzz

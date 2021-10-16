@@ -1,0 +1,8 @@
+mail-client/claws-mail archive bogofilter dillo gdata libcanberra libnotify litehtml notification pgp sieve smime spamassassin spam-report
+# required by mail-client/claws-mail-3.18.0::gentoo[appindicator,notification]
+# required by mail-client/claws-mail (argument)
+>=dev-libs/libindicate-12.10.1-r3 gtk
+# required by dev-libs/libindicate-12.10.1-r3::gentoo[gtk]
+# required by mail-client/claws-mail-3.18.0::gentoo[appindicator,notification]
+# required by mail-client/claws-mail (argument)
+>=dev-libs/libdbusmenu-16.04.0-r1 gtk3

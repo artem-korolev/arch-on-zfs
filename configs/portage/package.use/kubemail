@@ -1,0 +1,10 @@
+# required by mail-client/kube-0.7.0-r1::gentoo
+# required by mail-client/kube (argument)
+app-crypt/gpgme qt5
+# required by mail-client/kube-0.7.0-r1::gentoo
+# required by mail-client/kube (argument)
+>=dev-qt/qtwebengine-5.15.2_p20210824-r1 widgets
+# required by dev-qt/qtwebengine-5.15.2_p20210824-r1::gentoo
+# required by mail-client/kube-0.7.0-r1::gentoo
+# required by mail-client/kube (argument)
+>=dev-qt/qtwebchannel-5.15.2-r1 qml

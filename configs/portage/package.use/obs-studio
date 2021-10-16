@@ -1,0 +1,5 @@
+media-video/obs-studio browser decklink fdk jack lua nvenc pipewire pulseaudio python speex ssl truetype v4l vlc
+# required by media-video/vlc-3.0.16-r6::gentoo
+# required by media-video/obs-studio-9999::gentoo[vlc]
+# required by media-video/obs-studio (argument)
+>=sys-libs/zlib-1.2.11-r4 minizip

@@ -1,0 +1,3 @@
+media-video/vlc a52 aom archive aribsub bidi bluray cddb chromaprint chromecast dav1d dc1394 directx dts dvd encode faad fdk flac fluidsynth gme gstreamer gui ieee1394 jack jpeg kate libass libcaca libnotify libtar libtiger linsys lirc live loudness lua -macosx-notifications mad mp3 matroska modplug mpeg mtp musepack ncurses nfs ogg omxil -optimisememory opus png projectm rdp -run-as-root samba sdl-image sftp shout sid skins soxr speex srt svg taglib test tremor truetype twolame -upnp vnc vpx xml -zeroconf zvbi
+>=media-libs/libprojectm-3.1.12 qt5
+>=net-fs/samba-4.13.9-r3 client

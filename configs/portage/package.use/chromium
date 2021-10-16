@@ -1,0 +1,7 @@
+www-client/chromium screencast hangouts js-type-check -proprietary-codecs -widevine
+# required by www-client/chromium-94.0.4606.61::gentoo
+# required by www-client/chromium (argument)
+>=dev-libs/libxml2-2.9.12-r5 icu
+# required by www-client/chromium-94.0.4606.61::gentoo
+# required by www-client/chromium (argument)
+>=net-libs/nodejs-14.17.6 inspector

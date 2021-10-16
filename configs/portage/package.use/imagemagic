@@ -1,0 +1,2 @@
+media-gfx/imagemagick bzip2 cxx fontconfig jpeg2k openmp png truetype webp zlib corefonts djvu fftw fpx graphviz hdri heif jbig jpeg lcms lqr lzma openexr pango perl postscript q32 q8 raw svg tiff wmf xml zip
+virtual/imagemagick-tools jpeg perl png svg tiff

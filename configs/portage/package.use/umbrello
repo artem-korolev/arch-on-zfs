@@ -1,0 +1,6 @@
+# required by kde-frameworks/kcoreaddons-5.85.0::gentoo
+# required by kde-frameworks/kconfigwidgets-5.85.0::gentoo
+# required by kde-frameworks/kdelibs4support-5.85.0::gentoo
+# required by kde-apps/umbrello-21.04.3::gentoo
+# required by kde-apps/umbrello (argument)
+>=dev-qt/qtcore-5.15.2-r3 icu

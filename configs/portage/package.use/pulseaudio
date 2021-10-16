@@ -1,3 +1,5 @@
-media-sound/pulseaudio equalizer webrtc-aec -bluetooth
+media-sound/pulseaudio -bluetooth equalizer webrtc-aec
+#media-sound/pulseaudio-modules-bt ofono-headset ffmpeg native-headset
+media-sound/pulseaudio-modules-bt ffmpeg
 dev-cpp/gtkmm X
 media-libs/libcanberra alsa

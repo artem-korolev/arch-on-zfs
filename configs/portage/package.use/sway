@@ -1,0 +1,7 @@
+gui-wm/sway X man swaybar swaybg swayidle swaylock swaymsg swaynag tray wallpapers
+
+# required by gui-wm/sway-1.6.1-r1::gentoo[wallpapers]
+# required by gui-wm/sway (argument)
+>=x11-libs/gdk-pixbuf-2.42.6 jpeg tiff
+# required by sys-auth/polkit-0.119-r2::gentoo[systemd]
+>=sys-apps/systemd-249.4-r4 policykit

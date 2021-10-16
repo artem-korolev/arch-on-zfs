@@ -5,3 +5,5 @@ media-fonts/font-bh-type1 bh-luxi
 dev-util/nvidia-cuda-toolkit NVIDIA-CUDA
 app-editors/vscode Microsoft-vscode
 media-fonts/corefonts MSttfEULA
+dev-util/idea-community codehaus-classworlds
+app-arch/p7zip unRAR
