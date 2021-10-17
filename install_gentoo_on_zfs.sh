@@ -94,8 +94,8 @@ fi
 
 containsElement "${MICROARCHITECTURE}" "${SUPPORTED_MARCHS[@]}"
 if [[ $? -eq 1 ]]; then
-    "Error: Unsupported architecture: ${MICROARCHITECTURE}"
-    "Supported architectures: ${SUPPORTED_MARCHS[@]}"
+    echo "Error: Unsupported architecture: ${MICROARCHITECTURE}"
+    echo "Supported architectures: ${SUPPORTED_MARCHS[@]}"
     exit 1
 fi
 
