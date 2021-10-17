@@ -101,7 +101,7 @@ fi
 
 echo "DISK=${DISK} MACHINE_NAME=${MACHINENAME} SWAPSIZE=${SWAPSIZE}"
 
-if [ ! -z readlink -e "/mnt/gentoo" ]; then
+if [ ! -z $(readlink -e "/mnt/gentoo") ]; then
     echo "Error: Cannot proceed futher, because /mnt/gentoo directory already"
     echo "exist. If you had problems with installation, then you must carefully"
     echo "unmount all datasets and pools manually and remove /mnt/gentoo directory then."
