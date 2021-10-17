@@ -7,6 +7,11 @@ source "lib/functions.sh"
 ### RPOOL=rpooltmp BPOOL=bpooltmp DISK=/dev/disk/by-id/ata-INTEL_SSDSCKGF180A4L_CVDA342501A4180W ./install_gentoo_on_zfs.sh
 ### ```
 
+SUPPORTED_MARCHS=("native" "skylake" "haswell" "ivybridge" "sandybridge" "nehalem" "westmere"
+"core2" "pentium-m" "nocona" "prescott" "znver1" "znver2" "znver3" "bdver4" "bdver3"
+"btver2" "bdver2" "bdver1" "btver1" "amdfam10" "opteron-sse3" "geode" "opteron"
+"power8")
+DEFAULT_MICROARCHITECTURE="native"
 DEFAULT_SWAPSIZE=40G
 RPOOL=${RPOOL:=rpool}
 BPOOL=${BPOOL:=bpool}
@@ -34,6 +39,11 @@ while [[ $# -gt 0 ]]; do
         ;;
         -k|--key)
             AUTHORIZED_KEY_FILE="$2"
+            shift # past argument
+            shift # past value
+        ;;
+        -m|--march)
+            MICROARCHITECTURE="$2"
             shift # past argument
             shift # past value
         ;;
@@ -75,6 +85,17 @@ if [[ ! "${SWAPSIZE}" =~ [0-9]+[K|M|G|T]$ ]]; then
     echo "Swapsize incorrectly specified: ${SWAPSIZE}"
     echo "Example: 512K, 32G, 1T"
     echo "Default: ${DEFAULT_SWAPSIZE}"
+    exit 1
+fi
+
+if [[ -z "${MICROARCHITECTURE}" ]]; then
+    MICROARCHITECTURE=${DEFAULT_MICROARCHITECTURE}
+fi
+
+containsElement "${MICROARCHITECTURE}" "${SUPPORTED_MARCHS[@]}"
+if [[ $? -eq 1 ]]; then
+    "Error: Unsupported architecture: ${MICROARCHITECTURE}"
+    "Supported architectures: ${SUPPORTED_MARCHS[@]}"
     exit 1
 fi
 
@@ -285,7 +306,9 @@ wget http://distfiles.gentoo.org/releases/amd64/autobuilds/$latest_stage3
 tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
 cd ${cwd}
 mkdir /mnt/gentoo/root/.ssh/
-cat ${AUTHORIZED_KEY_FILE} > /mnt/gentoo/root/.ssh/authorized_keys
+if [ ! -z "${AUTHORIZED_KEY_FILE}"]; then
+    cat ${AUTHORIZED_KEY_FILE} > /mnt/gentoo/root/.ssh/authorized_keys
+fi
 chmod -R go-rwx /mnt/gentoo/root/.ssh/
 cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
 mount --types proc /proc /mnt/gentoo/proc
@@ -299,7 +322,10 @@ chmod 1777 /dev/shm
 
 mkdir /mnt/gentoo/etc/zfs
 cp -R configs/systemd/* /etc/systemd/
+## portage configs
 cp -R configs/portage/* /mnt/gentoo/etc/portage/
+MAKECONF_COMMON_FLAGS='${COMMON_FLAGS}'
+cat ./templates/make.conf | envsubst > /mnt/gentoo/etc/portage/make.conf
 # cp /tmp/zpool.cache /mnt/gentoo/etc/zfs/
 cp configs/locale.gen /mnt/gentoo/etc/locale.gen
 cat ./templates/fstab | envsubst > /mnt/gentoo/etc/fstab
