@@ -34,7 +34,7 @@ eselect kernel set 1
 ls -l /usr/src/linux
 emerge -v sys-apps/pciutils
 cd /usr/src/linux
-mv /installation_files/kconfig ./.config
+mv /kconfig ./.config
 make && make modules_install
 make install
 

@@ -298,7 +298,6 @@ mount --types tmpfs --options nosuid,nodev,noexec shm /dev/shm
 chmod 1777 /dev/shm
 
 mkdir /mnt/gentoo/etc/zfs
-mkdir /mnt/gentoo/install
 cp -R configs/systemd/* /etc/systemd/
 cp -R configs/portage/* /mnt/gentoo/etc/portage/
 # cp /tmp/zpool.cache /mnt/gentoo/etc/zfs/
