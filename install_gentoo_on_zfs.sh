@@ -80,6 +80,13 @@ fi
 
 echo "DISK=${DISK} MACHINE_NAME=${MACHINENAME} SWAPSIZE=${SWAPSIZE}"
 
+if [ ! -z readlink -e "/mnt/gentoo" ]; then
+    echo "Error: Cannot proceed futher, because /mnt/gentoo directory already"
+    echo "exist. If you had problems with installation, then you must carefully"
+    echo "unmount all datasets and pools manually and remove /mnt/gentoo directory then."
+    exit 1
+fi
+
 ## INITIALIZE DISK LAYOUT
 source ./lib/partiotion_all_disk_for_installation.sh "${MACHINENAME}" "${DISK}" "${SWAPSIZE}" 1>/dev/null 2>&1
 if [[ $? -eq 0 ]]; then
@@ -93,25 +100,25 @@ fi
 
 cwd=$(pwd)
 
+## UBUNTU
 # apt update
 # apt install -y curl
 
-## umount and export all pools after failed installation
-umount /mnt/gentoo/boot/efi 1>/dev/null 2>&1 || true
-zfs umount /mnt/gentoo/boot 1>/dev/null 2>&1 || true
-umount /mnt/gentoo/boot 1>/dev/null 2>&1 || true
-umount -l /mnt/gentoo/{dev,sys,proc} 1>/dev/null 2>&1 || true
-zfs umount /mnt/gentoo 1>/dev/null 2>&1 || true
-umount -R /mnt/gentoo 1>/dev/null 2>&1 || true
-zpool export installation_bpool 1>/dev/null 2>&1 || true
-zpool export installation_rpool 1>/dev/null 2>&1 || true
+# ## umount and export all pools after failed installation
+# umount /mnt/gentoo/boot/efi 1>/dev/null 2>&1 || true
+# zfs umount /mnt/gentoo/boot 1>/dev/null 2>&1 || true
+# umount /mnt/gentoo/boot 1>/dev/null 2>&1 || true
+# umount -l /mnt/gentoo/{dev,sys,proc} 1>/dev/null 2>&1 || true
+# zfs umount /mnt/gentoo 1>/dev/null 2>&1 || true
+# umount -R /mnt/gentoo 1>/dev/null 2>&1 || true
+# zpool export installation_bpool 1>/dev/null 2>&1 || true
+# zpool export installation_rpool 1>/dev/null 2>&1 || true
+#rm -Rf /mnt/gentoo
 
-rm -Rf /mnt/gentoo
 mkdir -p /mnt/gentoo
 
 
 ## FORMAT SWAP AND EFI Boot partiotions
-
 mkfs.fat -F 32 "${DISK}-part1"
 
 if [[ $? -eq 0 ]]; then
@@ -310,7 +317,19 @@ chroot /mnt/gentoo /in_chroot.sh
 rm /mnt/gentoo/in_chroot.sh
 
 umount /mnt/gentoo/boot/efi
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: RPOOL datasets are successfully unmounted from /mnt/gentoo"
+else
+    echo "Error: Cannot unmount EFI Boot at /mnt/gentoo/boot/efi"
+    exit 1
+fi
 umount -l /mnt/gentoo/{dev,sys,proc}
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: Virtual filesystems are unmounted from /mnt/gentoo/{dev,sys,proc}"
+else
+    echo "Error: Cannot unmount virtual filesystems, mounted at /mnt/gentoo/{dev,sys,proc}"
+    exit 1
+fi
 zfs umount /mnt/gentoo/boot
 if [[ $? -eq 0 ]]; then
     echo "SUCCESS: BPOOL datasets are successfully unmounted from /mnt/gentoo/boot"
@@ -318,20 +337,53 @@ else
     echo "Error: Cannot unmount bpool datasets from /mnt/gentoo/boot"
     exit 1
 fi
-umount -R /mnt/gentoo/boot || true
 zfs set mountpoint=legacy installation_${BPOOL}/BOOT/gentoo
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: Set mountpoint for installation_${BPOOL}/BOOT/gentoo to 'legacy'"
+else
+    echo "Error: Cannot set mountpoint for installation_${BPOOL}/BOOT/gentoo to 'legacy'"
+    exit 1
+fi
 
 # UNMOUNT DATASETS FROM RPOOL pool
 # TODO: find a way how to unmount dataset with all nested datasets
 # using zfs utility, or unmount it one by one, if there is no other way
 # Currently I decided to use 'umount -R ...', cause it just works.
 # zfs umount /mnt/gentoo
-# /root
-# /home
-# /var/lib
-# /var/log
-# /var
-umount -R /mnt/gentoo
+RPOOL_MOUNTS=(
+    "/mnt/gentoo/root"
+    "/mnt/gentoo/home"
+    "/mnt/gentoo/var/games"
+    "/mnt/gentoo/var/tmp"
+    "/mnt/gentoo/var/cache"
+    "/mnt/gentoo/var/spool/mail"
+    "/mnt/gentoo/var/spool"
+    "/mnt/gentoo/var/lib/AccountsService"
+    "/mnt/gentoo/var/lib/docker"
+    "/mnt/gentoo/var/lib/nfs"
+    "/mnt/gentoo/var/lib"
+    "/mnt/gentoo/var/log"
+    "/mnt/gentoo/var/snap"
+    "/mnt/gentoo/var/www"
+    "/mnt/gentoo/var"
+    "/mnt/gentoo/opt"
+    "/mnt/gentoo/srv"
+    "/mnt/gentoo/usr/local"
+    "/mnt/gentoo/usr"
+    "/mnt/gentoo/chiatmp"
+    "/mnt/gentoo/tmp"
+)
+for i in "${RPOOL_MOUNTS[@]}"
+do
+    zfs umount $i
+    if [[ $? -eq 0 ]]; then
+        echo "SUCCESS: Successfully unmounted ZFS dataset from $i"
+    else
+        echo "Error: Cannot unmount ZFS dataset from $i"
+        exit 1
+    fi
+done
+zfs umount /mnt/gentoo
 if [[ $? -eq 0 ]]; then
     echo "SUCCESS: RPOOL datasets are successfully unmounted from /mnt/gentoo"
 else
@@ -339,6 +391,14 @@ else
     exit 1
 fi
 rm -R /mnt/gentoo
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: /mnt/gentoo directory removed"
+else
+    echo "Error: Cannot remove /mnt/gentoo directory"
+    exit 1
+fi
+
+## FINALLY EXPORT ZFS POOLS
 zpool export installation_${BPOOL}
 if [[ $? -eq 0 ]]; then
     echo "SUCCESS: BPOOL is successfully exported"
@@ -355,3 +415,12 @@ else
 fi
 
 
+echo "SUCCESS!!! ALL STEPS ARE SUCCESSFULLY COMPLETED."
+echo "    If you installing Gentoo on this PC (from USB flash), then just restart."
+echo "    If you install system on external drive using another computer, then"
+echo "    disconnect your drive with newly installed system from computer."
+echo "    Installation scripts creates pools with names '${RPOOL}' and '${BPOOL}'"
+echo "    on specified block device. It can cause conflict with your running"
+echo "    system after reboot, if your system is using ZFS pools with same names"
+echo
+echo "CONGRATS!!! One more installation of Gentoo Linux on ZFS!"
