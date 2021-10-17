@@ -65,6 +65,7 @@ if [ -z "$DISK" ]; then
     show_usage
     exit 1
 fi
+export DISK
 
 if [ -z "$MACHINENAME" ]; then
     show_usage
@@ -98,6 +99,7 @@ if [[ $? -eq 1 ]]; then
     echo "Supported architectures: ${SUPPORTED_MARCHS[@]}"
     exit 1
 fi
+export MICROARCHITECTURE
 
 echo "DISK=${DISK} MACHINE_NAME=${MACHINENAME} SWAPSIZE=${SWAPSIZE}"
 
@@ -325,6 +327,7 @@ cp -R configs/systemd/* /etc/systemd/
 ## portage configs
 cp -R configs/portage/* /mnt/gentoo/etc/portage/
 MAKECONF_COMMON_FLAGS='${COMMON_FLAGS}'
+export MAKECONF_COMMON_FLAGS
 cat ./templates/make.conf | envsubst > /mnt/gentoo/etc/portage/make.conf
 # cp /tmp/zpool.cache /mnt/gentoo/etc/zfs/
 cp configs/locale.gen /mnt/gentoo/etc/locale.gen
