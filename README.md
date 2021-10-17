@@ -1,5 +1,15 @@
 # Install Gentoo on ZFS
 
+:warning: WARNING
+
+``Use it on your own risk!!! Script imports ZFS pools starting with
+**'installation_...'** prefix into running system. Make sure you
+do not have it already inside running environment.
+Drive with installed system will have two ZFS pools:
+**bpool** and **rpool**. If you have ZFS pools with same names,
+you can get conflict during boot. So disconnect installation
+target drive before boot.``
+
 I created script to automate process of installing Gentoo on
 ZFS file system.
 
@@ -11,6 +21,7 @@ It has also kernel configurations for two micro architectures: AMD and Intel.
 
 Script was designed to run in Linux using bash shell.
 It expects environment with **systemd**.
+
 If it's not **systemd**, then it most probably will install everything
 correctly.
 But there will be problems in "unmount stage". Script will fail to unmount
@@ -103,6 +114,19 @@ to the system using corresponding private key.
 **/chiatmp** can be used for plotting Chia plots (it does not compress and
 does not log access to file system).
 [https://www.chia.net/](https://www.chia.net/)
+
+
+
+## To-do
+
+- adjust script to run in non-systemd environments
+
+- make processor detection and auto selection of micro architecture
+
+- select proper COMMON_FLAGS and kernel config for selected architecture
+(**-m**)
+
+## Contributors
 
 Open issue, if you have any question.
 
