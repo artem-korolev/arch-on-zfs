@@ -83,7 +83,7 @@ fi
 
 if [[ ! "${SWAPSIZE}" =~ [0-9]+[K|M|G|T]$ ]]; then
     echo "Swapsize incorrectly specified: ${SWAPSIZE}"
-    echo "Example: 512K, 32G, 1T"
+    echo "Example: 512K, 512M, 32G, 1T"
     echo "Default: ${DEFAULT_SWAPSIZE}"
     exit 1
 fi
@@ -386,21 +386,18 @@ RPOOL_MOUNTS=(
     "/mnt/gentoo/var/lib/AccountsService"
     "/mnt/gentoo/var/lib/docker"
     "/mnt/gentoo/var/lib/nfs"
-    "/mnt/gentoo/var/lib"
     "/mnt/gentoo/var/log"
     "/mnt/gentoo/var/snap"
     "/mnt/gentoo/var/www"
-    "/mnt/gentoo/var"
     "/mnt/gentoo/opt"
     "/mnt/gentoo/srv"
     "/mnt/gentoo/usr/local"
-    "/mnt/gentoo/usr"
     "/mnt/gentoo/chiatmp"
     "/mnt/gentoo/tmp"
 )
 for i in "${RPOOL_MOUNTS[@]}"
 do
-    zfs umount $i
+    zfs unmount $i
     if [[ $? -eq 0 ]]; then
         echo "SUCCESS: Successfully unmounted ZFS dataset from $i"
     else
@@ -408,7 +405,7 @@ do
         exit 1
     fi
 done
-zfs umount /mnt/gentoo
+zfs unmount /mnt/gentoo
 if [[ $? -eq 0 ]]; then
     echo "SUCCESS: RPOOL datasets are successfully unmounted from /mnt/gentoo"
 else
