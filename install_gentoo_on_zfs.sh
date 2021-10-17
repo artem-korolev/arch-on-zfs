@@ -1,12 +1,6 @@
 #!/usr/bin/env bash
 source "lib/functions.sh"
 
-### README
-### For temporary installation run like that:
-### ```
-### RPOOL=rpooltmp BPOOL=bpooltmp DISK=/dev/disk/by-id/ata-INTEL_SSDSCKGF180A4L_CVDA342501A4180W ./install_gentoo_on_zfs.sh
-### ```
-
 SUPPORTED_MARCHS=("native" "skylake" "haswell" "ivybridge" "sandybridge" "nehalem" "westmere"
 "core2" "pentium-m" "nocona" "prescott" "znver1" "znver2" "znver3" "bdver4" "bdver3"
 "btver2" "bdver2" "bdver1" "btver1" "amdfam10" "opteron-sse3" "geode" "opteron"
@@ -15,6 +9,8 @@ DEFAULT_MICROARCHITECTURE="native"
 DEFAULT_SWAPSIZE=40G
 RPOOL=${RPOOL:=rpool}
 BPOOL=${BPOOL:=bpool}
+export RPOOL
+export BPOOL
 AUTHORIZED_KEY_FILE=
 SWAPSIZE=
 
@@ -107,6 +103,8 @@ if [ ! -z $(readlink -e "/mnt/gentoo") ]; then
     echo "Error: Cannot proceed futher, because /mnt/gentoo directory already"
     echo "exist. If you had problems with installation, then you must carefully"
     echo "unmount all datasets and pools manually and remove /mnt/gentoo directory then."
+    echo
+    show_unmount_failure_warning
     exit 1
 fi
 
@@ -254,6 +252,7 @@ if [[ $? -eq 0 ]]; then
     echo "SUCCESS: Created ZFS rpool on ${DISK}-part4"
 else
     echo "Error: Cannot create ZFS rpool on ${DISK}-part4"
+    show_unmount_failure_warning
     exit 1
 fi
 
@@ -349,6 +348,7 @@ if [[ $? -eq 0 ]]; then
     echo "SUCCESS: RPOOL datasets are successfully unmounted from /mnt/gentoo"
 else
     echo "Error: Cannot unmount EFI Boot at /mnt/gentoo/boot/efi"
+    show_unmount_failure_warning
     exit 1
 fi
 umount -l /mnt/gentoo/{dev,sys,proc}
@@ -356,6 +356,7 @@ if [[ $? -eq 0 ]]; then
     echo "SUCCESS: Virtual filesystems are unmounted from /mnt/gentoo/{dev,sys,proc}"
 else
     echo "Error: Cannot unmount virtual filesystems, mounted at /mnt/gentoo/{dev,sys,proc}"
+    show_unmount_failure_warning
     exit 1
 fi
 zfs umount /mnt/gentoo/boot
@@ -363,6 +364,7 @@ if [[ $? -eq 0 ]]; then
     echo "SUCCESS: BPOOL datasets are successfully unmounted from /mnt/gentoo/boot"
 else
     echo "Error: Cannot unmount bpool datasets from /mnt/gentoo/boot"
+    show_unmount_failure_warning
     exit 1
 fi
 zfs set mountpoint=legacy installation_${BPOOL}/BOOT/gentoo
@@ -370,6 +372,7 @@ if [[ $? -eq 0 ]]; then
     echo "SUCCESS: Set mountpoint for installation_${BPOOL}/BOOT/gentoo to 'legacy'"
 else
     echo "Error: Cannot set mountpoint for installation_${BPOOL}/BOOT/gentoo to 'legacy'"
+    show_unmount_failure_warning
     exit 1
 fi
 
@@ -405,6 +408,7 @@ do
         echo "SUCCESS: Successfully unmounted ZFS dataset from $i"
     else
         echo "Error: Cannot unmount ZFS dataset from $i"
+        show_unmount_failure_warning
         exit 1
     fi
 done
@@ -413,6 +417,7 @@ if [[ $? -eq 0 ]]; then
     echo "SUCCESS: RPOOL datasets are successfully unmounted from /mnt/gentoo"
 else
     echo "Error: Cannot unmount rpool datasets from /mnt/gentoo"
+    show_unmount_failure_warning
     exit 1
 fi
 rm -R /mnt/gentoo
@@ -420,6 +425,7 @@ if [[ $? -eq 0 ]]; then
     echo "SUCCESS: /mnt/gentoo directory removed"
 else
     echo "Error: Cannot remove /mnt/gentoo directory"
+    show_unmount_failure_warning
     exit 1
 fi
 
@@ -429,6 +435,7 @@ if [[ $? -eq 0 ]]; then
     echo "SUCCESS: BPOOL is successfully exported"
 else
     echo "Error: Cannot export BPOOL (installation_${BPOOL})"
+    show_unmount_failure_warning
     exit 1
 fi
 zpool export installation_${RPOOL}
@@ -436,6 +443,7 @@ if [[ $? -eq 0 ]]; then
     echo "SUCCESS: RPOOL is successfully exported"
 else
     echo "Error: Cannot	export RPOOL (installation_${RPOOL})"
+    show_unmount_failure_warning
     exit 1
 fi
 
