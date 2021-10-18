@@ -47,6 +47,7 @@ make install
 emerge -v zfs
 emerge -v grub:2
 emerge -v sys-fs/ntfs3g
+emerge -v sys-process/lsof
 # emerge -v dev-util/nvidia-cuda-toolkit
 # emerge -v python
 # emerge -v python:3.8
