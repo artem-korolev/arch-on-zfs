@@ -68,7 +68,7 @@ if [ -z "$DISK" ]; then
     exit 1
 fi
 
-if [-z "$ROOT_DISK_ON_TARGET_MACHINE"]; then
+if [ -z "$ROOT_DISK_ON_TARGET_MACHINE" ]; then
     ROOT_DISK_ON_TARGET_MACHINE="${DISK}"
 fi
 export ROOT_DISK_ON_TARGET_MACHINE
@@ -99,7 +99,7 @@ if [[ -z "${MICROARCHITECTURE}" ]]; then
     MICROARCHITECTURE=${DEFAULT_MICROARCHITECTURE}
 fi
 
-if [[ ${MICROARCHITECTURE} eq "native" ]]; then
+if [[ "${MICROARCHITECTURE}" eq "native" ]]; then
     echo "You choose to build with 'native' micro architecture."
     echo "Script is unable to automatically select kernel in that case."
     PS3="Select kernel:"
