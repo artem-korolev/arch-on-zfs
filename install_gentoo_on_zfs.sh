@@ -131,6 +131,17 @@ if [ ! -z $(readlink -e "/mnt/gentoo") ]; then
     exit 1
 fi
 
+## ATTENTION!!! DISK WRITE STARTS HERE
+#PS3="WARNING!!!: ALL DATA ON THIS DEVICE WILL BE ERAZED!!! Are you sure you want to install system on ${DISK} block device? : "
+#select continue_install in yes no
+#do
+        CONTINUE_INSTALL=${continue_install}
+#done
+
+#if [[ "${CONTINUE_INSTALL}" == "no" ]]; then
+#    exit 0
+#fi
+
 ## INITIALIZE DISK LAYOUT
 source ./lib/partiotion_all_disk_for_installation.sh "${MACHINENAME}" "${DISK}" "${SWAPSIZE}" 1>/dev/null 2>&1
 if [[ $? -eq 0 ]]; then
@@ -141,6 +152,8 @@ else
     modprobe_disk "${DISK}"
     exit 1
 fi
+
+sync
 
 cwd=$(pwd)
 
@@ -159,12 +172,8 @@ cwd=$(pwd)
 # zpool export installation_rpool 1>/dev/null 2>&1 || true
 #rm -Rf /mnt/gentoo
 
-mkdir -p /mnt/gentoo
-
-
 ## FORMAT SWAP AND EFI Boot partiotions
-mkfs.fat -F 32 "${DISK}-part1"
-
+mkfs.fat -F 32 -I "${DISK}-part1"
 if [[ $? -eq 0 ]]; then
     echo "SUCCESS: EFI Boot partition is formatted as FAT32 on ${DISK}-part1"
 else
@@ -181,6 +190,8 @@ else
     exit 1
 fi
 
+# CREATE MOUNT POINT FOR INSTALLATION ZFS POOLS
+mkdir -p /mnt/gentoo
 
 
 #zpool create \
@@ -325,7 +336,7 @@ zfs create -o com.sun:auto-snapshot=false -o relatime=off -o atime=off installat
 
 
 cd /mnt/gentoo
-latest_stage3=$(curl http://distfiles.gentoo.org/releases/amd64/autobuilds/latest-stage3-amd64-systemd.txt 2>/dev/null | awk '$0 !~ /^#/ { print $1; exit; };')
+latest_stage3=$(curl http://ftp.snt.utwente.nl/pub/os/linux/gentoo/releases/amd64/autobuilds/latest-stage3-amd64-systemd.txt 2>/dev/null | awk '$0 !~ /^#/ { print $1; exit; };')
 wget http://distfiles.gentoo.org/releases/amd64/autobuilds/$latest_stage3
 tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
 cd ${cwd}

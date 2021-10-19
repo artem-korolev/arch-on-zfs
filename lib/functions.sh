@@ -18,8 +18,9 @@ function show_usage() {
 }
 
 function show_unmount_failure_warning() {
-	echo "WARNING: Final unmounting process was failed."
-	echo "You need manually unmound all zfs datasets, that belong to"
+	echo
+	echo "WARNING!!!"
+	echo "You may need manually unmound all zfs datasets, that belong to"
 	echo "'installation_${RPOOL}' and 'installation_${BPOOL}' ZFS pools."
 	echo "And after that you must export both of the installation pools."
 	echo "Use 'zfs list | grep installation_' to get list of all datasets,"
@@ -28,6 +29,87 @@ function show_unmount_failure_warning() {
 	echo
 	echo "zfs unmount <mount-point>"
 	echo "zpool export <pool>"
+
+
+
+
+
+
+
+# UNMOUNT DATASETS FROM RPOOL pool
+# TODO: find a way how to unmount dataset with all nested datasets
+# using zfs utility, or unmount it one by one, if there is no other way
+# Currently I decided to use 'umount -R ...', cause it just works.
+# zfs umount /mnt/gentoo
+RPOOL_MOUNTS=(
+    "/mnt/gentoo/boot"
+    "/mnt/gentoo/root"
+    "/mnt/gentoo/home"
+    "/mnt/gentoo/var/games"
+    "/mnt/gentoo/var/tmp"
+    "/mnt/gentoo/var/cache"
+    "/mnt/gentoo/var/spool/mail"
+    "/mnt/gentoo/var/spool"
+    "/mnt/gentoo/var/lib/AccountsService"
+    "/mnt/gentoo/var/lib/docker"
+    "/mnt/gentoo/var/lib/nfs"
+    "/mnt/gentoo/var/log"
+    "/mnt/gentoo/var/snap"
+    "/mnt/gentoo/var/www"
+    "/mnt/gentoo/opt"
+    "/mnt/gentoo/srv"
+    "/mnt/gentoo/usr/local"
+    "/mnt/gentoo/chiatmp"
+    "/mnt/gentoo/tmp"
+)
+for i in "${RPOOL_MOUNTS[@]}"
+do
+    zfs unmount $i
+    if [[ $? -eq 0 ]]; then
+        echo "SUCCESS: Successfully unmounted ZFS dataset from $i"
+    else
+        echo "Error: Cannot unmount ZFS dataset from $i"
+        exit 1
+    fi
+done
+zfs unmount /mnt/gentoo
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: RPOOL datasets are successfully unmounted from /mnt/gentoo"
+else
+    echo "Error: Cannot unmount rpool datasets from /mnt/gentoo"
+    exit 1
+fi
+rm -R /mnt/gentoo
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: /mnt/gentoo directory removed"
+else
+    echo "Error: Cannot remove /mnt/gentoo directory"
+    exit 1
+fi
+
+## FINALLY EXPORT ZFS POOLS
+zpool export installation_${BPOOL}
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: BPOOL is successfully exported"
+else
+    echo "Error: Cannot export BPOOL (installation_${BPOOL})"
+    exit 1
+fi
+zpool export installation_${RPOOL}
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: RPOOL is successfully exported"
+else
+    echo "Error: Cannot export RPOOL (installation_${RPOOL})"
+    exit 1
+fi
+
+
+
+
+
+
+
+
 }
 
 function modprobe_disk() {
