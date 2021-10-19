@@ -103,7 +103,15 @@ if [[ -z "${MICROARCHITECTURE}" ]]; then
 fi
 
 if [[ ${MICROARCHITECTURE} eq "native" ]]; then
-    
+    echo "You choose to build with 'native' micro architecture."
+    echo "Script is unable to automatically select kernel in that case."
+    PS3="Select kernel:"
+    select kernel in amd intel
+    do
+        TARGET_KERNEL=${kernel}
+    done
+else
+    get_kernel_by_march "${MICROARCHITECTURE}"
 fi
 
 containsElement "${MICROARCHITECTURE}" "${SUPPORTED_MARCHS[@]}"
@@ -349,7 +357,7 @@ cat ./templates/make.conf | envsubst > /mnt/gentoo/etc/portage/make.conf
 # cp /tmp/zpool.cache /mnt/gentoo/etc/zfs/
 cp configs/locale.gen /mnt/gentoo/etc/locale.gen
 cat ./templates/fstab | envsubst > /mnt/gentoo/etc/fstab
-cp configs/kernel/.config /mnt/gentoo/kconfig
+cp "configs/kernel/kconfig_${TARGET_KERNEL}" /mnt/gentoo/kconfig
 cp configs/grub /mnt/gentoo/etc/default/grub
 
 
