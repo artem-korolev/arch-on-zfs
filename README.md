@@ -136,6 +136,8 @@ does not log access to file system).
 - select proper COMMON_FLAGS and kernel config for selected architecture
 (**-m**)
 
+- download stage3 archive from nearest mirror
+
 ## Contributors
 
 Open issue, if you have any question.
