@@ -19,16 +19,23 @@ It has also kernel configurations for two micro architectures: AMD and Intel.
 
 ## Requirements
 
-Script was designed to run in Linux using bash shell.
-It expects environment with **systemd**.
+- systemd on host machine (machine you run this script on)
 
-If it's not **systemd**, then it most probably will install everything
-correctly.
-But there will be problems in "unmount stage". Script will fail to unmount
-**/mnt/gentoo/{dev,sys,proc}** virtual file systems, and will show you warning
-about it. Just follow suggested steps to manually unmount all datasets and
-export corresponding pools. That way you'll be able to manually finalize
-installation in non-systemd environment.
+   Script was designed to run in Linux using bash shell.
+   It expects environment with **systemd**.
+
+   If it's not **systemd**, then it most probably will install everything
+   correctly.
+   But there will be problems in "unmount stage". Script will fail to unmount
+   **/mnt/gentoo/{dev,sys,proc}** virtual file systems, and will show you warning
+   about it. Just follow suggested steps to manually unmount all datasets and
+   export corresponding pools. That way you'll be able to manually finalize
+   installation in non-systemd environment.
+
+- AMD / Intel processor on target machine
+
+- Disk with enough space to install Gentoo
+  (minimal installation with ZFS modules)
 
 ## Usage
 
