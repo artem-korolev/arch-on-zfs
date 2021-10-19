@@ -38,12 +38,22 @@ install_gentoo_on_zfs [OPTION=VALUE] ...
 
 Options:
   -n <name>, --name <name>:  machine name
-  -d <block_device>, --disk <block_device>:  absolute path to disk device (use by-id. Example, -d=/dev/disk/by-id/nvme-eui.0025385891502595)
+  -d <block_device>, --disk <block_device>:  absolute path to disk
+                   device (use by-id.
+                   Example:
+                   -d=/dev/disk/by-id/nvme-eui.0025385891502595)
+  -r <root_device_on_target_machine>, --root <root_device_on_target_machine>:
+                        root disk on target machine; this will be used to configure
+                        /etc/fstab on target machine. By default equals
+                        to value from **-d** option
   -s <size>, --swap <size>:  swap filesystem size in K/M/G/T (Example: -s=64G)
                Default: 40G
   -k <path>, --key <path> : path to ssh public key (Gives SSH root access to the system)
   -m <march>, --march <march> : build for specific architecture.
-               Supported architectures: native skylake haswell ivybridge sandybridge nehalem westmere core2 pentium-m nocona prescott znver1 znver2 znver3 bdver4 bdver3 btver2 bdver2 bdver1 btver1 amdfam10 opteron-sse3 geode opteron power8
+               Supported architectures: native skylake haswell ivybridge
+               sandybridge nehalem westmere core2 pentium-m nocona prescott
+               znver1 znver2 znver3 bdver4 bdver3 btver2 bdver2 bdver1
+               btver1 amdfam10 opteron-sse3 geode opteron power8
                Default: native
                Check more details here - https://wiki.gentoo.org/wiki/Safe_CFLAGS
   -h, --help:  show help

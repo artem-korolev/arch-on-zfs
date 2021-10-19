@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 source "lib/functions.sh"
+source "lib/march.sh"
+
+TARGET_KERNEL=
+exit 1
 
 SUPPORTED_MARCHS=("native" "skylake" "haswell" "ivybridge" "sandybridge" "nehalem" "westmere"
 "core2" "pentium-m" "nocona" "prescott" "znver1" "znver2" "znver3" "bdver4" "bdver3"
@@ -20,6 +24,11 @@ while [[ $# -gt 0 ]]; do
     case $key in
         -d|--disk)
             DISK="$2"
+            shift # past argument
+            shift # past value
+        ;;
+        -r|--root)
+            ROOT_DISK_ON_TARGET_MACHINE="$2"
             shift # past argument
             shift # past value
         ;;
@@ -61,7 +70,11 @@ if [ -z "$DISK" ]; then
     show_usage
     exit 1
 fi
-export DISK
+
+if [-z "$ROOT_DISK_ON_TARGET_MACHINE"]; then
+    ROOT_DISK_ON_TARGET_MACHINE="${DISK}"
+fi
+export ROOT_DISK_ON_TARGET_MACHINE
 
 if [ -z "$MACHINENAME" ]; then
     show_usage
@@ -89,6 +102,10 @@ if [[ -z "${MICROARCHITECTURE}" ]]; then
     MICROARCHITECTURE=${DEFAULT_MICROARCHITECTURE}
 fi
 
+if [[ ${MICROARCHITECTURE} eq "native" ]]; then
+    
+fi
+
 containsElement "${MICROARCHITECTURE}" "${SUPPORTED_MARCHS[@]}"
 if [[ $? -eq 1 ]]; then
     echo "Error: Unsupported architecture: ${MICROARCHITECTURE}"
@@ -97,7 +114,8 @@ if [[ $? -eq 1 ]]; then
 fi
 export MICROARCHITECTURE
 
-echo "DISK=${DISK} MACHINE_NAME=${MACHINENAME} SWAPSIZE=${SWAPSIZE}"
+echo "DISK=${DISK} ROOT_DISK_ON_TARGET_MACHINE=${ROOT_DISK_ON_TARGET_MACHINE}"
+echo "MACHINE_NAME=${MACHINENAME} SWAPSIZE=${SWAPSIZE}"
 
 if [ ! -z $(readlink -e "/mnt/gentoo") ]; then
     echo "Error: Cannot proceed futher, because /mnt/gentoo directory already"
