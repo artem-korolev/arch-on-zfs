@@ -153,7 +153,9 @@ else
     exit 1
 fi
 
-sync
+# TODO: I have no idea why script fails to create FAT32 filysystem on newly partitioned disk.
+#       It works good after restart. Issue occures when restarting installation several times.
+sleep 5
 
 cwd=$(pwd)
 

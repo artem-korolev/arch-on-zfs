@@ -34,7 +34,15 @@ function show_unmount_failure_warning() {
 
 
 
+# UNMOUNT LEGACY MOUNTPOONT - EFI Boot and virtual file systems
+umount /mnt/gentoo/boot/efi || true
 
+umount -l /mnt/gentoo/{dev,sys,proc}
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: Virtual filesystems are unmounted from /mnt/gentoo/{dev,sys,proc}"
+else
+    echo "Error: Cannot unmount virtual filesystems, mounted at /mnt/gentoo/{dev,sys,proc}"
+fi
 
 # UNMOUNT DATASETS FROM RPOOL pool
 # TODO: find a way how to unmount dataset with all nested datasets
@@ -69,7 +77,6 @@ do
         echo "SUCCESS: Successfully unmounted ZFS dataset from $i"
     else
         echo "Error: Cannot unmount ZFS dataset from $i"
-        exit 1
     fi
 done
 zfs unmount /mnt/gentoo
@@ -77,14 +84,18 @@ if [[ $? -eq 0 ]]; then
     echo "SUCCESS: RPOOL datasets are successfully unmounted from /mnt/gentoo"
 else
     echo "Error: Cannot unmount rpool datasets from /mnt/gentoo"
-    exit 1
 fi
-rm -R /mnt/gentoo
-if [[ $? -eq 0 ]]; then
-    echo "SUCCESS: /mnt/gentoo directory removed"
-else
-    echo "Error: Cannot remove /mnt/gentoo directory"
-    exit 1
+
+if [ -d "/mnt/gentoo" ]; then
+    rm /mnt/gentoo
+    if [[ $? -eq 0 ]]; then
+        echo "SUCCESS: /mnt/gentoo directory removed"
+    else
+        echo "Error: Cannot remove /mnt/gentoo directory, because its not empty."
+        echo "Now you must manually care about rest of mounted ZFS datasets and pools"
+        echo "Check mountpoint, if you have important files there, unmount and export"
+        echo "ZFS datasets and pools starting with 'installation_' and remove /mnt/gentoo"
+    fi
 fi
 
 ## FINALLY EXPORT ZFS POOLS
@@ -93,14 +104,12 @@ if [[ $? -eq 0 ]]; then
     echo "SUCCESS: BPOOL is successfully exported"
 else
     echo "Error: Cannot export BPOOL (installation_${BPOOL})"
-    exit 1
 fi
 zpool export installation_${RPOOL}
 if [[ $? -eq 0 ]]; then
     echo "SUCCESS: RPOOL is successfully exported"
 else
     echo "Error: Cannot export RPOOL (installation_${RPOOL})"
-    exit 1
 fi
 
 
