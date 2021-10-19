@@ -2,9 +2,6 @@
 source "lib/functions.sh"
 source "lib/march.sh"
 
-TARGET_KERNEL=
-exit 1
-
 SUPPORTED_MARCHS=("native" "skylake" "haswell" "ivybridge" "sandybridge" "nehalem" "westmere"
 "core2" "pentium-m" "nocona" "prescott" "znver1" "znver2" "znver3" "bdver4" "bdver3"
 "btver2" "bdver2" "bdver1" "btver1" "amdfam10" "opteron-sse3" "geode" "opteron"
