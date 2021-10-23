@@ -132,8 +132,6 @@ to the system using corresponding private key.
 does not log access to file system).
 [https://www.chia.net/](https://www.chia.net/)
 
-
-
 ## To-do
 
 - adjust script to run in non-systemd environments
