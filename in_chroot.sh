@@ -103,6 +103,9 @@ emerge -v sys-process/lsof
 # emerge -v media-gfx/scrot
 # emerge -v x11-misc/shutter
 
+# # PHP
+# dev-lang/php
+
 # # ASCII GENERATORS
 # emerge -v app-misc/figlet
 # emerge -v app-misc/toilet
