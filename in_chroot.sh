@@ -100,6 +100,9 @@ emerge -v sys-process/lsof
 # emerge -v app-antivirus/clamav
 # emerge -v app-antivirus/clamtk
 
+# # Flatpack
+# emerge -v sys-apps/flatpak
+
 # # Screenshot apps
 # emerge -v media-gfx/scrot
 # emerge -v x11-misc/shutter

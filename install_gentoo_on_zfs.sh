@@ -328,6 +328,7 @@ zfs create                                 installation_${RPOOL}/var/games
 # so if you want to claws-mail and its dependencies, then do not create
 # /var/mail as separate filesystem
 zfs create                                 installation_${RPOOL}/var/spool/mail
+zfs create                                 installation_${RPOOL}/var/lib/flatpack
 zfs create                                 installation_${RPOOL}/var/snap
 zfs create                                 installation_${RPOOL}/var/www
 zfs create                                 installation_${RPOOL}/var/lib/AccountsService
