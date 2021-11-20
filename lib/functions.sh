@@ -60,6 +60,7 @@ RPOOL_MOUNTS=(
     "/mnt/gentoo/var/spool"
     "/mnt/gentoo/var/lib/AccountsService"
     "/mnt/gentoo/var/lib/docker"
+    "/mnt/gentoo/var/lib/flatpack"
     "/mnt/gentoo/var/lib/nfs"
     "/mnt/gentoo/var/log"
     "/mnt/gentoo/var/snap"

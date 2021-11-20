@@ -35,6 +35,7 @@ ls -l /usr/src/linux
 emerge -v sys-apps/pciutils
 cd /usr/src/linux
 mv /kconfig ./.config
+make olddefconfig
 make && make modules_install
 make install
 
