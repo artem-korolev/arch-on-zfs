@@ -382,7 +382,7 @@ rm /mnt/gentoo/in_chroot.sh
 
 umount /mnt/gentoo/boot/efi
 if [[ $? -eq 0 ]]; then
-    echo "SUCCESS: RPOOL datasets are successfully unmounted from /mnt/gentoo"
+    echo "SUCCESS: EFI Bootpartition is successfully unmounted from /mnt/gentoo/boot/efi"
 else
     echo "Error: Cannot unmount EFI Boot at /mnt/gentoo/boot/efi"
     show_unmount_failure_warning
@@ -428,6 +428,7 @@ RPOOL_MOUNTS=(
     "/mnt/gentoo/var/spool"
     "/mnt/gentoo/var/lib/AccountsService"
     "/mnt/gentoo/var/lib/docker"
+    "/mnt/gentoo/var/lib/flatpack"
     "/mnt/gentoo/var/lib/nfs"
     "/mnt/gentoo/var/log"
     "/mnt/gentoo/var/snap"
