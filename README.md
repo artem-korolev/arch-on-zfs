@@ -105,6 +105,10 @@ I have AMD Zen3 processor, so I run it like that:
     -m skylake
 ```
 
+```bash
+./install_gentoo_on_zfs.sh -n "intel8core" -d /dev/disk/by-id/usb-JMICRON_JMS583_DD56419883AD8-0\:0 -k /home/artem/.ssh/id_rsa.pub  -m skylake -r /dev/nvme0n1
+```
+
 Refer to
 [https://wiki.gentoo.org/wiki/Safe_CFLAGS](https://wiki.gentoo.org/wiki/Safe_CFLAGS)
 for more details about available micro architectures and recommended compiler
