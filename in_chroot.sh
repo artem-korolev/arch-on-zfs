@@ -4,11 +4,47 @@ source /etc/profile
 export PS1="(chroot) ${PS1}"
 
 emerge --sync
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: 'emerge --sync' done."
+else
+    echo "Error: 'emerge --sync' failed."
+    exit 1
+fi
 emerge -v app-portage/gentoolkit
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: 'emerge -v app-portage/gentoolkit' done."
+else
+    echo "Error: 'emerge -v app-portage/gentoolkit' failed."
+    exit 1
+fi
 emerge -v app-portage/mirrorselect
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: 'emerge -v app-portage/mirrorselect' done."
+else
+    echo "Error: 'emerge -v app-portage/mirrorselect' failed."
+    exit 1
+fi
 emerge -v sys-fs/dosfstools
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: 'emerge -v sys-fs/dosfstools' done."
+else
+    echo "Error: 'emerge -v sys-fs/dosfstools' failed."
+    exit 1
+fi
 emerge -v net-misc/dhcpcd
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: 'emerge -v net-misc/dhcpcd' done."
+else
+    echo "Error: 'emerge -v net-misc/dhcpcd' failed."
+    exit 1
+fi
 mirrorselect -s4 -b10 -D
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: 'mirrorselect -s4 -b10 -D' done."
+else
+    echo "Error: 'mirrorselect -s4 -b10 -D' failed."
+    exit 1
+fi
 
 ## nano -w /etc/locale.gen
 locale-gen
@@ -19,6 +55,10 @@ emerge --verbose --update --deep --newuse @world
 ln -sf ../usr/share/zoneinfo/Europe/Tallinn /etc/localtime
 env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
 
+cp -R /etc/portage.new/* /etc/portage/
+rm -Rf /etc/portage.new
+#emerge -vuDN @world
+
 #mkdir /etc/portage/package.accept_keywords
 #echo "sys-fs/zfs ~amd64" >> /etc/portage/package.accept_keywords/zfs
 #echo "sys-fs/zfs-kmod ~amd64" >> /etc/portage/package.accept_keywords/zfs-kmod
@@ -28,7 +68,13 @@ env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
 
 # kernel
 #echo 'sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE' >> /etc/portage/package.license
-emerge -uvDN sys-kernel/gentoo-sources sys-kernel/genkernel
+emerge -uvDN sys-kernel/gentoo-sources:5.14.20 sys-kernel/genkernel
+if [[ $? -eq 0 ]]; then
+    echo "SUCCESS: 'emerge -uvDN sys-kernel/gentoo-sources-5.14.20 sys-kernel/genkernel' done."
+else
+    echo "Error: 'emerge -uvDN sys-kernel/gentoo-sources-5.14.20 sys-kernel/genkernel' failed."
+    exit 1
+fi
 eselect kernel list
 eselect kernel set 1
 ls -l /usr/src/linux
@@ -124,6 +170,9 @@ emerge -v sys-process/lsof
 
 # # SWAY
 # emerge -v gui-wm/sway x11-terms/alacritty x11-terms/st
+
+# # GAMES
+# emerge -v games-util/lutris
 
 emerge -v --changed-use net-misc/openssh
 echo "PermitRootLogin yes" >> /etc/ssh/sshd_config

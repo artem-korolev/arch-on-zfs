@@ -1,4 +1,14 @@
-=gui-libs/wlroots-0.14.1 ~amd64
+# github master version
+#=gui-libs/wlroots-9999 **
 #=gui-wm/sway-9999 **
 #=app-text/scdoc-9999 **
+#=dev-libs/wayland-protocols-9999 **
+
+=gui-libs/wlroots-0.14.1 ~amd64
 >=dev-libs/wayland-protocols-1.23 ~amd64
+
+# new nvidia drivers (version 495.29.05) requirement
+# it support now running sway and GBM extensions,
+# but everything is experimental yet
+=gui-libs/egl-wayland-1.1.8 ~amd64
+=media-libs/libglvnd-1.3.4 ~amd64

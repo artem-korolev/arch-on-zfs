@@ -361,7 +361,7 @@ chmod 1777 /dev/shm
 mkdir /mnt/gentoo/etc/zfs
 cp -R configs/systemd/* /etc/systemd/
 ## portage configs
-cp -R configs/portage/* /mnt/gentoo/etc/portage/
+cp -R configs/portage /mnt/gentoo/etc/portage.new
 MAKECONF_COMMON_FLAGS='${COMMON_FLAGS}'
 export MAKECONF_COMMON_FLAGS
 cat ./templates/make.conf | envsubst > /mnt/gentoo/etc/portage/make.conf

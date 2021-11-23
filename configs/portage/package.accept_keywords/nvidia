@@ -1,1 +1,2 @@
 >=x11-drivers/nvidia-drivers-460.67 ~amd64
+>=media-libs/mesa-21.2.2 ~amd64
