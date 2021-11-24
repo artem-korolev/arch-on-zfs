@@ -3,6 +3,11 @@
 MACHINE_NAME="$1"
 BLOCK_DEVICE="$2"
 SWAPFILE_SIZE="$3"
+
+cat templates/disk.layout | sfdisk ${BLOCK_DEVICE}
+exit 0
+
+
 # to create the partitions programatically (rather than manually)
 # we're going to simulate the manual input to fdisk
 # The sed script strips off all the comments so that we can
