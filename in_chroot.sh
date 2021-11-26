@@ -142,6 +142,7 @@ emerge -v sys-process/lsof
 # emerge -v www-client/chromium
 # emerge -v mail-client/kube mail-client/thunderbird mail-client/evolution mail-client/claws-mail
 # emerge -v net-dns/bind-tools
+# emerge -v dev-vcs/mr
 
 # # Antivirus
 # emerge -v app-antivirus/clamav
