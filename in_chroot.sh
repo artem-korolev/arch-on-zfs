@@ -68,7 +68,7 @@ rm -Rf /etc/portage.new
 
 # kernel
 #echo 'sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE' >> /etc/portage/package.license
-emerge -uvDN sys-kernel/gentoo-sources:5.14.20 sys-kernel/genkernel
+emerge -uvDN sys-kernel/gentoo-sources:5.14.256 sys-kernel/genkernel
 if [[ $? -eq 0 ]]; then
     echo "SUCCESS: 'emerge -uvDN sys-kernel/gentoo-sources-5.14.20 sys-kernel/genkernel' done."
 else
