@@ -210,3 +210,6 @@ genkernel initramfs --kernel-config=/usr/src/linux/.config --keymap --makeopts=-
 mkdir /boot/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GentooOnZFS --recheck --no-floppy
+
+# CREATE ROOT PASSWORD
+passwd
