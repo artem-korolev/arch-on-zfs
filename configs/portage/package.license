@@ -8,3 +8,8 @@ media-fonts/corefonts MSttfEULA
 dev-util/idea-community codehaus-classworlds
 app-arch/p7zip unRAR
 dev-db/mongodb SSPL-1
+www-client/opera OPERA-2018
+media-fonts/ipamonafont grass-ipafonts
+games-util/steam-launcher ValveSteamLicense
+dev-util/adobe-air-runtime AdobeAIRSDK
+media-gfx/nvidia-cg-toolkit NVIDIA-r1

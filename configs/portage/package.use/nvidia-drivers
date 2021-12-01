@@ -1,1 +1,1 @@
-x11-drivers/nvidia-drivers X tools wayland
+x11-drivers/nvidia-drivers X tools -wayland abi_x86_32

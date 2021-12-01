@@ -7,4 +7,4 @@
 # required by app-editors/vscode-1.59.1::gentoo
 # required by @selected
 # required by @world (argument)
->=media-libs/freetype-2.11.0-r1 harfbuzz
+#>=media-libs/freetype-2.11.0-r1 harfbuzz

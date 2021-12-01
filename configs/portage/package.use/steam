@@ -1,0 +1,641 @@
+games-util/steam-games-meta steamruntime mono steamgames_bioshock_infinite -steamgames_defenders_quest steamgames_dirt_rally steamgames_dont_starve steamgames_dwarfs steamgames_hammerwatch steamgames_ironclad_tactics steamgames_journey_down steamgames_narcissu steamgames_painkiller steamgames_portal steamgames_shadow_mordor steamgames_shatter steamgames_source_engine steamgames_te120 steamgames_tf2 steamgames_trine2 -steamgames_voidexpanse steamgames_witcher2
+
+# steamgames_hammerwatch? ( mono ) steamgames_portal? ( steamgames_source_engine ) steamgames_te120? ( steamgames_source_engine ) steamgames_tf2? ( steamgames_source_engine ) steamgames_voidexpanse? ( mono )
+dev-lang/mono minimal
+#media-libs/freetype -harfbuzz
+
+
+
+
+media-libs/libsdl2 gles2
+# required by games-util/steam-launcher-1.0.0.72::steam-overlay[steamruntime]
+# required by games-util/steam-meta-0-r20160817::steam-overlay
+# required by games-util/steam-meta (argument)
+>=virtual/opengl-7.0-r2 abi_x86_32
+# required by virtual/opengl-7.0-r2::gentoo
+# required by games-util/steam-client-meta-0-r20210804::steam-overlay
+# required by games-util/steam-meta-0-r20160817::steam-overlay
+# required by games-util/steam-meta (argument)
+>=media-libs/mesa-21.3.0 abi_x86_32
+# required by media-libs/mesa-21.3.0::gentoo
+# required by virtual/opengl-7.0-r2::gentoo
+# required by games-util/steam-client-meta-0-r20210804::steam-overlay
+# required by games-util/steam-meta-0-r20160817::steam-overlay
+# required by games-util/steam-meta (argument)
+>=dev-libs/expat-2.4.1 abi_x86_32
+# required by sys-devel/llvm-13.0.0::gentoo
+# required by media-libs/mesa-21.3.0::gentoo[-video_cards_radeonsi,-opencl,gallium,-video_cards_radeon,llvm,-video_cards_r600]
+# required by virtual/opengl-7.0-r2::gentoo
+# required by games-util/steam-client-meta-0-r20210804::steam-overlay
+# required by games-util/steam-meta-0-r20160817::steam-overlay
+# required by games-util/steam-meta (argument)
+>=sys-libs/zlib-1.2.11-r4 abi_x86_32
+# required by media-libs/mesa-21.3.0::gentoo[vaapi,gallium]
+# required by virtual/opengl-7.0-r2::gentoo
+# required by games-util/steam-client-meta-0-r20210804::steam-overlay
+# required by games-util/steam-meta-0-r20160817::steam-overlay
+# required by games-util/steam-meta (argument)
+>=x11-libs/libva-2.13.0-r1 abi_x86_32
+# required by media-libs/mesa-21.3.0::gentoo[vdpau,gallium]
+# required by virtual/opengl-7.0-r2::gentoo
+# required by games-util/steam-client-meta-0-r20210804::steam-overlay
+# required by games-util/steam-meta-0-r20160817::steam-overlay
+# required by games-util/steam-meta (argument)
+>=x11-libs/libvdpau-1.4 abi_x86_32
+# required by media-libs/mesa-21.3.0::gentoo[wayland]
+# required by virtual/opengl-7.0-r2::gentoo
+# required by games-util/steam-client-meta-0-r20210804::steam-overlay
+# required by games-util/steam-meta-0-r20160817::steam-overlay
+# required by games-util/steam-meta (argument)
+>=dev-libs/wayland-1.19.0 abi_x86_32
+# required by media-libs/mesa-21.3.0::gentoo
+# required by virtual/opengl-7.0-r2::gentoo
+# required by games-util/steam-client-meta-0-r20210804::steam-overlay
+# required by games-util/steam-meta-0-r20160817::steam-overlay
+# required by games-util/steam-meta (argument)
+>=x11-libs/libdrm-2.4.107 abi_x86_32
+# required by media-libs/mesa-21.3.0::gentoo[X]
+# required by virtual/opengl-7.0-r2::gentoo
+# required by games-util/steam-client-meta-0-r20210804::steam-overlay
+# required by games-util/steam-meta-0-r20160817::steam-overlay
+# required by games-util/steam-meta (argument)
+>=x11-libs/libxshmfence-1.3-r2 abi_x86_32
+# required by media-libs/mesa-21.3.0::gentoo[X]
+# required by virtual/opengl-7.0-r2::gentoo
+# required by games-util/steam-client-meta-0-r20210804::steam-overlay
+# required by games-util/steam-meta-0-r20160817::steam-overlay
+# required by games-util/steam-meta (argument)
+>=x11-libs/libXxf86vm-1.1.4-r2 abi_x86_32
+# required by x11-libs/libva-2.13.0-r1::gentoo[X]
+# required by media-libs/mesa-21.3.0::gentoo[vaapi,gallium]
+# required by virtual/opengl-7.0-r2::gentoo
+# required by games-util/steam-client-meta-0-r20210804::steam-overlay
+# required by games-util/steam-meta-0-r20160817::steam-overlay
+# required by games-util/steam-meta (argument)
+>=x11-libs/libXfixes-6.0.0 abi_x86_32
+# required by media-libs/mesa-21.3.0::gentoo[zstd]
+# required by virtual/opengl-7.0-r2::gentoo
+# required by games-util/steam-client-meta-0-r20210804::steam-overlay
+# required by games-util/steam-meta-0-r20160817::steam-overlay
+# required by games-util/steam-meta (argument)
+>=app-arch/zstd-1.5.0 abi_x86_32
+# required by media-libs/mesa-21.3.0::gentoo[-video_cards_radeonsi,-opencl,gallium,-video_cards_radeon,llvm,-video_cards_r600]
+# required by virtual/opengl-7.0-r2::gentoo
+# required by games-util/steam-client-meta-0-r20210804::steam-overlay
+# required by games-util/steam-meta-0-r20160817::steam-overlay
+# required by games-util/steam-meta (argument)
+>=sys-devel/llvm-13.0.0 abi_x86_32
+# required by media-libs/mesa-21.3.0::gentoo[X]
+# required by virtual/opengl-7.0-r2::gentoo
+# required by games-util/steam-client-meta-0-r20210804::steam-overlay
+# required by games-util/steam-meta-0-r20160817::steam-overlay
+# required by games-util/steam-meta (argument)
+>=x11-libs/libXrandr-1.5.2 abi_x86_32
+# required by dev-libs/wayland-1.19.0::gentoo
+# required by x11-libs/libva-2.13.0-r1::gentoo[wayland]
+# required by media-libs/mesa-21.3.0::gentoo[vaapi,gallium]
+# required by virtual/opengl-7.0-r2::gentoo
+# required by games-util/steam-client-meta-0-r20210804::steam-overlay
+# required by games-util/steam-meta-0-r20160817::steam-overlay
+# required by games-util/steam-meta (argument)
+>=dev-util/wayland-scanner-1.19.0 abi_x86_32
+# required by x11-libs/libXrandr-1.5.2::gentoo
+# required by media-libs/mesa-21.3.0::gentoo[X]
+# required by virtual/opengl-7.0-r2::gentoo
+# required by games-util/steam-client-meta-0-r20210804::steam-overlay
+# required by games-util/steam-meta-0-r20160817::steam-overlay
+# required by games-util/steam-meta (argument)
+>=x11-libs/libXrender-0.9.10-r2 abi_x86_32
+# required by sys-devel/llvm-13.0.0::gentoo[libffi]
+# required by media-libs/mesa-21.3.0::gentoo[-video_cards_radeonsi,-opencl,gallium,-video_cards_radeon,llvm,-video_cards_r600]
+# required by virtual/opengl-7.0-r2::gentoo
+# required by games-util/steam-client-meta-0-r20210804::steam-overlay
+# required by games-util/steam-meta-0-r20160817::steam-overlay
+# required by games-util/steam-meta (argument)
+>=dev-libs/libffi-3.3-r2 abi_x86_32
+# required by sys-devel/llvm-13.0.0::gentoo[ncurses]
+# required by media-libs/mesa-21.3.0::gentoo[-video_cards_radeonsi,-opencl,gallium,-video_cards_radeon,llvm,-video_cards_r600]
+# required by virtual/opengl-7.0-r2::gentoo
+# required by games-util/steam-client-meta-0-r20210804::steam-overlay
+# required by games-util/steam-meta-0-r20160817::steam-overlay
+# required by games-util/steam-meta (argument)
+>=sys-libs/ncurses-6.2_p20210619 abi_x86_32
+
+
+media-libs/libsdl2 gles2
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_dwarfs]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-libs/libexif-0.6.23 abi_x86_32
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamgames_ironclad_tactics]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-libs/sdl2-mixer-2.0.4 abi_x86_32
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_journey_down]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-libs/openal-1.21.1-r2 abi_x86_32
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-libs/sdl2-image-2.0.5_p20210328 abi_x86_32
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamruntime,steamgames_shatter,steamgames_trine2]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-gfx/nvidia-cg-toolkit-3.1.0013-r6 abi_x86_32
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_source_engine]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-libs/libpng-compat-1.2.59:1.2 abi_x86_32
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_source_engine]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=dev-libs/libgcrypt-1.8.8 abi_x86_32
+# required by dev-libs/libgcrypt-1.8.8::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_source_engine]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=dev-libs/libgpg-error-1.42 abi_x86_32
+# required by media-gfx/nvidia-cg-toolkit-3.1.0013-r6::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamruntime,steamgames_shatter,steamgames_trine2]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-libs/glu-9.0.2 abi_x86_32
+# required by media-gfx/nvidia-cg-toolkit-3.1.0013-r6::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamruntime,steamgames_shatter,steamgames_trine2]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=x11-libs/libICE-1.0.10 abi_x86_32
+# required by media-gfx/nvidia-cg-toolkit-3.1.0013-r6::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamruntime,steamgames_shatter,steamgames_trine2]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=x11-libs/libSM-1.2.3-r1 abi_x86_32
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[X]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=x11-libs/libXi-1.8 abi_x86_32
+# required by media-gfx/nvidia-cg-toolkit-3.1.0013-r6::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamruntime,steamgames_shatter,steamgames_trine2]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=x11-libs/libXmu-1.1.3 abi_x86_32
+# required by x11-libs/libXmu-1.1.3::gentoo
+# required by media-gfx/nvidia-cg-toolkit-3.1.0013-r6::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamruntime,steamgames_shatter,steamgames_trine2]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=x11-libs/libXt-1.2.1 abi_x86_32
+# required by media-gfx/nvidia-cg-toolkit-3.1.0013-r6::gentoo[abi_x86_32]
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamruntime,steamgames_shatter,steamgames_trine2]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-libs/freeglut-3.2.1-r2 abi_x86_32
+# required by x11-libs/libSM-1.2.3-r1::gentoo[uuid]
+# required by media-sound/pulseaudio-15.0-r1::gentoo[X]
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[pulseaudio]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=sys-apps/util-linux-2.37.2-r1 abi_x86_32
+# required by media-plugins/alsa-plugins-1.2.2::gentoo[pulseaudio]
+>=media-sound/pulseaudio-15.0-r1 abi_x86_32
+# required by media-sound/pulseaudio-15.0-r1::gentoo
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[pulseaudio]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-libs/libsndfile-1.0.31 abi_x86_32
+# required by media-sound/pulseaudio-15.0-r1::gentoo
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[pulseaudio]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-libs/speexdsp-1.2.0 abi_x86_32
+# required by media-sound/pulseaudio-15.0-r1::gentoo[asyncns]
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[pulseaudio]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=net-libs/libasyncns-0.8-r4 abi_x86_32
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[dbus]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=sys-apps/dbus-1.12.20-r4 abi_x86_32
+# required by media-sound/pulseaudio-15.0-r1::gentoo[glib]
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[pulseaudio]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=dev-libs/glib-2.68.4 abi_x86_32
+# required by media-sound/pulseaudio-15.0-r1::gentoo[alsa,alsa-plugin]
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[pulseaudio]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-plugins/alsa-plugins-1.2.2 abi_x86_32
+# required by media-plugins/alsa-plugins-1.2.2::gentoo
+# required by media-sound/pulseaudio-15.0-r1::gentoo[alsa,alsa-plugin]
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[pulseaudio]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-libs/alsa-lib-1.2.4 abi_x86_32
+# required by dev-libs/glib-2.68.4::gentoo
+# required by media-sound/pulseaudio-15.0-r1::gentoo[glib]
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[pulseaudio]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=dev-libs/libpcre-8.45 abi_x86_32
+# required by media-libs/libsndfile-1.0.31::gentoo[-minimal]
+# required by media-sound/pulseaudio-15.0-r1::gentoo
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[pulseaudio]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-libs/flac-1.3.3-r1 abi_x86_32
+# required by media-libs/libvorbis-1.3.7::gentoo
+# required by media-libs/sdl2-mixer-2.0.4::gentoo[vorbis,-tremor]
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamgames_ironclad_tactics]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-libs/libogg-1.3.5 abi_x86_32
+# required by media-libs/sdl2-mixer-2.0.4::gentoo[vorbis,-tremor]
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamgames_ironclad_tactics]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-libs/libvorbis-1.3.7 abi_x86_32
+# required by media-libs/libsndfile-1.0.31::gentoo[-minimal]
+# required by media-sound/pulseaudio-15.0-r1::gentoo
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[pulseaudio]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-libs/opus-1.3.1-r2 abi_x86_32
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-libs/libsdl2-2.0.16-r1 abi_x86_32
+# required by media-libs/sdl2-mixer-2.0.4::gentoo[mp3,-mad]
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamgames_ironclad_tactics]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-sound/mpg123-1.29.2 abi_x86_32
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[wayland]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=x11-libs/libxkbcommon-1.3.1 abi_x86_32
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[X]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=x11-libs/libXcursor-1.2.0 abi_x86_32
+# required by x11-libs/libxkbcommon-1.3.1::gentoo
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[wayland]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=dev-libs/libxml2-2.9.12-r5 abi_x86_32
+# required by dev-libs/libxml2-2.9.12-r5::gentoo[icu]
+# required by x11-libs/libxkbcommon-1.3.1::gentoo
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[wayland]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=dev-libs/icu-69.1-r1 abi_x86_32
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo[webp]
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_narcissu,steamruntime,steamgames_bioshock_infinite]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-libs/libwebp-1.1.0 abi_x86_32
+
+
+
+media-libs/libsdl2 gles2
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=dev-libs/atk-2.36.0 abi_x86_32
+# required by dev-util/adobe-air-runtime-2.6-r3::steam-overlay
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_defenders_quest]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=dev-libs/libxslt-1.1.34-r2 abi_x86_32
+# required by dev-libs/nss-3.72::gentoo
+# required by dev-util/adobe-air-runtime-2.6-r3::steam-overlay
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_defenders_quest]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=dev-libs/nspr-4.32 abi_x86_32
+# required by dev-util/adobe-air-runtime-2.6-r3::steam-overlay
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_defenders_quest]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=dev-libs/nss-3.72 abi_x86_32
+# required by dev-util/adobe-air-runtime-2.6-r3::steam-overlay
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_defenders_quest]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=gnome-base/gconf-3.2.6-r5 abi_x86_32
+# required by x11-libs/pango-1.48.10-r1::gentoo
+# required by gnome-base/librsvg-2.50.7::gentoo
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=media-libs/fontconfig-2.13.1-r2 abi_x86_32
+# required by x11-libs/cairo-1.16.0-r5::gentoo
+# required by gnome-base/librsvg-2.50.7::gentoo
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=media-libs/freetype-2.11.0-r1 abi_x86_32
+# required by dev-util/adobe-air-runtime-2.6-r3::steam-overlay
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_defenders_quest]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-libs/hal-flash-0.3.3-r1 abi_x86_32
+# required by dev-util/adobe-air-runtime-2.6-r3::steam-overlay
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_defenders_quest]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=net-misc/curl-7.79.1 abi_x86_32
+# required by gnome-base/librsvg-2.50.7::gentoo
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=x11-libs/cairo-1.16.0-r5 abi_x86_32
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=x11-libs/gdk-pixbuf-2.42.6 abi_x86_32
+# required by dev-util/adobe-air-runtime-2.6-r3::steam-overlay
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_defenders_quest]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=x11-libs/gtk+-2.24.33:2 cups abi_x86_32
+# required by gnome-base/librsvg-2.50.7::gentoo
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=x11-libs/pango-1.48.10-r1 abi_x86_32
+# required by x11-libs/pango-1.48.10-r1::gentoo
+# required by gnome-base/librsvg-2.50.7::gentoo
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=dev-libs/fribidi-1.0.10 abi_x86_32
+# required by x11-libs/pango-1.48.10-r1::gentoo
+# required by gnome-base/librsvg-2.50.7::gentoo
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=media-libs/harfbuzz-2.9.1 abi_x86_32
+# required by x11-libs/pango-1.48.10-r1::gentoo[X]
+# required by gnome-base/librsvg-2.50.7::gentoo
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=x11-libs/libXft-2.3.4 abi_x86_32
+# required by media-libs/harfbuzz-2.9.1::gentoo[graphite]
+# required by media-libs/freetype-2.11.0-r1::gentoo[harfbuzz]
+# required by media-libs/fontconfig-2.13.1-r2::gentoo
+# required by dev-dotnet/libgdiplus-6.0.2::gentoo
+# required by dev-lang/mono-6.12.0.122::gentoo[-minimal]
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[mono]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-gfx/graphite2-1.3.14 abi_x86_32
+# required by x11-libs/gtk+-2.24.33::gentoo[cups]
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=net-print/cups-2.3.3_p2-r2 abi_x86_32
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=x11-libs/libXcomposite-0.4.5 abi_x86_32
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=x11-libs/libXdamage-1.1.5 abi_x86_32
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=gnome-base/librsvg-2.50.7 abi_x86_32
+# required by net-misc/curl-7.79.1::gentoo[gnutls,ssl]
+# required by dev-util/adobe-air-runtime-2.6-r3::steam-overlay
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_defenders_quest]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=net-libs/gnutls-3.7.2 abi_x86_32
+# required by net-libs/gnutls-3.7.2::gentoo
+# required by net-misc/curl-7.79.1::gentoo[gnutls,ssl]
+# required by dev-util/adobe-air-runtime-2.6-r3::steam-overlay
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_defenders_quest]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=dev-libs/libtasn1-4.17.0 abi_x86_32
+# required by net-dns/libidn2-2.3.2::gentoo
+# required by net-libs/gnutls-3.7.2::gentoo[idn]
+# required by net-misc/curl-7.79.1::gentoo[gnutls,ssl]
+# required by dev-util/adobe-air-runtime-2.6-r3::steam-overlay
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_defenders_quest]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=dev-libs/libunistring-0.9.10-r1 abi_x86_32
+# required by net-misc/curl-7.79.1::gentoo[gnutls,ssl]
+# required by dev-util/adobe-air-runtime-2.6-r3::steam-overlay
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_defenders_quest]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=dev-libs/nettle-3.7.3 abi_x86_32
+# required by dev-libs/nettle-3.7.3::gentoo[gmp]
+# required by net-misc/curl-7.79.1::gentoo[gnutls,ssl]
+# required by dev-util/adobe-air-runtime-2.6-r3::steam-overlay
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_defenders_quest]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=dev-libs/gmp-6.2.1-r1 abi_x86_32
+# required by net-libs/gnutls-3.7.2::gentoo[idn]
+# required by net-misc/curl-7.79.1::gentoo[gnutls,ssl]
+# required by dev-util/adobe-air-runtime-2.6-r3::steam-overlay
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_defenders_quest]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=net-dns/libidn2-2.3.2 abi_x86_32
+# required by x11-libs/gdk-pixbuf-2.42.6::gentoo
+# required by gnome-base/librsvg-2.50.7::gentoo
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=media-libs/libpng-1.6.37-r2 abi_x86_32
+# required by x11-libs/gdk-pixbuf-2.42.6::gentoo[tiff]
+# required by gnome-base/librsvg-2.50.7::gentoo
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=media-libs/tiff-4.3.0 abi_x86_32
+# required by x11-libs/cairo-1.16.0-r5::gentoo
+# required by gnome-base/librsvg-2.50.7::gentoo
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=dev-libs/lzo-2.10 abi_x86_32
+# required by x11-libs/cairo-1.16.0-r5::gentoo
+# required by gnome-base/librsvg-2.50.7::gentoo
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=sys-libs/binutils-libs-2.37_p1 abi_x86_32
+# required by x11-libs/cairo-1.16.0-r5::gentoo
+# required by gnome-base/librsvg-2.50.7::gentoo
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=x11-libs/pixman-0.40.0 abi_x86_32
+# required by net-misc/curl-7.79.1::gentoo[openssl,ssl]
+# required by dev-util/adobe-air-runtime-2.6-r3::steam-overlay
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_defenders_quest]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=dev-libs/openssl-1.1.1l abi_x86_32
+# required by net-misc/curl-7.79.1::gentoo[http2]
+# required by dev-util/adobe-air-runtime-2.6-r3::steam-overlay
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_defenders_quest]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=net-libs/nghttp2-1.45.1-r1 abi_x86_32
+# required by media-libs/freetype-2.11.0-r1::gentoo[bzip2]
+# required by media-libs/fontconfig-2.13.1-r2::gentoo
+# required by dev-dotnet/libgdiplus-6.0.2::gentoo
+# required by dev-lang/mono-6.12.0.122::gentoo[-minimal]
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[mono]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=app-arch/bzip2-1.0.8-r1 abi_x86_32
+# required by gnome-base/gconf-3.2.6-r5::gentoo
+# required by dev-util/adobe-air-runtime-2.6-r3::steam-overlay
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_defenders_quest]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=dev-libs/dbus-glib-0.112 abi_x86_32
+# required by dev-libs/nss-3.72::gentoo
+# required by dev-util/adobe-air-runtime-2.6-r3::steam-overlay
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_defenders_quest]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=dev-db/sqlite-3.35.5 abi_x86_32
+# required by dev-db/sqlite-3.35.5::gentoo[readline]
+# required by dev-libs/nss-3.72::gentoo
+# required by dev-util/adobe-air-runtime-2.6-r3::steam-overlay
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_defenders_quest]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=sys-libs/readline-8.1_p1-r1 abi_x86_32
+# required by dev-libs/glib-2.68.4::gentoo
+# required by dev-libs/atk-2.36.0::gentoo
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=virtual/libintl-0-r2 abi_x86_32
+# required by x11-libs/gdk-pixbuf-2.42.6::gentoo[jpeg]
+# required by gnome-base/librsvg-2.50.7::gentoo
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=virtual/jpeg-100 abi_x86_32
+# required by virtual/jpeg-100::gentoo
+# required by x11-libs/gdk-pixbuf-2.42.6::gentoo[jpeg]
+# required by gnome-base/librsvg-2.50.7::gentoo
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=media-libs/libjpeg-turbo-2.1.1-r2 abi_x86_32
+# required by gnome-base/librsvg-2.50.7::gentoo
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=virtual/rust-1.56.1 abi_x86_32
+# required by virtual/rust-1.56.1::gentoo
+# required by gnome-base/librsvg-2.50.7::gentoo
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=dev-lang/rust-1.56.1 abi_x86_32
+# required by media-libs/openal-1.21.1-r2::gentoo[jack]
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_journey_down]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=virtual/jack-2 abi_x86_32
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[udev]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_dirt_rally]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=virtual/libudev-232-r5 abi_x86_32
+# required by virtual/libudev-232-r5::gentoo
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[udev]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_dirt_rally]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=sys-apps/systemd-249.6 abi_x86_32
+# required by sys-apps/systemd-249.6::gentoo
+# required by virtual/libudev-232-r5::gentoo
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[udev]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_dirt_rally]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=sys-libs/libcap-2.49-r1 abi_x86_32
+# required by sys-apps/systemd-249.6::gentoo[lz4]
+# required by virtual/libudev-232-r5::gentoo
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[udev]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_dirt_rally]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=app-arch/lz4-1.9.3-r1 abi_x86_32
+# required by sys-libs/libcap-2.49-r1::gentoo[pam]
+# required by sys-apps/systemd-249.6::gentoo
+# required by virtual/libudev-232-r5::gentoo
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[udev]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_dirt_rally]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=sys-libs/pam-1.5.1_p20210622-r1 abi_x86_32
+# required by virtual/jack-2::gentoo
+# required by media-libs/openal-1.21.1-r2::gentoo[jack]
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_journey_down]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=media-sound/jack2-1.9.19 abi_x86_32
+# required by sys-libs/pam-1.5.1_p20210622-r1::gentoo
+# required by sys-libs/libcap-2.49-r1::gentoo[pam]
+# required by sys-apps/systemd-249.6::gentoo
+# required by virtual/libudev-232-r5::gentoo
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[udev]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_dirt_rally]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=virtual/libcrypt-2 abi_x86_32
+# required by virtual/libcrypt-2::gentoo
+# required by sys-apps/util-linux-2.37.2-r1::gentoo
+# required by sys-apps/systemd-249.6::gentoo
+# required by virtual/libudev-232-r5::gentoo
+# required by media-libs/libsdl2-2.0.16-r1::gentoo[udev]
+# required by media-libs/sdl2-image-2.0.5_p20210328::gentoo
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_dirt_rally]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=sys-libs/libxcrypt-4.4.25-r1 abi_x86_32
+# required by dev-libs/glib-2.68.4::gentoo
+# required by dev-libs/atk-2.36.0::gentoo
+# required by x11-libs/gtk+-2.24.33::gentoo
+# required by x11-themes/gtk-engines-adwaita-3.28::gentoo
+>=virtual/libiconv-0-r2 abi_x86_32
+# required by media-libs/freeglut-3.2.1-r2::gentoo
+# required by media-gfx/nvidia-cg-toolkit-3.1.0013-r6::gentoo[abi_x86_32]
+# required by games-util/steam-games-meta-0-r20210323::steam-overlay[steamgames_trine2,steamruntime,steamgames_shatter]
+# required by games-util/steam-meta-0-r20160817::steam-overlay[steamruntime]
+# required by games-util/steam-meta (argument)
+>=virtual/glu-9.0-r2 abi_x86_32
