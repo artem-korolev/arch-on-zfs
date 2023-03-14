@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
 
+# CREATING USERS
+users=( artem crypto )
+
+for i in "${users[@]}"
+do
+  useradd -m -G cdrom,dip,plugdev,lpadmin,lxd,sambashare -s /bin/bash -d /home/$i $i
+  chown -R $i:root /home/$i
+  chmod -R a-x /home/$i
+  chmod -R u=rwX /home/$i
+  chmod -R go-rwx /home/$i
+done
+
 # PREPARATIONS (keys, utils, etc)
 apt update
 apt install -y curl
