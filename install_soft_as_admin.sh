@@ -15,7 +15,7 @@ done
 # PREPARATIONS (keys, utils, etc)
 apt update
 apt install -y curl
-wget -qO - http://packages.lunarg.com/lunarg-signing-key-pub.asc | sudo apt-key add -
+wget -qO - http://packages.lunarg.com/lunarg-signing-key-pub.asc | apt-key add -
 wget -qO /etc/apt/sources.list.d/lunarg-vulkan-jammy.list  http://packages.lunarg.com/vulkan/lunarg-vulkan-jammy.list
 curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | tee /etc/apt/sources.list.d/brave-browser-release.list
