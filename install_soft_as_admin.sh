@@ -2,6 +2,8 @@
 
 # CREATING USERS
 users=( artem crypto )
+# ALLOW PARTICULAR NON-ADMIN USERS TO CONFIGURE WIFI WITHOUT ADMIN PASSWORD
+wifi_users=( artem )
 
 for i in "${users[@]}"
 do
@@ -13,7 +15,6 @@ do
 done
 
 # ALLOW PARTICULAR NON-ADMIN USERS TO CONFIGURE WIFI WITHOUT ADMIN PASSWORD
-wifi_users=( artem )
 addgroup wifi-users
 for wifi_user in "${wifi_users[@]}"
 do
