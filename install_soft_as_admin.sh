@@ -12,12 +12,26 @@ do
   chmod -R go-rwx /home/$i
 done
 
+# ALLOW PARTICULAR NON-ADMIN USERS TO CONFIGURE WIFI WITHOUT ADMIN PASSWORD
+wifi_users=( artem )
+addgroup wifi-users
+for wifi_user in "${wifi_users[@]}"
+do
+  usermod -a -G wifi-users $wifi_user
+done
+echo "[Enable NetworkManager]
+Identity=unix-group:wifi-users
+Action=org.freedesktop.NetworkManager.*
+ResultAny=no
+ResultInactive=no
+ResultActive=yes" > /etc/polkit-1/localauthority/50-local.d/org.freedesktop.NetworkManager.pkla
+
 # PREPARATIONS (keys, utils, etc)
 apt update
 apt install -y curl
 ## Vulkan SDK
 wget -qO - http://packages.lunarg.com/lunarg-signing-key-pub.asc | apt-key add -
-wget -qO /etc/apt/sources.list.d/lunarg-vulkan-jammy.list  http://packages.lunarg.com/vulkan/lunarg-vulkan-jammy.list
+wget -qO /etc/apt/sources.list.d/lunarg-vulkan-jammy.list http://packages.lunarg.com/vulkan/lunarg-vulkan-jammy.list
 ## Brave browser
 curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | tee /etc/apt/sources.list.d/brave-browser-release.list
