@@ -15,10 +15,17 @@ done
 # PREPARATIONS (keys, utils, etc)
 apt update
 apt install -y curl
+## Vulkan SDK
 wget -qO - http://packages.lunarg.com/lunarg-signing-key-pub.asc | apt-key add -
 wget -qO /etc/apt/sources.list.d/lunarg-vulkan-jammy.list  http://packages.lunarg.com/vulkan/lunarg-vulkan-jammy.list
+## Brave browser
 curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | tee /etc/apt/sources.list.d/brave-browser-release.list
+## Sublime Merge
+wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
+echo "deb https://download.sublimetext.com/ apt/stable/" | tee /etc/apt/sources.list.d/sublime-text.list
+
+# APPLY ALL CONFIG CHANGES AND UPDATES
 apt update
 
 # INSTALLING SOFT
@@ -31,7 +38,11 @@ apt install -y vkd3d-demos
 apt install -y pkg-config
 apt install -y libssl-dev
 
-# Docker
+## Sublime Merge
+apt install -y apt-transport-https
+apt install -y sublime-merge
+
+## Docker
 apt install -y \
     ca-certificates \
     gnupg \
