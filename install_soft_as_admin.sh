@@ -53,6 +53,9 @@ apt install -y vkd3d-demos
 apt install -y pkg-config
 apt install -y libssl-dev
 
+## 3D modeling/develpment soft
+apt install -y blender blender-data fracplanet libbullet-dev
+
 ## Sublime Merge
 apt install -y apt-transport-https
 apt install -y sublime-merge
