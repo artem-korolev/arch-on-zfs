@@ -49,7 +49,7 @@ apt update
 apt install -y build-essential
 apt install -y vulkan-sdk
 apt install -y brave-browser
-apt install -y git 
+apt install -y git
 apt install -y mpv
 apt install -y vkd3d-demos
 apt install -y pkg-config
