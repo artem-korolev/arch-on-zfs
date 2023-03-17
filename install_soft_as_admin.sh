@@ -63,7 +63,7 @@ apt install -y apt-transport-https
 apt install -y sublime-merge
 
 ## Telegram
-apt install -y telegram
+apt install -y telegram-desktop
 
 ## Docker
 apt install -y \
