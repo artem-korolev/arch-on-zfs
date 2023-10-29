@@ -54,6 +54,8 @@ apt install -y mpv
 apt install -y vkd3d-demos
 apt install -y pkg-config
 apt install -y libssl-dev
+apt install openjdk-19-jre-headless
+apt install meson
 
 ## 3D modeling/develpment soft
 apt install -y blender blender-data fracplanet libbullet-dev
