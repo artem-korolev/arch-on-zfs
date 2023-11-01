@@ -45,6 +45,16 @@ add-apt-repository -y ppa:atareao/telegram
 # APPLY ALL CONFIG CHANGES AND UPDATES
 apt update
 
+## NodeJS
+apt install -y ca-certificates curl gnupg
+mkdir -p /etc/apt/keyrings
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+NODE_MAJOR=20
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+
+# APPLY ALL CONFIG CHANGES AND UPDATES ONCE AGAIN
+apt update
+
 # INSTALLING SOFT
 apt install -y build-essential
 apt install -y vulkan-sdk
@@ -55,7 +65,9 @@ apt install -y vkd3d-demos
 apt install -y pkg-config
 apt install -y libssl-dev
 apt install openjdk-19-jre-headless
-apt install meson
+apt install -y meson
+apt install -y clang
+apt install -y nodejs
 
 ## 3D modeling/develpment soft
 apt install -y blender blender-data fracplanet libbullet-dev
