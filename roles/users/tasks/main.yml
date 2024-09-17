@@ -1,0 +1,39 @@
+- name: Ensure ZFS is installed
+  apt:
+    name: zfsutils-linux
+    state: present
+
+- name: Create users with ZFS datasets
+  block:
+    - name: Check if user {{ item }} exists
+      command: id {{ item }}
+      register: user_exists
+      ignore_errors: yes
+
+    - name: Create ZFS dataset for user {{ item }}
+      command: zfs create rpool/USERDATA/home_{{ item }}
+      when: user_exists.rc != 0
+
+    - name: Set ZFS mountpoint for user {{ item }}
+      command: zfs set mountpoint=/home/{{ item }} rpool/USERDATA/home_{{ item }}
+      when: user_exists.rc != 0
+
+    - name: Create user {{ item }}
+      user:
+        name: "{{ item }}"
+        groups: "cdrom,dip,plugdev,lpadmin,audio,plugdev,users"
+        shell: /bin/bash
+        create_home: yes
+      when: user_exists.rc != 0
+
+    - name: Set ownership and permissions for user {{ item }}
+      file:
+        path: "/home/{{ item }}"
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: '0700'
+      when: user_exists.rc != 0
+
+  loop:
+    - artem
+    - crypto

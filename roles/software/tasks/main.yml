@@ -1,0 +1,34 @@
+- include_tasks: brave.yml
+- include_tasks: vscode.yml
+- include_tasks: docker.yml
+
+- name: Install additional codecs and fonts
+  apt:
+    name: ubuntu-restricted-extras
+    state: present
+
+- name: Install additional software packages
+  apt:
+    name:
+      - gstreamer1.0-libav
+      - gstreamer1.0-plugins-bad
+      - gstreamer1.0-plugins-ugly
+      - libdvd-pkg
+      - nvidia-prime
+      - build-essential
+      - vulkan-sdk
+      - git
+      - mpv
+      - vkd3d-demos
+      - pkg-config
+      - libssl-dev
+      - htop
+      - apt-transport-https
+      - sublime-merge
+      - code-insiders
+    state: present
+
+- name: Reconfigure libdvd-pkg
+  command: dpkg-reconfigure libdvd-pkg
+  args:
+    creates: /usr/share/doc/libdvd-pkg

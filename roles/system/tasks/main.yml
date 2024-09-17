@@ -1,0 +1,8 @@
+- name: Add multiverse repository
+  apt_repository:
+    repo: "deb http://archive.ubuntu.com/ubuntu $(lsb_release -cs) multiverse"
+    state: present
+
+- name: Update apt cache
+  apt:
+    update_cache: yes

@@ -1,0 +1,42 @@
+- name: Install Docker dependencies
+  apt:
+    name:
+      - ca-certificates
+      - gnupg
+      - lsb-release
+    state: present
+
+- name: Add Docker repository key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker repository
+  apt_repository:
+    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    state: present
+
+- name: Install Docker packages
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+
+- name: Add user artem to docker group
+  user:
+    name: artem
+    groups: docker
+    append: yes
+
+- name: Enable Docker services
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  loop:
+    - docker.service
+    - containerd.service
