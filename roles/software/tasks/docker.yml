@@ -26,11 +26,12 @@
       - docker-compose-plugin
     state: present
 
-- name: Add user artem to docker group
+- name: Add users to docker group
   user:
-    name: artem
-    groups: docker
+    name: "{{ item }}"
+    groups: "docker"
     append: yes
+  loop: "{{ docker_users }}"
 
 - name: Enable Docker services
   systemd:

@@ -1,9 +1,9 @@
-- name: Workstation Setup
+- name: Workstation Initialization
   hosts: localhost
   become: yes
   gather_facts: yes
 
   roles:
     - users
-    - system
     - software
+    - system

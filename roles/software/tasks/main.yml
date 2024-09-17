@@ -1,34 +1,25 @@
-- include_tasks: brave.yml
-- include_tasks: vscode.yml
-- include_tasks: docker.yml
-
-- name: Install additional codecs and fonts
+- name: Update apt cache
   apt:
-    name: ubuntu-restricted-extras
-    state: present
+    update_cache: yes
 
-- name: Install additional software packages
+- name: Install basic utilities
   apt:
     name:
-      - gstreamer1.0-libav
-      - gstreamer1.0-plugins-bad
-      - gstreamer1.0-plugins-ugly
-      - libdvd-pkg
-      - nvidia-prime
-      - build-essential
-      - vulkan-sdk
-      - git
-      - mpv
-      - vkd3d-demos
-      - pkg-config
-      - libssl-dev
-      - htop
-      - apt-transport-https
-      - sublime-merge
-      - code-insiders
+      - curl
+      - wget
+      - lsb-release
+    state: present
+
+- name: Add multiverse repository
+  apt_repository:
+    repo: "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) multiverse"
+    state: present
+
+- name: Install software packages
+  apt:
+    name: "{{ software_packages }}"
     state: present
 
 - name: Reconfigure libdvd-pkg
   command: dpkg-reconfigure libdvd-pkg
-  args:
-    creates: /usr/share/doc/libdvd-pkg
+  when: "'libdvd-pkg' in software_packages"

@@ -1,0 +1,29 @@
+---
+- name: Check if user {{ item }} exists
+  command: id {{ item }}
+  register: user_exists
+  ignore_errors: yes
+
+- name: Ensure ZFS dataset and user setup for {{ item }}
+  block:
+    - name: Create ZFS dataset for user {{ item }}
+      command: zfs create rpool/USERDATA/home_{{ item }}
+
+    - name: Set ZFS mountpoint for user {{ item }}
+      command: zfs set mountpoint=/home/{{ item }} rpool/USERDATA/home_{{ item }}
+
+    - name: Create user {{ item }}
+      user:
+        name: "{{ item }}"
+        groups: "{{ regular_user_groups }}"
+        shell: /bin/bash
+        create_home: yes
+
+    - name: Set ownership and permissions for /home/{{ item }}
+      file:
+        path: /home/{{ item }}"
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: '0700'
+
+  when: user_exists.rc != 0

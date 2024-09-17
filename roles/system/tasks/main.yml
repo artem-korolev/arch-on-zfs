@@ -1,8 +1,17 @@
-- name: Add multiverse repository
-  apt_repository:
-    repo: "deb http://archive.ubuntu.com/ubuntu $(lsb_release -cs) multiverse"
-    state: present
-
 - name: Update apt cache
   apt:
     update_cache: yes
+
+- name: Install system codecs and fonts
+  apt:
+    name:
+      - ubuntu-restricted-extras
+      - gstreamer1.0-libav
+      - gstreamer1.0-plugins-bad
+      - gstreamer1.0-plugins-ugly
+      - libdvd-pkg
+    state: present
+
+- name: Reconfigure libdvd-pkg
+  command: dpkg-reconfigure libdvd-pkg
+  when: "'libdvd-pkg' in software_packages"

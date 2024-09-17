@@ -1,0 +1,36 @@
+users:
+  - artem
+  - crypto
+
+regular_user_groups: "cdrom,dip,plugdev,lpadmin,audio,plugdev,users"
+
+sudo_users:
+  - artem
+
+docker_users:
+  - artem
+
+software_packages:
+  - ubuntu-restricted-extras
+  - gstreamer1.0-libav
+  - gstreamer1.0-plugins-bad
+  - gstreamer1.0-plugins-ugly
+  - libdvd-pkg
+  - nvidia-prime
+  - build-essential
+  - vulkan-sdk
+  - brave-browser
+  - git
+  - mpv
+  - vkd3d-demos
+  - pkg-config
+  - libssl-dev
+  - htop
+  - apt-transport-https
+  - sublime-merge
+  - code-insiders
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
