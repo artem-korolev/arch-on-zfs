@@ -83,4 +83,3 @@ apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker
 usermod -aG docker artem
 systemctl enable docker.service
 systemctl enable containerd.service
-
