@@ -1,3 +1,14 @@
+Generate a high quality design document that can be used by our project team to design the software described below. It should be complete and usable as the sole design documentation to get our team to complete our project.
+
+--
+I need Ansible project for my workstation PC initializatoin.
+I need complete modulary structured with best practices in mind,
+easy to extend complete source implementing my bash script:
+In my bash script I'm trying to use techniques to have it release independant,
+for example, I use "$(lsb_release -cs)". If Ansible have some built-in feature for this,
+then use it please:
+
+
 #!/usr/bin/env bash
 
 # CREATING USERS
@@ -58,8 +69,6 @@ apt install -y vkd3d-demos
 apt install -y pkg-config
 apt install -y libssl-dev
 apt install -y htop
-apt install -y python3-pip
-apt install -y pipx
 
 ## Sublime Merge
 apt install -y apt-transport-https
@@ -85,3 +94,4 @@ apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker
 usermod -aG docker artem
 systemctl enable docker.service
 systemctl enable containerd.service
+

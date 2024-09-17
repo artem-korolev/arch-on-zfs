@@ -1,3 +1,59 @@
+Workstation Initialization Using Ansible: Design Document
+Project Overview
+The goal of this project is to automate the initialization and setup of a workstation PC using Ansible. The Ansible project will replace an existing bash script by providing a modular, easily extendable solution based on best practices. The playbook will cover user creation, software installation, and system configuration for Ubuntu systems. The solution will remain distribution-independent by leveraging Ansible's fact-gathering and modules to determine the release version.
+
+Requirements
+Platform: Ubuntu (supporting multiple versions)
+Ansible Version: Minimum 2.9
+Main Functionality:
+Creation of users with ZFS datasets
+Installation of necessary software packages (e.g., Brave browser, VSCode Insiders, Docker, Vulkan SDK)
+Application of system configuration (e.g., multiverse repository, codec installation)
+Modular structure allowing easy extension for future requirements
+Architecture
+The project will consist of the following main components:
+
+Playbooks: Define high-level tasks.
+Roles: Encapsulate specific functionalities such as user creation, package installation, or Docker setup.
+Inventory: Target systems configuration.
+Variables: Used for customization and adaptability.
+Structure
+css
+Copy code
+ansible-workstation-setup/
+├── ansible.cfg
+├── inventory/
+│   └── hosts
+├── playbooks/
+│   ├── main.yml
+│   ├── users.yml
+│   ├── software.yml
+│   ├── system.yml
+├── roles/
+│   ├── users/
+│   │   ├── tasks/
+│   │   │   └── main.yml
+│   ├── software/
+│   │   ├── tasks/
+│   │   │   ├── main.yml
+│   │   │   ├── brave.yml
+│   │   │   ├── vscode.yml
+│   │   │   └── docker.yml
+│   ├── system/
+│   │   ├── tasks/
+│   │   │   └── main.yml
+└── group_vars/
+    └── all.yml
+Ansible Configuration
+ansible.cfg: Defines default behaviors, paths to roles, and inventories.
+inventory/hosts: Contains the inventory of target systems (localhost in most cases for workstation setup).
+
+
+
+
+This script must be converted into Ansible project:
+
+
 #!/usr/bin/env bash
 
 # CREATING USERS
@@ -58,8 +114,6 @@ apt install -y vkd3d-demos
 apt install -y pkg-config
 apt install -y libssl-dev
 apt install -y htop
-apt install -y python3-pip
-apt install -y pipx
 
 ## Sublime Merge
 apt install -y apt-transport-https
