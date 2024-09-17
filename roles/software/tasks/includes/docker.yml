@@ -1,19 +1,12 @@
-- name: Install Docker dependencies
-  apt:
-    name:
-      - ca-certificates
-      - gnupg
-      - lsb-release
-    state: present
-
-- name: Add Docker repository key
+- name: Add Docker's official GPG key
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
+    keyring: /etc/apt/keyrings/docker.gpg
     state: present
 
 - name: Add Docker repository
   apt_repository:
-    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ ansible_facts.distribution_release }} stable"
     state: present
 
 - name: Install Docker packages

@@ -1,0 +1,73 @@
+root@littleboy:/home/artem/projects/arch-on-zfs# ansible-playbook playbooks/main.yml
+
+PLAY [Workstation Initialization] ***************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************
+ok: [localhost]
+
+TASK [users : Ensure ZFS is installed] **********************************************************************************
+ok: [localhost]
+
+TASK [users : Create users with ZFS datasets] ***************************************************************************
+included: /home/artem/projects/arch-on-zfs/roles/users/tasks/includes/create_user.yml for localhost => (item=artem)
+included: /home/artem/projects/arch-on-zfs/roles/users/tasks/includes/create_user.yml for localhost => (item=crypto)
+
+TASK [users : Check if user artem exists] *******************************************************************************
+changed: [localhost]
+
+TASK [users : Create ZFS dataset for user artem] ************************************************************************
+skipping: [localhost]
+
+TASK [users : Set ZFS mountpoint for user artem] ************************************************************************
+skipping: [localhost]
+
+TASK [users : Create user artem] ****************************************************************************************
+skipping: [localhost]
+
+TASK [users : Set ownership and permissions for /home/artem] ************************************************************
+skipping: [localhost]
+
+TASK [users : Check if user crypto exists] ******************************************************************************
+changed: [localhost]
+
+TASK [users : Create ZFS dataset for user crypto] ***********************************************************************
+skipping: [localhost]
+
+TASK [users : Set ZFS mountpoint for user crypto] ***********************************************************************
+skipping: [localhost]
+
+TASK [users : Create user crypto] ***************************************************************************************
+skipping: [localhost]
+
+TASK [users : Set ownership and permissions for /home/crypto] ***********************************************************
+skipping: [localhost]
+
+TASK [users : Add users in the sudo group] ******************************************************************************
+ok: [localhost] => (item=artem)
+
+TASK [software : Update apt cache] **************************************************************************************
+changed: [localhost]
+
+TASK [software : Install basic utilities] *******************************************************************************
+ok: [localhost]
+
+TASK [software : Add multiverse repository] *****************************************************************************
+changed: [localhost]
+
+TASK [software : Install software packages] *****************************************************************************
+ok: [localhost]
+
+TASK [software : Reconfigure libdvd-pkg] ********************************************************************************
+changed: [localhost]
+
+TASK [system : Update apt cache] ****************************************************************************************
+changed: [localhost]
+
+TASK [system : Install system codecs and fonts] *************************************************************************
+ok: [localhost]
+
+TASK [system : Reconfigure libdvd-pkg] **********************************************************************************
+changed: [localhost]
+
+PLAY RECAP **************************************************************************************************************
+localhost                  : ok=15   changed=7    unreachable=0    failed=0    skipped=8    rescued=0    ignored=0   

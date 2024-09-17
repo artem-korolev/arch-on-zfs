@@ -1,0 +1,5 @@
+- name: Download Trunk.io script (automated way of Trunk.io distribution)
+  get_url:
+    url: https://trunk.io/releases/trunk
+    dest: /usr/local/bin/trunk_io
+    mode: '0755'

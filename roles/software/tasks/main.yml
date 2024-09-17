@@ -1,25 +1,23 @@
-- name: Update apt cache
-  apt:
-    update_cache: yes
+- name: Install Brave browser
+  include_tasks: includes/brave.yml
 
-- name: Install basic utilities
-  apt:
-    name:
-      - curl
-      - wget
-      - lsb-release
-    state: present
+- name: Install Docker
+  include_tasks: includes/docker.yml
 
-- name: Add multiverse repository
-  apt_repository:
-    repo: "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) multiverse"
-    state: present
+- name: Install VSCode Insiders
+  include_tasks: includes/vscode.yml
 
-- name: Install software packages
-  apt:
-    name: "{{ software_packages }}"
-    state: present
+- name: Install Sublime Merge
+  include_tasks: includes/sublime-merge.yml
 
-- name: Reconfigure libdvd-pkg
-  command: dpkg-reconfigure libdvd-pkg
-  when: "'libdvd-pkg' in software_packages"
+- name: Install Vulkan SDK
+  include_tasks: includes/vulkan-sdk.yml
+
+- name: Install LLVM toolchain
+  include_tasks: includes/llvm.yml
+
+- name: Install Bazel build system
+  include_tasks: includes/bazel.yml
+
+- name: Install Trunk.io code analyzer
+  include_tasks: includes/trunk_io.yml

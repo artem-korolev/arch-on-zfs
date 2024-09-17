@@ -4,33 +4,14 @@ users:
 
 regular_user_groups: "cdrom,dip,plugdev,lpadmin,audio,plugdev,users"
 
-sudo_users:
-  - artem
+sudo_users: []
 
 docker_users:
   - artem
 
-software_packages:
-  - ubuntu-restricted-extras
-  - gstreamer1.0-libav
-  - gstreamer1.0-plugins-bad
-  - gstreamer1.0-plugins-ugly
-  - libdvd-pkg
-  - nvidia-prime
-  - build-essential
-  - vulkan-sdk
-  - brave-browser
-  - git
-  - mpv
-  - vkd3d-demos
-  - pkg-config
-  - libssl-dev
-  - htop
-  - apt-transport-https
-  - sublime-merge
-  - code-insiders
-  - docker-ce
-  - docker-ce-cli
-  - containerd.io
-  - docker-buildx-plugin
-  - docker-compose-plugin
+# NOTE: please monitor and keep it up to date with latest version available
+# through LLVM official repository - https://apt.llvm.org/, considering of
+# course your own needs.
+# You can install multiply LLVM versions
+llvm_versions:
+  - 20

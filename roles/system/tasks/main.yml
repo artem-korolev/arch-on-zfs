@@ -1,8 +1,33 @@
+- name: Add multiverse repository
+  apt_repository:
+    repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_facts.distribution_release }} multiverse"
+    state: present
+
 - name: Update apt cache
   apt:
     update_cache: yes
 
-- name: Install system codecs and fonts
+- name: Install basic utilities
+  apt:
+    name:
+      - curl
+      - wget
+    state: present
+
+- name: Install system software packages
+  apt:
+    name:
+      - nvidia-prime
+      - build-essential
+      - git
+      - mpv
+      - pkg-config
+      - libssl-dev
+      - htop
+      - apt-transport-https
+    state: present
+
+- name: Install proprietary codecs and fonts
   apt:
     name:
       - ubuntu-restricted-extras
@@ -14,4 +39,3 @@
 
 - name: Reconfigure libdvd-pkg
   command: dpkg-reconfigure libdvd-pkg
-  when: "'libdvd-pkg' in software_packages"

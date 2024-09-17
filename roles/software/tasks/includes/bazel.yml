@@ -1,0 +1,17 @@
+- name: Download Bazelisk (automated way of Bazel distribution) and install to /usr/local/bin
+  get_url:
+    url: https://github.com/bazelbuild/bazelisk/releases/download/v1.21.0/bazelisk-linux-amd64
+    dest: /usr/local/bin/bazel
+    mode: '0755'
+
+- name: Download and install Buildifier and install to /usr/local/bin
+  get_url:
+    url: https://github.com/bazelbuild/buildtools/releases/download/v7.3.1/buildifier-linux-amd64
+    dest: /usr/local/bin/buildifier
+    mode: '0755'
+
+- name: Download and install Buildozer and install to /usr/local/bin
+  get_url:
+    url: https://github.com/bazelbuild/buildtools/releases/download/v7.3.1/buildozer-linux-amd64
+    dest: /usr/local/bin/buildozer
+    mode: '0755'
