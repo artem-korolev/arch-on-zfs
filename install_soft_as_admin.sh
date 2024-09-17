@@ -2,82 +2,69 @@
 
 # CREATING USERS
 users=( artem crypto )
-# ALLOW PARTICULAR NON-ADMIN USERS TO CONFIGURE WIFI WITHOUT ADMIN PASSWORD
-wifi_users=( artem )
 
 for i in "${users[@]}"
 do
-  useradd -m -G cdrom,dip,plugdev,lpadmin,lxd,sambashare -s /bin/bash -d /home/$i $i
-  chown -R $i:root /home/$i
-  chmod -R a-x /home/$i
-  chmod -R u=rwX /home/$i
-  chmod -R go-rwx /home/$i
-done
+  if id "$i" &>/dev/null; then
+    echo "User $i already exists, skipping."
+  else
+    echo "Creating ZFS dataset rpool/USERDATA/home_${i}."
+    zfs create rpool/USERDATA/home_${i}
+    zfs set mountpoint=/home/${i} rpool/USERDATA/home_${i}
 
-# ALLOW PARTICULAR NON-ADMIN USERS TO CONFIGURE WIFI WITHOUT ADMIN PASSWORD
-addgroup wifi-users
-for wifi_user in "${wifi_users[@]}"
-do
-  usermod -a -G wifi-users $wifi_user
+    echo "Creating user $i."
+    useradd -m -G cdrom,dip,plugdev,lpadmin,audio,plugdev,users -s /bin/bash "$i"
+    chown ${i}:${i} /home/${i}
+    chmod go-rwx /home/${i}
+  fi
 done
-echo "[Enable NetworkManager]
-Identity=unix-group:wifi-users
-Action=org.freedesktop.NetworkManager.*
-ResultAny=no
-ResultInactive=no
-ResultActive=yes" > /etc/polkit-1/localauthority/50-local.d/org.freedesktop.NetworkManager.pkla
 
 # PREPARATIONS (keys, utils, etc)
 apt update
-apt install -y curl
+apt install -y curl wget lsb_release
 ## Vulkan SDK
-wget -qO - http://packages.lunarg.com/lunarg-signing-key-pub.asc | apt-key add -
-wget -qO /etc/apt/sources.list.d/lunarg-vulkan-jammy.list http://packages.lunarg.com/vulkan/lunarg-vulkan-jammy.list
+wget -qO - https://packages.lunarg.com/lunarg-signing-key-pub.asc | apt-key add -
+wget -qO /etc/apt/sources.list.d/lunarg-vulkan-1.3.290-$(lsb_release -cs).list https://packages.lunarg.com/vulkan/1.3.290/lunarg-vulkan-1.3.290-$(lsb_release -cs).list
 ## Brave browser
 curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | tee /etc/apt/sources.list.d/brave-browser-release.list
+echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | tee /etc/apt/sources.list.d/brave-browser-release.list
 ## Sublime Merge
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
 echo "deb https://download.sublimetext.com/ apt/stable/" | tee /etc/apt/sources.list.d/sublime-text.list
-## Telegram
-add-apt-repository -y ppa:atareao/telegram
+## VSCode
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/packages.microsoft.gpg
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" | tee /etc/apt/sources.list.d/vscode-insiders.list
+
+
+## Additional codecs and fonts
+add-apt-repository -y multiverse
+
 
 # APPLY ALL CONFIG CHANGES AND UPDATES
 apt update
 
-## NodeJS
-apt install -y ca-certificates curl gnupg
-mkdir -p /etc/apt/keyrings
-curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-NODE_MAJOR=20
-echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
-
-# APPLY ALL CONFIG CHANGES AND UPDATES ONCE AGAIN
-apt update
-
 # INSTALLING SOFT
+apt install -y ubuntu-restricted-extras gstreamer1.0-libav gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly
+apt install -y libdvd-pkg
+dpkg-reconfigure libdvd-pkg
+apt install -y nvidia-prime
+
 apt install -y build-essential
 apt install -y vulkan-sdk
 apt install -y brave-browser
-apt install -y git
+apt install -y git 
 apt install -y mpv
 apt install -y vkd3d-demos
 apt install -y pkg-config
 apt install -y libssl-dev
-apt install openjdk-19-jre-headless
-apt install -y meson
-apt install -y clang
-apt install -y nodejs
-
-## 3D modeling/develpment soft
-apt install -y blender blender-data fracplanet libbullet-dev
+apt install -y htop
 
 ## Sublime Merge
 apt install -y apt-transport-https
 apt install -y sublime-merge
 
-## Telegram
-apt install -y telegram-desktop
+## VSCode Insiders
+apt install -y code-insiders
 
 ## Docker
 apt install -y \
@@ -97,5 +84,3 @@ usermod -aG docker artem
 systemctl enable docker.service
 systemctl enable containerd.service
 
-# for faster applications startup
-apt install -y preload
