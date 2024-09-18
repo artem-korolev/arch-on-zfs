@@ -6,6 +6,7 @@
     "buildifier",
     "Buildifier",
     "buildozer",
-    "Buildozer"
+    "Buildozer",
+    "runtimes"
   ]
 }
