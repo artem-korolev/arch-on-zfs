@@ -10,6 +10,6 @@
 - name: Add users in the sudo group
   user:
     name: "{{ item }}"
-    groups: "sudo"
+    groups: sudo
     append: yes
   loop: "{{ sudo_users }}"

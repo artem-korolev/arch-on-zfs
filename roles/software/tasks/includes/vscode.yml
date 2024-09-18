@@ -6,7 +6,7 @@
 
 - name: Add VSCode repository
   apt_repository:
-    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/vscode stable main"
+    repo: deb [arch=amd64 signed-by=/etc/apt/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/vscode stable main
     state: present
 
 - name: Update apt cache

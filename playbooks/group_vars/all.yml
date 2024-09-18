@@ -2,7 +2,7 @@ users:
   - artem
   - crypto
 
-regular_user_groups: "cdrom,dip,plugdev,lpadmin,audio,plugdev,users"
+regular_user_groups: cdrom,dip,plugdev,lpadmin,audio,plugdev,users
 
 sudo_users: []
 

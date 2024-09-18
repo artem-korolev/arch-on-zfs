@@ -8,6 +8,7 @@ As root:
 apt install ansible-core
 ansible-playbook playbooks/main.yml
 ```
+
 ## Contribute
 
 ### Install GPT engineer

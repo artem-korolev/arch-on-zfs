@@ -1,4 +1,3 @@
----
 - name: Check if user {{ item }} exists
   command: id {{ item }}
   register: user_exists
@@ -21,9 +20,9 @@
 
     - name: Set ownership and permissions for /home/{{ item }}
       file:
-        path: /home/{{ item }}"
+        path: "/home/{{ item }}"
         owner: "{{ item }}"
         group: "{{ item }}"
-        mode: '0700'
+        mode: "0700"
 
   when: user_exists.rc != 0

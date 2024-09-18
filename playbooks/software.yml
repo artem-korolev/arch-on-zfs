@@ -1,7 +1,7 @@
 - name: Software Installation
   hosts: localhost
-  become: yes
-  gather_facts: yes
+  become: true
+  gather_facts: true
 
   roles:
     - software

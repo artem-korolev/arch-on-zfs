@@ -1,7 +1,7 @@
 - name: Workstation Initialization
   hosts: localhost
-  become: yes
-  gather_facts: yes
+  become: true
+  gather_facts: true
 
   roles:
     - users

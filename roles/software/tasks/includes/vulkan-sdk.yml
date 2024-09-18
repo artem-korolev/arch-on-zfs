@@ -6,12 +6,12 @@
 
 - name: Add Vulkan binary repository
   apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/lunarg-archive-keyring.gpg] https://packages.lunarg.com/vulkan {{ ansible_facts.distribution_release }} main"
+    repo: deb [signed-by=/etc/apt/keyrings/lunarg-archive-keyring.gpg] https://packages.lunarg.com/vulkan {{ ansible_facts.distribution_release }} main
     state: present
 
 - name: Add Vulkan source repository
   apt_repository:
-    repo: "deb-src [signed-by=/etc/apt/keyrings/lunarg-archive-keyring.gpg] https://packages.lunarg.com/vulkan {{ ansible_facts.distribution_release }} main"
+    repo: deb-src [signed-by=/etc/apt/keyrings/lunarg-archive-keyring.gpg] https://packages.lunarg.com/vulkan {{ ansible_facts.distribution_release }} main
     state: present
 
 - name: Update apt cache

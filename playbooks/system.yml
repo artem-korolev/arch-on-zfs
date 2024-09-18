@@ -1,7 +1,7 @@
 - name: System Configuration
   hosts: localhost
-  become: yes
-  gather_facts: yes
+  become: true
+  gather_facts: true
 
   roles:
     - system

@@ -6,12 +6,12 @@
 
 - name: Add LLVM binary repository
   apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/llvm-archive-keyring.gpg] http://apt.llvm.org/{{ ansible_facts.distribution_release }}/ llvm-toolchain-{{ ansible_facts.distribution_release }} main"
+    repo: deb [signed-by=/etc/apt/keyrings/llvm-archive-keyring.gpg] http://apt.llvm.org/{{ ansible_facts.distribution_release }}/ llvm-toolchain-{{ ansible_facts.distribution_release }} main
     state: present
 
 - name: Add LLVM source repository
   apt_repository:
-    repo: "deb-src [signed-by=/etc/apt/keyrings/llvm-archive-keyring.gpg] http://apt.llvm.org/{{ ansible_facts.distribution_release }}/ llvm-toolchain-{{ ansible_facts.distribution_release }} main"
+    repo: deb-src [signed-by=/etc/apt/keyrings/llvm-archive-keyring.gpg] http://apt.llvm.org/{{ ansible_facts.distribution_release }}/ llvm-toolchain-{{ ansible_facts.distribution_release }} main
     state: present
 
 - name: Update apt cache
