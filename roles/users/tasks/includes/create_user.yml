@@ -26,3 +26,11 @@
         mode: "0700"
 
   when: user_exists.rc != 0
+  rescue:
+    - name: Handle failure by logging
+      debug:
+        msg: "Failed to fully process {{ item }} user successfully"
+  always:
+    - name: Ensure task cleanup is done
+      debug:
+        msg: "Task execution complete for {{ item }}."
