@@ -13,3 +13,4 @@
     - vulkan-sdk
     - awscli
     - jdk
+    - cmake
