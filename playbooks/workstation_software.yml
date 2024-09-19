@@ -1,0 +1,14 @@
+- name: Workstation Software Installation
+  hosts: localhost
+  become: true
+  gather_facts: true
+  roles:
+    - bazel
+    - brave
+    - docker
+    - llvm
+    - sublime
+    - trunk.io
+    - vscode
+    - vulkan-sdk
+    - awscli

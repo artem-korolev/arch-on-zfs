@@ -1,6 +1,6 @@
-- name: Workstation Initialization
+- name: Workstation System soft and configs
   hosts: localhost
   become: true
   gather_facts: true
   roles:
-    - awscli
+    - system
