@@ -14,6 +14,12 @@ apt install ansible-core
 ansible-playbook playbooks/workstation.yml
 ```
 
+### Update AWS CLI tools
+
+```bash
+ansible-playbook playbooks/update_awscli.yml
+```
+
 ## Contribute
 
 ### Install GPT engineer
