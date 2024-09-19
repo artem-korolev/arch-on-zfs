@@ -1,5 +1,6 @@
 {
   "cSpell.words": [
+    "ansible",
     "awscli",
     "awscliv",
     "bazel",
@@ -9,6 +10,8 @@
     "Buildifier",
     "buildozer",
     "Buildozer",
-    "runtimes"
+    "runtimes",
+    "venv",
+    "vulkan"
   ]
 }
