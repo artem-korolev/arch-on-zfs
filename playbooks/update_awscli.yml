@@ -1,0 +1,7 @@
+- name: Workstation Initialization
+  hosts: localhost
+  become: true
+  gather_facts: true
+
+  roles:
+    - awscli

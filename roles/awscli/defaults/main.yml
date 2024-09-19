@@ -1,0 +1,3 @@
+# roles/awscli/defaults/main.yml
+aws_cli_zip_path: "/tmp/awscliv2.zip"
+aws_cli_extract_path: "/tmp/aws"
