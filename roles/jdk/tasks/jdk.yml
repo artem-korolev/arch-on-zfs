@@ -1,0 +1,6 @@
+- name: Install OpenJDK
+  apt:
+    name:
+      - openjdk-{{ item }}-jdk
+    state: present
+  loop: "{{ jdk_versions }}"

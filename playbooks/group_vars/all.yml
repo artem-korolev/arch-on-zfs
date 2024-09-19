@@ -15,3 +15,6 @@ docker_users:
 # You can install multiply LLVM versions
 llvm_versions:
   - 20
+
+jdk_versions:
+  - 21
