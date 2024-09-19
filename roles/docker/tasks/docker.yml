@@ -23,14 +23,14 @@
   user:
     name: "{{ item }}"
     groups: docker
-    append: yes
+    append: true
   loop: "{{ docker_users }}"
 
-- name: Enable Docker services
-  systemd:
+- name: Keep Docker services disabled by default
+  service:
     name: "{{ item }}"
-    enabled: yes
-    state: started
+    enabled: false
+    state: stopped
   loop:
     - docker.service
     - containerd.service
