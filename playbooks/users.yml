@@ -1,7 +1,0 @@
-- name: User Setup
-  hosts: localhost
-  become: true
-  gather_facts: true
-
-  roles:
-    - users

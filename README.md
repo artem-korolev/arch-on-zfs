@@ -2,11 +2,16 @@
 
 ## Run Ansible project
 
-As root:
+Run everything as root
 
 ```bash
 apt install ansible-core
-ansible-playbook playbooks/main.yml
+```
+
+### Workstation
+
+```bash
+ansible-playbook playbooks/workstation.yml
 ```
 
 ## Contribute

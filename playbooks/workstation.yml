@@ -6,4 +6,11 @@
   roles:
     - users
     - system
-    - software
+    - bazel
+    - brave
+    - docker
+    - llvm
+    - sublime
+    - trunk.io
+    - vscode
+    - vulkan-sdk

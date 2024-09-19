@@ -1,7 +1,7 @@
 - name: Check if user {{ item }} exists
   command: id {{ item }}
   register: user_exists
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: Ensure ZFS dataset and user setup for {{ item }}
   block:
@@ -16,7 +16,7 @@
         name: "{{ item }}"
         groups: "{{ regular_user_groups }}"
         shell: /bin/bash
-        create_home: yes
+        create_home: true
 
     - name: Set ownership and permissions for /home/{{ item }}
       file:
