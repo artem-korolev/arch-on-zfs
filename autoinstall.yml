@@ -14,4 +14,4 @@ autoinstall:
       size: 50G  # Set the swap size to 50GB (adjust as needed)
   timezone: Europe/Tallinn
   kernel-crash-dumps:
-     enabled: null
+     enabled: false
