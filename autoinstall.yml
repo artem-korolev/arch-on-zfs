@@ -6,10 +6,11 @@ autoinstall:
     - network
     - locale
     - keyboard
-    - storage  # Make storage selection interactive
+#    - storage  # Make storage selection interactive
   storage:
-    # layout:
-    #   name: zfs-encrypted  # ZFS with encryption layout
+    layout:
+      name: zfs  # ZFS with encryption layout
+      encrypted: true
     swap:
       size: 50G  # Set the swap size to 50GB (adjust as needed)
   timezone: Europe/Tallinn
