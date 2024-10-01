@@ -1,0 +1,16 @@
+#cloud-config
+autoinstall:
+  version: 1
+  interactive-sections:
+    - identity
+    - network
+    - locale
+    - keyboard
+  storage:
+    layout:
+      name: zfs-encrypted  # ZFS with encryption layout
+    swap:
+      size: 51200  # Set the swap size to 50GB (adjust as needed)
+  timezone: Europe/Tallinn
+  kernel-crash-dumps:
+     enabled: null
