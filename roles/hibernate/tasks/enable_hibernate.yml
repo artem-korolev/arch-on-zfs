@@ -31,7 +31,7 @@
   lineinfile:
     path: /etc/default/grub
     regexp: ^GRUB_CMDLINE_LINUX_DEFAULT=
-    line: "GRUB_CMDLINE_LINUX_DEFAULT=\"quiet splash resume=UUID={{ swap_uuid }}\""
+    line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash resume=UUID={{ swap_uuid }}"'
     backup: true
 
 - name: Update initramfs resume configuration
@@ -41,7 +41,7 @@
       RESUME=UUID={{ swap_uuid }}
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
 
 - name: Update GRUB
   command: update-grub
@@ -53,7 +53,7 @@
   shell: dmesg | grep -i acpi | grep -i sleep
   register: acpi_sleep_state
   changed_when: false
-  ignore_errors: true  # In case no ACPI sleep states are found, don't fail
+  ignore_errors: true # In case no ACPI sleep states are found, don't fail
 
 - name: Debug ACPI sleep state output
   debug:

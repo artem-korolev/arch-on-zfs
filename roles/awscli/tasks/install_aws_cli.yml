@@ -4,14 +4,14 @@
 
 - name: Download AWS CLI installer
   get_url:
-    url: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+    url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
     dest: "{{ aws_cli_zip_path }}"
     mode: "0644"
 
 - name: Unzip AWS CLI installer
   unarchive:
     src: "{{ aws_cli_zip_path }}"
-    dest: "/tmp"
+    dest: /tmp
     remote_src: yes
 
 - name: Install AWS CLI

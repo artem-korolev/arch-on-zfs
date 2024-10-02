@@ -3,7 +3,7 @@
   file:
     path: /etc/systemd/sleep.conf.d/
     state: directory
-    mode: '0755'
+    mode: "0755"
 
 - name: Configure systemd to enable hibernation without ACPI S4
   copy:
@@ -12,7 +12,7 @@
       [Sleep]
       HibernateMode=platform shutdown
       HibernateState=disk
-    mode: '0644'
+    mode: "0644"
 
 - name: Restart systemd-logind to apply hibernation configuration
   systemd:

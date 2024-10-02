@@ -6,13 +6,13 @@ autoinstall:
     - network
     - locale
     - keyboard
-#    - storage  # Make storage selection interactive
+  #    - storage  # Make storage selection interactive
   storage:
     swap:
-      size: 50G  # Set the swap size to 50GB (adjust as needed)
+      size: 50G # Set the swap size to 50GB (adjust as needed)
     layout:
-      name: zfs  # ZFS with encryption layout
+      name: zfs # ZFS with encryption layout
       password: # set password here
   timezone: Europe/Tallinn
   kernel-crash-dumps:
-     enabled: false
+    enabled: false

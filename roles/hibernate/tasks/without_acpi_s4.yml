@@ -16,8 +16,7 @@
       shutdown method = platform
     owner: root
     group: root
-    mode: '0644'
-
+    mode: "0644"
 # - name: Test software-based hibernate (s2disk)
 #   command: s2disk
 #   ignore_errors: true
