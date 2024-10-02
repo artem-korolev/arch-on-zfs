@@ -1,0 +1,2 @@
+- name: Enable Hibernate on experimental ZFS with encryption systems
+  include_tasks: enable_hibernate.yml

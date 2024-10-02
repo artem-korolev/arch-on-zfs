@@ -1,5 +1,6 @@
 {
   "cSpell.words": [
+    "acpi",
     "ansible",
     "awscli",
     "awscliv",
@@ -11,8 +12,13 @@
     "buildozer",
     "Buildozer",
     "containerd",
+    "lineinfile",
+    "MOUNTPOINTS",
     "runtimes",
+    "uswsusp",
+    "uuid",
     "venv",
-    "vulkan"
+    "vulkan",
+    "writeout"
   ]
 }
