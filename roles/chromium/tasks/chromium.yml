@@ -1,0 +1,44 @@
+# trunk-ignore(checkov/CKV2_ANSIBLE_1)
+- name: Fetch the content of the Chromium directory listing
+  uri:
+    url: http://packages.linuxmint.com/pool/upstream/c/chromium/
+    return_content: yes
+  register: page_content
+
+- name: Find all .deb files for 'wilma' (Ubuntu 24.04 LTS)
+  set_fact:
+    chromium_versions_list: "{{ page_content.content | regex_findall('chromium_(\\d+[\\.\\d+]*)~linuxmint1\\+wilma_amd64\\.deb') }}"
+
+- name: Debug the chromium_versions_list
+  debug:
+    var: chromium_versions_list
+
+- name: Set the latest version of the deb package
+  set_fact:
+    latest_version: "{{ chromium_versions_list | sort | last }}"
+
+- name: Debug the latest_version
+  debug:
+    var: latest_version
+
+- name: Construct the download URL for the latest deb package
+  set_fact:
+    latest_deb_url: "http://packages.linuxmint.com/pool/upstream/c/chromium/chromium_{{ latest_version }}~linuxmint1+wilma_amd64.deb"
+
+- name: Debug the latest .deb URL
+  debug:
+    var: latest_deb_url
+
+- name: Download the latest Chromium .deb package
+  get_url:
+    url: "{{ latest_deb_url }}"
+    dest: /tmp/chromium_latest.deb
+
+- name: Install the downloaded Chromium package
+  apt:
+    deb: /tmp/chromium_latest.deb
+
+- name: Remove the downloaded Chromium .deb package
+  file:
+    path: /tmp/chromium_latest.deb
+    state: absent

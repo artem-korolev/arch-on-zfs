@@ -1,0 +1,2 @@
+- name: Install/Update Chromium from Linux Mint repository
+  include_tasks: chromium.yml
