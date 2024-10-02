@@ -25,6 +25,7 @@
       - libssl-dev
       - htop
       - apt-transport-https
+      - synaptic
     state: present
 
 - name: Install proprietary codecs and fonts
