@@ -38,5 +38,14 @@
       - libdvd-pkg
     state: present
 
-- name: Reconfigure libdvd-pkg
+- name: Pre-configure libdvd-pkg for non-interactive installation
+  debconf:
+    name: libdvd-pkg
+    question: libdvd-pkg/build
+    value: true
+    vtype: boolean
+
+- name: Reconfigure libdvd-pkg non-interactively
+  environment:
+    DEBIAN_FRONTEND: noninteractive
   command: dpkg-reconfigure libdvd-pkg
