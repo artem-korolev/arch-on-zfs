@@ -1,0 +1,1 @@
+- include_tasks: ansible-lint.yml

@@ -1,0 +1,12 @@
+[Unit]
+Description=Shutdown on Critical Battery
+After=upower.service
+
+[Service]
+ExecStart=/usr/local/bin/shutdown-on-critical-battery.sh
+StandardOutput=journal
+StandardError=journal
+Type=simple
+
+[Install]
+WantedBy=multi-user.target

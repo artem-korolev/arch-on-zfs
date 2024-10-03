@@ -3,6 +3,7 @@
   become: true
   gather_facts: true
   roles:
+    - ansible-lint
     - bazel
     - brave
     - docker

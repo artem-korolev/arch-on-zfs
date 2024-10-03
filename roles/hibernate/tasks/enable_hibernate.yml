@@ -1,3 +1,7 @@
+# TODO: commented part works great. But the problem is that I didn't
+# find a way to use hibernate in Ubuntu 24.04 without hardware support from
+# ACPI yet.
+
 - name: Find encrypted swap partition UUID
   command: lsblk -f -o NAME,UUID,MOUNTPOINTS
   register: lsblk_output
@@ -49,8 +53,8 @@
 - name: Update initramfs
   command: update-initramfs -u
 
-- name: Check ACPI support for S4 (Hibernate)
-  shell: dmesg | grep -i acpi | grep -i sleep
+- name: Check ACPI support for power modes
+  shell: dmesg | grep -i acpi | grep -i "supports s"
   register: acpi_sleep_state
   changed_when: false
   ignore_errors: true # In case no ACPI sleep states are found, don't fail
@@ -59,10 +63,10 @@
   debug:
     msg: "{{ acpi_sleep_state.stdout }}"
 
-- name: Include tasks for systems without ACPI S4 support
-  include_tasks: without_acpi_s4.yml
-  when: "'S4' not in acpi_sleep_state.stdout"
+# - name: Include tasks for systems without ACPI S4 support
+#   include_tasks: without_acpi_s4.yml
+#   when: "'S4' not in acpi_sleep_state.stdout"
 
-- name: Include tasks for systems with ACPI S4 support
-  include_tasks: with_acpi_s4.yml
-  when: "'S4' in acpi_sleep_state.stdout"
+# - name: Include tasks for systems with ACPI S4 support
+#   include_tasks: with_acpi_s4.yml
+#   when: "'S4' in acpi_sleep_state.stdout"

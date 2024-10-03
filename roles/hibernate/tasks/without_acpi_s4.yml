@@ -1,22 +1,45 @@
-- name: Install uswsusp for software-based hibernate
-  apt:
-    name: uswsusp
+- name: Install upower
+  ansible.builtin.apt:
+    name: upower
     state: present
 
-- name: Configure uswsusp to handle hibernation
-  copy:
-    dest: /etc/uswsusp.conf
-    content: |
-      # Configuration file for s2disk, a part of uswsusp
-      snapshot device = /dev/snapshot
-      resume device = /dev/disk/by-uuid/{{ swap_uuid }}  # Assuming swap_uuid is set elsewhere in the playbook
-      compress = y
-      early writeout = y
-      image size = 2000000000
-      shutdown method = platform
+- name: Copy the shutdown-on-critical-battery script
+  ansible.builtin.template:
+    src: shutdown-on-critical-battery.sh.j2
+    dest: /usr/local/bin/shutdown-on-critical-battery.sh
+    mode: "0755"
     owner: root
     group: root
+
+- name: Copy the systemd service for shutdown-on-critical-battery
+  ansible.builtin.template:
+    src: shutdown-on-critical-battery.service.j2
+    dest: /etc/systemd/system/shutdown-on-critical-battery.service
     mode: "0644"
-# - name: Test software-based hibernate (s2disk)
-#   command: s2disk
-#   ignore_errors: true
+    owner: root
+    group: root
+  notify:
+    - Reload systemd
+
+- name: Copy the systemd timer for periodic execution
+  ansible.builtin.template:
+    src: shutdown-on-critical-battery.timer.j2
+    dest: /etc/systemd/system/shutdown-on-critical-battery.timer
+    mode: "0644"
+    owner: root
+    group: root
+  notify:
+    - Reload systemd
+    - Restart shutdown-on-critical-battery timer
+
+- name: Enable and start the shutdown-on-critical-battery timer
+  ansible.builtin.systemd:
+    name: shutdown-on-critical-battery.timer
+    enabled: yes
+    state: started
+
+- name: Ensure upower service is started and enabled
+  ansible.builtin.systemd:
+    name: upower
+    enabled: yes
+    state: started

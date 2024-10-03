@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Check battery status using upower
+battery_status=$(upower -i $(upower -e | grep BAT) | grep state | awk '{print $2}')
+battery_percentage=$(upower -i $(upower -e | grep BAT) | grep percentage | awk '{print $2}' | sed 's/%//')
+
+# Get current date and time
+current_time=$(date +"%Y-%m-%d %H:%M:%S")
+
+# If the battery is below 5% and discharging or in critical state, shut down
+if [ "$battery_status" == "discharging" ] && [ "$battery_percentage" -le 5 ]; then
+    echo "Critical battery level reached ($battery_percentage%). Shutting down."
+    systemctl poweroff
+fi

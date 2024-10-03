@@ -1,0 +1,10 @@
+[Unit]
+Description=Run shutdown-on-critical-battery every 10 seconds
+
+[Timer]
+OnBootSec=0s
+OnUnitActiveSec=10s
+AccuracySec=1s  # Reduce the allowed delay
+
+[Install]
+WantedBy=timers.target

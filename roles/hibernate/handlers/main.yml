@@ -1,0 +1,8 @@
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Restart shutdown-on-critical-battery timer
+  ansible.builtin.systemd:
+    name: shutdown-on-critical-battery.timer
+    state: restarted
