@@ -1,6 +1,6 @@
-- name: Setup Hibernate
+- name: Configure Power Management
   hosts: localhost
   become: true
   gather_facts: true
   roles:
-    - hibernate
+    - power-management

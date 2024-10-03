@@ -1,0 +1,21 @@
+- name: Ensure UPower is installed
+  ansible.builtin.apt:
+    name: upower
+    state: present
+
+- name: Configure UPower to hibernate on critical battery level
+  ansible.builtin.template:
+    src: upower.conf.j2
+    dest: /etc/UPower/UPower.conf
+    mode: "0644"
+
+- name: Restart UPower service
+  ansible.builtin.systemd:
+    name: upower
+    state: restarted
+
+- name: Ensure UPower is enabled on startup
+  ansible.builtin.systemd:
+    name: upower
+    enabled: true
+    state: started

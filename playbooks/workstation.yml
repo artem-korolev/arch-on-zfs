@@ -3,6 +3,11 @@
   become: true
   gather_facts: true
 
-- import_playbook: workstation_users.yml
-- import_playbook: workstation_system.yml
-- import_playbook: workstation_software.yml
+- name: Configure Power Management
+  import_playbook: configure_power_management.yml
+- name: Setup Users
+  import_playbook: workstation_users.yml
+- name: Install System Software
+  import_playbook: workstation_system.yml
+- name: Install Software Packages
+  import_playbook: workstation_software.yml
