@@ -1,5 +1,6 @@
+---
 - name: Install OpenJDK
-  apt:
+  ansible.builtin.apt:
     name:
       - openjdk-{{ item }}-jdk
     state: present

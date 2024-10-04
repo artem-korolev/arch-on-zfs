@@ -1,15 +1,16 @@
+---
 - name: Ensure ZFS is installed
-  apt:
+  ansible.builtin.apt:
     name: zfsutils-linux
     state: present
 
 - name: Create users with ZFS datasets
-  include_tasks: create_user.yml
+  ansible.builtin.include_tasks: create_user.yml
   loop: "{{ users }}"
 
 - name: Add users in the sudo group
-  user:
+  ansible.builtin.user:
     name: "{{ item }}"
     groups: sudo
-    append: yes
+    append: true
   loop: "{{ sudo_users }}"

@@ -1,36 +1,39 @@
-- name: Check if user {{ item }} exists
-  command: id {{ item }}
+---
+- name: Check if user exists {{ item }}
+  ansible.builtin.command: id {{ item }}
   register: user_exists
   ignore_errors: true
+  changed_when: true
 
 - name: Ensure ZFS dataset and user setup for {{ item }}
+  when: user_exists.rc != 0
   block:
     - name: Create ZFS dataset for user {{ item }}
-      command: zfs create rpool/USERDATA/home_{{ item }}
+      ansible.builtin.command: zfs create rpool/USERDATA/home_{{ item }}
+      changed_when: true
 
     - name: Set ZFS mountpoint for user {{ item }}
-      command: zfs set mountpoint=/home/{{ item }} rpool/USERDATA/home_{{ item }}
+      ansible.builtin.command: zfs set mountpoint=/home/{{ item }} rpool/USERDATA/home_{{ item }}
+      changed_when: true
 
     - name: Create user {{ item }}
-      user:
+      ansible.builtin.user:
         name: "{{ item }}"
         groups: "{{ regular_user_groups }}"
         shell: /bin/bash
         create_home: true
 
     - name: Set ownership and permissions for /home/{{ item }}
-      file:
-        path: "/home/{{ item }}"
+      ansible.builtin.file:
+        path: /home/{{ item }}
         owner: "{{ item }}"
         group: "{{ item }}"
         mode: "0700"
-
-  when: user_exists.rc != 0
   rescue:
     - name: Handle failure by logging
-      debug:
-        msg: "Failed to fully process {{ item }} user successfully"
+      ansible.builtin.debug:
+        msg: Failed to fully process {{ item }} user successfully
   always:
     - name: Ensure task cleanup is done
-      debug:
-        msg: "Task execution complete for {{ item }}."
+      ansible.builtin.debug:
+        msg: Task execution complete for {{ item }}.

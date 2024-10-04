@@ -1,1 +1,3 @@
-- include_tasks: cmake.yml
+---
+- name: CMake
+  ansible.builtin.include_tasks: cmake.yml

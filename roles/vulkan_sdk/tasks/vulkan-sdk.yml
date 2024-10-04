@@ -1,25 +1,26 @@
+---
 - name: Add LunarG repository key
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://packages.lunarg.com/lunarg-signing-key-pub.asc
     keyring: /etc/apt/keyrings/lunarg-archive-keyring.gpg
     state: present
 
 - name: Add Vulkan binary repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb [signed-by=/etc/apt/keyrings/lunarg-archive-keyring.gpg] https://packages.lunarg.com/vulkan {{ ansible_facts.distribution_release }} main
     state: present
 
 - name: Add Vulkan source repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb-src [signed-by=/etc/apt/keyrings/lunarg-archive-keyring.gpg] https://packages.lunarg.com/vulkan {{ ansible_facts.distribution_release }} main
     state: present
 
 - name: Update apt cache
-  apt:
-    update_cache: yes
+  ansible.builtin.apt:
+    update_cache: true
 
 - name: Install Vulkan SDK, GLFW window library and demos
-  apt:
+  ansible.builtin.apt:
     name:
       - vulkan-sdk
       - vkd3d-demos

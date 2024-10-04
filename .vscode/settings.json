@@ -17,6 +17,7 @@
     "dpkg",
     "gstreamer",
     "journalctl",
+    "keyrings",
     "libdvd",
     "lineinfile",
     "lockdown",

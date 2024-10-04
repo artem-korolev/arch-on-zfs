@@ -1,6 +1,7 @@
+---
 - name: Configure Power Management
   hosts: localhost
   become: true
   gather_facts: true
   roles:
-    - power-management
+    - power_management

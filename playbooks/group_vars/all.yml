@@ -1,3 +1,4 @@
+---
 users:
   - artem
   - crypto
@@ -5,7 +6,6 @@ users:
 regular_user_groups: cdrom,dip,plugdev,lpadmin,audio,plugdev,users
 
 sudo_users: []
-
 docker_users:
   - artem
 

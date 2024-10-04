@@ -1,0 +1,3 @@
+---
+- name: Vulkan SDK and tools
+  ansible.builtin.include_tasks: vulkan-sdk.yml

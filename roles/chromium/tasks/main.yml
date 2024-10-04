@@ -1,2 +1,3 @@
+---
 - name: Install/Update Chromium from Linux Mint repository
-  include_tasks: chromium.yml
+  ansible.builtin.include_tasks: chromium.yml

@@ -1,31 +1,32 @@
+---
 - name: (Cleanup after Ubuntu install) Remove dvd.list file from /etc/apt/sources.list.d
-  file:
+  ansible.builtin.file:
     path: /etc/apt/sources.list.d/dvd.list
     state: absent
 
 - name: (Cleanup after Ubuntu install) Remove ubuntu.sources.curtin.orig file from /etc/apt/sources.list.d
-  file:
+  ansible.builtin.file:
     path: /etc/apt/sources.list.d/ubuntu.sources.curtin.orig
     state: absent
 
 - name: Add multiverse repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb http://archive.ubuntu.com/ubuntu {{ ansible_facts.distribution_release }} multiverse
     state: present
 
 - name: Update apt cache
-  apt:
-    update_cache: yes
+  ansible.builtin.apt:
+    update_cache: true
 
 - name: Install basic utilities
-  apt:
+  ansible.builtin.apt:
     name:
       - curl
       - wget
     state: present
 
 - name: Install system software packages
-  apt:
+  ansible.builtin.apt:
     name:
       - nvidia-prime
       - build-essential
@@ -39,7 +40,7 @@
     state: present
 
 - name: Install proprietary codecs and fonts
-  apt:
+  ansible.builtin.apt:
     name:
       - ubuntu-restricted-extras
       - gstreamer1.0-libav
@@ -49,13 +50,14 @@
     state: present
 
 - name: Pre-configure libdvd-pkg for non-interactive installation
-  debconf:
+  ansible.builtin.debconf:
     name: libdvd-pkg
     question: libdvd-pkg/build
     value: true
     vtype: boolean
 
 - name: Reconfigure libdvd-pkg non-interactively
+  ansible.builtin.command: dpkg-reconfigure libdvd-pkg
   environment:
     DEBIAN_FRONTEND: noninteractive
-  command: dpkg-reconfigure libdvd-pkg
+  changed_when: true

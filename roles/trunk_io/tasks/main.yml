@@ -1,0 +1,3 @@
+---
+- name: Trunk.io
+  ansible.builtin.include_tasks: trunk.io.yml

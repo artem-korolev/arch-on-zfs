@@ -1,17 +1,18 @@
+---
 - name: Workstation Software Installation
   hosts: localhost
   become: true
   gather_facts: true
   roles:
-    - ansible-lint
+    - ansible_lint
     - bazel
     - brave
     - docker
     - llvm
     - sublime
-    - trunk.io
+    - trunk_io
     - vscode
-    - vulkan-sdk
+    - vulkan_sdk
     - awscli
     - jdk
     - cmake

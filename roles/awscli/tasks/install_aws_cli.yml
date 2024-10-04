@@ -1,21 +1,23 @@
+---
 # install_aws_cli.yml
 - name: Cleanup installation files (for security reasons)
-  include_tasks: cleanup.yml
+  ansible.builtin.include_tasks: cleanup.yml
 
 - name: Download AWS CLI installer
-  get_url:
+  ansible.builtin.get_url:
     url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
     dest: "{{ aws_cli_zip_path }}"
     mode: "0644"
 
 - name: Unzip AWS CLI installer
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ aws_cli_zip_path }}"
     dest: /tmp
-    remote_src: yes
+    remote_src: true
 
 - name: Install AWS CLI
-  command: "{{ aws_cli_extract_path }}/install"
+  ansible.builtin.command: "{{ aws_cli_extract_path }}/install"
+  changed_when: true # Explicitly mark this task as changed
 
 - name: Cleanup installation files
-  include_tasks: cleanup.yml
+  ansible.builtin.include_tasks: cleanup.yml

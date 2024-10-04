@@ -1,3 +1,4 @@
+---
 - name: Workstation Initialization
   hosts: localhost
   become: true

@@ -1,2 +1,3 @@
+---
 - name: Install/Update AWS CLI tools
-  include_tasks: awscli.yml
+  ansible.builtin.include_tasks: awscli.yml

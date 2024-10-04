@@ -1,2 +1,3 @@
+---
 - name: Enable Hibernate on experimental ZFS with encryption systems
   ansible.builtin.include_tasks: configure_upower.yml

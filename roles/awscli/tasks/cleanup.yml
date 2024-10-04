@@ -1,9 +1,10 @@
+---
 - name: Remove AWS CLI installer and source files
-  file:
+  ansible.builtin.file:
     path: "{{ aws_cli_zip_path }}"
     state: absent
 
 - name: Remove unzipped installer directory
-  file:
+  ansible.builtin.file:
     path: "{{ aws_cli_extract_path }}"
     state: absent

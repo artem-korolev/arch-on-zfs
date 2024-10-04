@@ -1,3 +1,4 @@
+---
 - name: Ensure UPower is installed
   ansible.builtin.apt:
     name: upower
