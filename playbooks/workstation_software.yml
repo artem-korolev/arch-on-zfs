@@ -18,3 +18,4 @@
     - cmake
     - chromium
     - qemu
+    - virtualbox

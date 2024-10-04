@@ -1,0 +1,10 @@
+---
+- name: Update apt package index
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Install VirtualBox
+  ansible.builtin.apt:
+    name:
+      - virtualbox
+    state: present

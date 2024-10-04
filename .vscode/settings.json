@@ -35,6 +35,7 @@
     "uuid",
     "venv",
     "virt",
+    "virtualbox",
     "vtype",
     "vulkan",
     "writeout"
