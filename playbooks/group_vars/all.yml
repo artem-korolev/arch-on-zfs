@@ -8,6 +8,8 @@ regular_user_groups: cdrom,dip,plugdev,lpadmin,audio,plugdev,users
 sudo_users: []
 docker_users:
   - artem
+qemu_users:
+  - artem
 
 # NOTE: please monitor and keep it up to date with latest version available
 # through LLVM official repository - https://apt.llvm.org/, considering of

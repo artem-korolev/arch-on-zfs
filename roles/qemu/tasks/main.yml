@@ -1,0 +1,3 @@
+---
+- name: QEMU/KVM with virt-manager
+  ansible.builtin.include_tasks: qemu.yml
