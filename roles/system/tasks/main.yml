@@ -1,3 +1,13 @@
+- name: (Cleanup after Ubuntu install) Remove dvd.list file from /etc/apt/sources.list.d
+  file:
+    path: /etc/apt/sources.list.d/dvd.list
+    state: absent
+
+- name: (Cleanup after Ubuntu install) Remove ubuntu.sources.curtin.orig file from /etc/apt/sources.list.d
+  file:
+    path: /etc/apt/sources.list.d/ubuntu.sources.curtin.orig
+    state: absent
+
 - name: Add multiverse repository
   apt_repository:
     repo: deb http://archive.ubuntu.com/ubuntu {{ ansible_facts.distribution_release }} multiverse
