@@ -25,11 +25,11 @@
     dest: /etc/systemd/system/hibernate-configure.service
     mode: "0644"
 
-- name: Enable and start hibernate configuration service
+- name: Enable, but do not start hibernate configuration service
   ansible.builtin.systemd:
     name: hibernate-configure.service
     enabled: true
-    state: started
+    state: stopped
 
 - name: Reboot the system using systemctl
   ansible.builtin.command: systemctl reboot
