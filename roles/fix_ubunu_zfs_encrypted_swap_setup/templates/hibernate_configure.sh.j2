@@ -5,13 +5,17 @@ set -e
 swap_uuid=$(lsblk -f -o UUID,MOUNTPOINTS | grep '[SWAP]' | awk '{print $1}')
 
 # Check if UUID is already configured in GRUB and resume file
-if grep -q "$swap_uuid" /etc/default/grub && grep -q "$swap_uuid" /etc/initramfs-tools/conf.d/resume; then
+if grep -q "$swap_uuid" /etc/default/grub && [ -f /etc/initramfs-tools/conf.d/resume ] && grep -q "$swap_uuid" /etc/initramfs-tools/conf.d/resume; then
     echo "Hibernate is already configured. No action on it."
     exit 0
 fi
 
 # Update GRUB with resume parameter
-sed -i "s|^GRUB_CMDLINE_LINUX_DEFAULT=.*|GRUB_CMDLINE_LINUX_DEFAULT=\"quiet splash resume=UUID=$swap_uuid\"|" /etc/default/grub
+sed -i "s|^GRUB_CMDLINE_LINUX_DEFAULT=.*|GRUB_CMDLINE_LINUX_DEFAULT=\"quiet splash resume=UUID=$swap_uuid\"|" /etc/default/grub || {
+    echo "Failed to update GRUB configuration"
+    exit 1
+}
+# Update GRUB
 update-grub
 
 # Update initramfs resume configuration
@@ -21,3 +25,4 @@ update-initramfs -u
 echo "Hibernate is configured now. Let's reboot the system to apply configurations"
 # Reboot the system
 reboot
+
