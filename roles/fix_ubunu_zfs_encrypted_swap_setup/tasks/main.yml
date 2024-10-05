@@ -39,9 +39,12 @@
   block:
     - name: Include hibernate configuration tasks
       ansible.builtin.include_tasks: enable_hibernate.yml
-  rescue:
-    - name: Handle failure during swap reconfiguration
+    - name: Manual reboot required
       ansible.builtin.debug:
         msg: >
           If you run this task second time, then no need to do anything,
           otherwise reboot system manually to get Hibernate configured
+  rescue:
+    - name: Handle failure during Hibernate reconfiguration
+      ansible.builtin.debug:
+        msg: Hibernate configuration failed
