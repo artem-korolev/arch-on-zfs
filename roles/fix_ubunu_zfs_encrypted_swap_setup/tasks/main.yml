@@ -32,9 +32,13 @@
       ansible.builtin.include_tasks: configure_swap.yml
     - name: Include hibernate configuration tasks
       ansible.builtin.include_tasks: enable_hibernate.yml
-    - name: Reboot the system
-      ansible.builtin.reboot:
-        msg: Rebooting to apply new swap and hibernate configuration
+    - name: Reboot the system using systemd
+      ansible.builtin.systemd:
+        name: reboot
+        state: restarted
+        daemon_reload: true
+      async: 1
+      poll: 0
   rescue:
     - name: Handle failure during swap reconfiguration
       ansible.builtin.debug:

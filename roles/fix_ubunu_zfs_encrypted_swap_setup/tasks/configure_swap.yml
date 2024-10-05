@@ -10,7 +10,3 @@
 - name: Regenerate initramfs
   ansible.builtin.command: update-initramfs -u
   changed_when: true
-
-- name: Reboot the system to apply changes
-  ansible.builtin.reboot:
-    msg: Rebooting to apply new swap encryption configuration
