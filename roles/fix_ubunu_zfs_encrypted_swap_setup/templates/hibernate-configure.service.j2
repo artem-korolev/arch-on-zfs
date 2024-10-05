@@ -1,0 +1,11 @@
+[Unit]
+Description=Hibernate Configuration Service
+After=swap.target
+
+[Service]
+Type=oneshot
+ExecStart=/root/hibernate_configure.sh
+RemainAfterExit=false
+
+[Install]
+WantedBy=multi-user.target
