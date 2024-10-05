@@ -1,0 +1,39 @@
+---
+- name: Generate key file for swap encryption
+  ansible.builtin.command: dd if=/dev/urandom of=/root/swap_keyfile bs=512 count=4
+  args:
+    creates: /root/swap_keyfile
+
+- name: Set permissions on the key file
+  ansible.builtin.file:
+    path: /root/swap_keyfile
+    mode: "0600"
+    owner: root
+    group: root
+
+- name: Extract UUID from current crypttab configuration
+  ansible.builtin.shell: |
+    set -o pipefail
+    grep -m 1 -E 'swap.*urandom|urandom.*swap' /etc/crypttab | awk '{print $2}'
+  register: crypttab_uuid
+  changed_when: true
+
+- name: Check if UUID was found and proceed if valid
+  ansible.builtin.debug:
+    msg: "UUID found: {{ crypttab_uuid.stdout }}"
+  when: crypttab_uuid.stdout != ""
+
+- name: Proceed with swap and hibernate configuration
+  when: crypttab_uuid.stdout != ""
+  block:
+    - name: Include swap reconfiguration tasks
+      ansible.builtin.include_tasks: configure_swap.yml
+    - name: Include hibernate configuration tasks
+      ansible.builtin.include_tasks: enable_hibernate.yml
+    - name: Reboot the system
+      ansible.builtin.reboot:
+        msg: Rebooting to apply new swap and hibernate configuration
+  rescue:
+    - name: Handle failure during swap reconfiguration
+      ansible.builtin.debug:
+        msg: Swap reconfiguration / enabling hibernate failed

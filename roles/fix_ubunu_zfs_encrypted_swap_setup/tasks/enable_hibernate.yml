@@ -1,0 +1,50 @@
+---
+- name: Find encrypted swap partition UUID
+  ansible.builtin.command: lsblk -f -o UUID,MOUNTPOINTS
+  register: lsblk_output
+  changed_when: true
+
+- name: Debug lsblk output
+  ansible.builtin.debug:
+    msg: "{{ lsblk_output.stdout_lines }}"
+
+- name: Set swap UUID variable to none (initially)
+  ansible.builtin.set_fact:
+    swap_uuid:
+- name: Process lsblk output and extract swap UUID using regex
+  ansible.builtin.set_fact:
+    swap_uuid: "{{ item | regex_search('([a-f0-9-]{36})') }}"
+  loop: "{{ lsblk_output.stdout_lines }}"
+  when: "'[SWAP]' in item"
+  vars:
+    swap_uuid:
+  until: swap_uuid is not none
+
+- name: Debug swap UUID
+  ansible.builtin.debug:
+    msg: "{{ swap_uuid }}"
+
+- name: Update GRUB with resume parameter
+  ansible.builtin.lineinfile:
+    path: /etc/default/grub
+    regexp: ^GRUB_CMDLINE_LINUX_DEFAULT=
+    line: GRUB_CMDLINE_LINUX_DEFAULT="quiet splash resume=UUID={{ swap_uuid }}"
+    backup: true
+
+- name: Update initramfs resume configuration
+  ansible.builtin.copy:
+    dest: /etc/initramfs-tools/conf.d/resume
+    content: |
+      RESUME=UUID={{ swap_uuid }}
+    owner: root
+    group: root
+    mode: "0644"
+  changed_when: true
+
+- name: Update GRUB
+  ansible.builtin.command: update-grub
+  changed_when: true
+
+- name: Update initramfs
+  ansible.builtin.command: update-initramfs -u
+  changed_when: true
