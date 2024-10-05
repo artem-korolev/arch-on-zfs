@@ -7,6 +7,7 @@
     executable: /bin/bash
   register: crypttab_uuid
   changed_when: true
+  ignore_errors: true
 
 - name: Check if UUID was found and proceed if valid
   ansible.builtin.debug:
@@ -32,3 +33,15 @@
     - name: Handle failure during swap reconfiguration
       ansible.builtin.debug:
         msg: Swap reconfiguration / enabling hibernate failed
+
+- name: Swap is not using urandom, so no need to configure it, but maybe Hibernate is not configured yet
+  when: crypttab_uuid.stdout == ""
+  block:
+    - name: Include hibernate configuration tasks
+      ansible.builtin.include_tasks: enable_hibernate.yml
+  rescue:
+    - name: Handle failure during swap reconfiguration
+      ansible.builtin.debug:
+        msg: >
+          If you run this task second time, then no need to do anything,
+          otherwise reboot system manually to get Hibernate configured
