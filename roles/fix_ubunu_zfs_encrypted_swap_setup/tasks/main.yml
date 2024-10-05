@@ -1,16 +1,4 @@
 ---
-- name: Generate key file for swap encryption
-  ansible.builtin.command: dd if=/dev/urandom of=/root/swap_keyfile bs=512 count=4
-  args:
-    creates: /root/swap_keyfile
-
-- name: Set permissions on the key file
-  ansible.builtin.file:
-    path: /root/swap_keyfile
-    mode: "0600"
-    owner: root
-    group: root
-
 - name: Extract UUID from current crypttab configuration
   ansible.builtin.shell: |
     set -o pipefail
