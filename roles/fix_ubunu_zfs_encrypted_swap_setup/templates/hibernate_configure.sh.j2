@@ -18,5 +18,6 @@ update-grub
 echo "RESUME=UUID=$swap_uuid" > /etc/initramfs-tools/conf.d/resume
 update-initramfs -u
 
+echo "Hibernate is configured now. Let's reboot the system to apply configurations"
 # Reboot the system
 reboot
