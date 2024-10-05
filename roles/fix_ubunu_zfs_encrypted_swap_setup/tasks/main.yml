@@ -30,15 +30,16 @@
   block:
     - name: Include swap reconfiguration tasks
       ansible.builtin.include_tasks: configure_swap.yml
+
     - name: Include hibernate configuration tasks
       ansible.builtin.include_tasks: enable_hibernate.yml
-    - name: Reboot the system using systemd
-      ansible.builtin.systemd:
-        name: reboot
-        state: restarted
-        daemon_reload: true
+
+    - name: Reboot the system using systemctl
+      ansible.builtin.command: systemctl reboot
       async: 1
       poll: 0
+      changed_when: true
+      # noqa: command-instead-of-module
   rescue:
     - name: Handle failure during swap reconfiguration
       ansible.builtin.debug:
