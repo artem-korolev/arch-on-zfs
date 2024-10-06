@@ -62,5 +62,7 @@
     state: stopped
 
 - name: Reboot machine
-  ansible.builtin.reboot:
-    msg: Rebooting machine in 5 seconds
+  ansible.builtin.command: /sbin/reboot
+  async: 1
+  poll: 0
+  changed_when: true
