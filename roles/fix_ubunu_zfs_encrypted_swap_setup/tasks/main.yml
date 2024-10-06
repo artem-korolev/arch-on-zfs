@@ -3,6 +3,8 @@
   ansible.builtin.shell: |
     set -o pipefail
     grep -m 1 -E 'swap.*urandom|urandom.*swap' /etc/crypttab | awk '{print $2}' | sed 's/PARTUUID=//'
+  args:
+    executable: /bin/bash
   register: swap_partuuid
   changed_when: false
 
@@ -10,6 +12,8 @@
   ansible.builtin.shell: |
     set -o pipefail
     grep -m 1 -E 'swap.*urandom|urandom.*swap' /etc/crypttab | awk '{print $1}'
+  args:
+    executable: /bin/bash
   register: crypttab_mapping
   changed_when: false
 
@@ -17,6 +21,8 @@
   ansible.builtin.shell: |
     set -o pipefail
     grep -m 1 'swap' /etc/fstab | awk '{print $1}'
+  args:
+    executable: /bin/bash
   register: swap_device
   changed_when: false
 
