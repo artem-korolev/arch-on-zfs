@@ -1,20 +1,86 @@
 #!/usr/bin/env bash
-set -e
+
+# Extract PARTUUID from /etc/crypttab
+swap_partuuid=$(grep -m 1 -E 'swap.*urandom|urandom.*swap' /etc/crypttab | awk '{print $2}' | sed 's/PARTUUID=//')
+crypttab_mapping=$(grep -m 1 -E 'swap.*urandom|urandom.*swap' /etc/crypttab | awk '{print $1}')
+
+# Extract current swap device from /etc/fstab
+swap_device=$(grep -m 1 'swap' /etc/fstab | awk '{print $1}')
+
+# Proceed only if both swap_partuuid and swap_device are found
+if [[ -n "$swap_partuuid" && -n "$swap_device" ]]; then
+
+    echo "PARTUUID: $swap_partuuid"
+    echo "Swap Device: $swap_device"
+
+    # Disable the current swap
+    echo "Disabling current swap..."
+    swapoff "$swap_device"
+
+    # Remove the old cryptsetup mapping
+    echo "Removing old cryptsetup mapping..."
+    cryptsetup remove "${crypttab_mapping}"
+
+    # Encrypt the swap partition using LUKS
+    echo "Encrypting swap partition with LUKS..."
+    cryptsetup luksFormat "/dev/disk/by-partuuid/$swap_partuuid"
+
+    # Open the LUKS-encrypted partition
+    echo "Opening LUKS-encrypted partition..."
+    cryptsetup open "/dev/disk/by-partuuid/$swap_partuuid" cryptswap
+
+    # Set up the swap
+    echo "Setting up swap on the encrypted partition..."
+    mkswap /dev/mapper/cryptswap
+    swapon /dev/mapper/cryptswap
+
+    # Update /etc/crypttab
+    echo "Updating /etc/crypttab..."
+    sed -i.bak -E "s|^.*(swap.*urandom\|urandom.*swap).*\$|cryptswap PARTUUID=$swap_partuuid none luks,swap|" /etc/crypttab
+
+    # Update /etc/fstab
+    echo "Updating /etc/fstab..."
+    sed -i.bak "s|^.*swap.*\$|/dev/mapper/cryptswap none swap sw 0 0|" /etc/fstab
+
+    echo "Swap is configured. Press [ENTER] to reboot"
+    read
+    systemctl reboot
+    exit 0
+else
+    if [[ -z "$swap_partuuid" ]]; then
+        echo "Swap is not using random. Its is already configured most probably."
+    else
+        echo "Error: Swap is random, but unable to parse swap device in /etc/fstab. You must review this script and adjust it to your system"
+        systemctl disable hibernate-configure
+        read
+        systemctl reboot
+        exit 1
+    fi
+fi
+
+
+
 
 # Extract swap UUID
 swap_uuid=$(lsblk -f -o UUID,MOUNTPOINTS | awk '/\[SWAP\]/ {print $1}')
 
 # Check if UUID is already configured in GRUB and resume file
 if grep -q "$swap_uuid" /etc/default/grub && [ -f /etc/initramfs-tools/conf.d/resume ] && grep -q "$swap_uuid" /etc/initramfs-tools/conf.d/resume; then
-    echo "Hibernate is already configured. No action on it."
-    exit 0
+    echo "Hibernate is already configured. No action on it. Press [ENTER] to reboot"
+    systemctl disable hibernate-configure
+    read
+    systemctl reboot
+    exit 1
 fi
 
 # Update GRUB with resume parameter safely
 current_cmdline=$(grep "^GRUB_CMDLINE_LINUX_DEFAULT=" /etc/default/grub | cut -d'"' -f2)
-new_cmdline="$current_cmdline resume=UUID=$swap_uuid"
-sed -i "s|^GRUB_CMDLINE_LINUX_DEFAULT=.*|GRUB_CMDLINE_LINUX_DEFAULT=\"$new_cmdline\"|" /etc/default/grub || {
-    echo "Failed to update GRUB configuration"
+new_cmdline="quiet splash resume=UUID=$swap_uuid"
+sed -i.bak "s|^GRUB_CMDLINE_LINUX_DEFAULT=.*|GRUB_CMDLINE_LINUX_DEFAULT=\"$new_cmdline\"|" /etc/default/grub || {
+    echo "Failed to update GRUB configuration. You must review this script and adjust it to your system. Press [ENTER] to reboot"
+    systemctl disable hibernate-configure
+    read
+    systemctl reboot
     exit 1
 }
 # Update GRUB
@@ -24,6 +90,9 @@ update-grub
 echo "RESUME=UUID=$swap_uuid" > /etc/initramfs-tools/conf.d/resume
 update-initramfs -u
 
-echo "Hibernate is configured now. Let's reboot the system to apply configurations"
+echo "Hibernate is configured now. Let's reboot the system to apply configurations. Press [ENTER]"
+
 # Reboot the system
-reboot
+systemctl disable hibernate-configure
+read
+systemctl reboot

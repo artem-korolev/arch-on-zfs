@@ -1,18 +1,4 @@
 ---
-- name: Extract UUID from current crypttab configuration
-  ansible.builtin.shell: |
-    set -o pipefail
-    grep -m 1 -E 'swap.*urandom|urandom.*swap' /etc/crypttab | awk '{print $2}'
-  args:
-    executable: /bin/bash
-  register: crypttab_uuid
-  changed_when: true
-  ignore_errors: true
-
-- name: Include swap reconfiguration tasks if swap is using urandom
-  when: crypttab_uuid.stdout != ""
-  ansible.builtin.include_tasks: configure_swap.yml
-
 - name: Create hibernate configuration script from template
   ansible.builtin.template:
     src: hibernate_configure.sh.j2
@@ -25,18 +11,8 @@
     dest: /etc/systemd/system/hibernate-configure.service
     mode: "0644"
 
-- name: Enable, but do not start hibernate configuration service
+- name: Enable, and start hibernate configuration service
   ansible.builtin.systemd:
     name: hibernate-configure.service
     enabled: true
-    state: stopped
-
-- name: Reboot the system using systemctl
-  ansible.builtin.command: systemctl reboot
-  async: 1
-  poll: 0
-  changed_when: true
-  # noqa: command-instead-of-module
-
-- name: Exit playbook
-  ansible.builtin.meta: end_play
+    state: started
