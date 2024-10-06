@@ -1,0 +1,10 @@
+---
+- name: Install QDirStat
+  ansible.builtin.apt:
+    name: qdirstat
+    state: present
+
+- name: Install Filelight
+  ansible.builtin.apt:
+    name: filelight
+    state: present
