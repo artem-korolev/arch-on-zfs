@@ -55,7 +55,7 @@ behavior: wake up system from sleep mode, when battery is on critical level and
 immediately put machine into Hibernate mode.
 
 For all of that I creates a separate ansible playbook
-`playbooks/configure_power.yml`
+`playbooks/configure_power_management.yml`
 
 There are few notes, before you start running anything, it is better to
 ensure, that you will achieve expectable result. So start reading first.
@@ -104,7 +104,7 @@ enabled in the system, then just no worries and continue with setting it up.
 Now, when you know your system
 
 ```bash
-ansible-playbook playbooks/configure_power.yml
+ansible-playbook playbooks/configure_power_management.yml
 ```
 
 #### Shutdown on critical battery power with upower (when Hibernate is unavailable)
