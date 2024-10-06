@@ -1,7 +1,21 @@
 ---
-- name: Workstation Initialization
+- name: Fix for swap setup in Ubuntu 24.04 on ZFS with encryption
   hosts: localhost
   become: true
   gather_facts: true
+  vars_prompt:
+    - name: swap_pass
+      prompt: Enter the LUKS encryption password for the swap partition
+      private: true
+    - name: swap_pass_confirm
+      prompt: Confirm the LUKS encryption password
+      private: true
+
+  pre_tasks:
+    - name: Fail if the passwords do not match
+      ansible.builtin.fail:
+        msg: Passwords do not match. Please try again.
+      when: swap_pass != swap_pass_confirm
+
   roles:
     - fix_ubunu_zfs_encrypted_swap_setup

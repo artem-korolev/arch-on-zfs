@@ -1,0 +1,52 @@
+---
+- name: Disable the current swap
+  ansible.builtin.command: swapoff "{{ swap_device.stdout }}"
+  changed_when: true
+
+- name: Remove the old cryptsetup mapping
+  ansible.builtin.command: cryptsetup remove "{{ crypttab_mapping.stdout }}"
+  changed_when: true
+
+- name: Encrypt the swap partition using LUKS
+  ansible.builtin.command: cryptsetup luksFormat "/dev/disk/by-partuuid/{{ swap_partuuid.stdout }}" --key-file /dev/stdin
+  args:
+    stdin: "{{ swap_pass }}"
+  changed_when: true
+
+- name: Open the LUKS-encrypted partition
+  ansible.builtin.command: cryptsetup open "/dev/disk/by-partuuid/{{ swap_partuuid.stdout }}" cryptswap --key-file /dev/stdin
+  args:
+    stdin: "{{ swap_pass }}"
+  changed_when: true
+
+- name: Set up the swap on the encrypted partition
+  ansible.builtin.command: mkswap /dev/mapper/cryptswap
+  changed_when: true
+
+- name: Enable swap on the encrypted partition
+  ansible.builtin.command: swapon /dev/mapper/cryptswap
+  changed_when: true
+
+- name: Update /etc/crypttab
+  ansible.builtin.lineinfile:
+    path: /etc/crypttab
+    regexp: ^.*(swap.*urandom|urandom.*swap).*$
+    line: "cryptswap PARTUUID={{ swap_partuuid.stdout }} none luks,swap"
+    backrefs: true
+    backup: true
+
+- name: Update /etc/fstab
+  ansible.builtin.lineinfile:
+    path: /etc/fstab
+    regexp: ^.*swap.*$
+    line: /dev/mapper/cryptswap none swap sw 0 0
+    backrefs: true
+    backup: true
+
+- name: Regenerate initramfs and update GRUB
+  ansible.builtin.command: update-initramfs -u
+  changed_when: true
+
+- name: Update GRUB
+  ansible.builtin.command: update-grub
+  changed_when: true

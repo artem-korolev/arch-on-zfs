@@ -1,16 +1,11 @@
 [Unit]
 Description=Hibernate Configuration Service
-DefaultDependencies=no
-Before=rescue.target
+After=swap.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/systemctl rescue
-ExecStartPost=/root/hibernate_configure.sh
-RemainAfterExit=true
-StandardInput=tty
-StandardOutput=tty
-StandardError=tty
+ExecStart=/root/hibernate_configure.sh
+RemainAfterExit=false
 
 [Install]
 WantedBy=multi-user.target

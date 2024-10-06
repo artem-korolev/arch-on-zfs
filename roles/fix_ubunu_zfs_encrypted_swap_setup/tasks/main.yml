@@ -1,4 +1,38 @@
 ---
+- name: Extract PARTUUID from /etc/crypttab
+  ansible.builtin.shell: |
+    set -o pipefail
+    grep -m 1 -E 'swap.*urandom|urandom.*swap' /etc/crypttab | awk '{print $2}' | sed 's/PARTUUID=//'
+  register: swap_partuuid
+  changed_when: false
+
+- name: Extract crypttab mapping from /etc/crypttab
+  ansible.builtin.shell: |
+    set -o pipefail
+    grep -m 1 -E 'swap.*urandom|urandom.*swap' /etc/crypttab | awk '{print $1}'
+  register: crypttab_mapping
+  changed_when: false
+
+- name: Extract current swap device from /etc/fstab
+  ansible.builtin.shell: |
+    set -o pipefail
+    grep -m 1 'swap' /etc/fstab | awk '{print $1}'
+  register: swap_device
+  changed_when: false
+
+- name: Check if both swap_partuuid and swap_device are found
+  ansible.builtin.debug:
+    msg: "PARTUUID: {{ swap_partuuid.stdout }}, Swap Device: {{ swap_device.stdout }}"
+  when:
+    - swap_partuuid.stdout != ""
+    - swap_device.stdout != ""
+
+- name: Include setup_swap.yml if both swap_partuuid and swap_device are found
+  ansible.builtin.include_tasks: setup_swap.yml
+  when:
+    - swap_partuuid.stdout != ""
+    - swap_device.stdout != ""
+
 - name: Create hibernate configuration script from template
   ansible.builtin.template:
     src: hibernate_configure.sh.j2
@@ -11,8 +45,16 @@
     dest: /etc/systemd/system/hibernate-configure.service
     mode: "0644"
 
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+
 - name: Enable, and start hibernate configuration service
   ansible.builtin.systemd:
     name: hibernate-configure.service
     enabled: true
-    state: started
+    state: stopped
+
+- name: Reboot machine
+  ansible.builtin.reboot:
+    msg: Rebooting machine in 5 seconds
