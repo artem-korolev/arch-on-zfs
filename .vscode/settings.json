@@ -33,6 +33,7 @@
     "nvidia",
     "partuuid",
     "PARTUUID",
+    "pipefail",
     "poweroff",
     "rpool",
     "runtimes",
