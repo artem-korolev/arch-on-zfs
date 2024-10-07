@@ -20,3 +20,4 @@
     - qemu
     - virtualbox
     - disk_usage
+    - stress_tests

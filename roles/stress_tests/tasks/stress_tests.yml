@@ -1,0 +1,8 @@
+---
+- name: Install stress-ng
+  ansible.builtin.apt:
+    name: stress-ng
+    state: present
+  tags:
+    - stress_test_packages
+    - stress-ng

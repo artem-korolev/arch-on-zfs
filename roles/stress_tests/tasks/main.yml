@@ -1,0 +1,5 @@
+---
+- name: Install stress test packages
+  ansible.builtin.include_tasks: stress_tests.yml
+  tags:
+    - stress_test_packages
