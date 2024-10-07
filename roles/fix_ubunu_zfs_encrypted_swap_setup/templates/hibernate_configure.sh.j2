@@ -13,7 +13,7 @@ fi
 
 # Update GRUB with resume parameter safely
 current_cmdline=$(grep "^GRUB_CMDLINE_LINUX_DEFAULT=" /etc/default/grub | cut -d'"' -f2)
-new_cmdline="quiet splash resume=UUID=$swap_uuid"
+new_cmdline="quiet splash resume=UUID=$swap_uuid no_console_suspend"
 sed -i.bak "s|^GRUB_CMDLINE_LINUX_DEFAULT=.*|GRUB_CMDLINE_LINUX_DEFAULT=\"$new_cmdline\"|" /etc/default/grub || {
     echo "Failed to update GRUB configuration. You must review this script and adjust it to your system."
     systemctl disable hibernate-configure
