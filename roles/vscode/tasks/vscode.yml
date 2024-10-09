@@ -17,5 +17,6 @@
 - name: Install VSCode Insiders
   ansible.builtin.apt:
     name:
+      - code
       - code-insiders
     state: present
