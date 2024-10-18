@@ -13,7 +13,7 @@
     --key-file /dev/stdin --keyfile-size {{ swap_pass | length }}
   args:
     stdin: "{{ swap_pass }}"
-  no_log: true  # This will hide all logging for this task, including the password
+  no_log: true # This will hide all logging for this task, including the password
   changed_when: true
 
 - name: Open the LUKS-encrypted partition
@@ -22,7 +22,7 @@
     cryptswap --key-file /dev/stdin --keyfile-size {{ swap_pass | length }}
   args:
     stdin: "{{ swap_pass }}"
-  no_log: true  # This will hide all logging for this task, including the password
+  no_log: true # This will hide all logging for this task, including the password
   changed_when: true
 
 - name: Set up the swap on the encrypted partition
