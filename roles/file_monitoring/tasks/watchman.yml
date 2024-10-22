@@ -1,0 +1,8 @@
+---
+- name: Install watchman
+  ansible.builtin.apt:
+    name: watchman
+    state: present
+  tags:
+    - file_monitoring_packages
+    - watchman

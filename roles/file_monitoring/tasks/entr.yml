@@ -1,0 +1,8 @@
+---
+- name: Install entr
+  ansible.builtin.apt:
+    name: entr
+    state: present
+  tags:
+    - file_monitoring_packages
+    - entr

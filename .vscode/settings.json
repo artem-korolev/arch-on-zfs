@@ -19,6 +19,7 @@
     "crypttab",
     "debconf",
     "dpkg",
+    "entr",
     "filelight",
     "Filelight",
     "gstreamer",
