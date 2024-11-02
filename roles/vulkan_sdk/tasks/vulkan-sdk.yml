@@ -33,7 +33,6 @@
       - vulkan-sdk
       - vkd3d-demos
       - libglfw3-dev
-      - libglm-dev
     state: present
   tags:
     - vulkan_sdk
