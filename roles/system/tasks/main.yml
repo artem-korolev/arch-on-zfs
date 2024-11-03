@@ -61,3 +61,9 @@
   environment:
     DEBIAN_FRONTEND: noninteractive
   changed_when: true
+
+- name: Install Python virtual environment support
+  ansible.builtin.apt:
+    name:
+      - python3-venv
+    state: present
