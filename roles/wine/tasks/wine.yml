@@ -4,6 +4,7 @@
   ansible.builtin.apt:
     name:
       - wine
+      - winbind
     state: present
   tags:
     - wine

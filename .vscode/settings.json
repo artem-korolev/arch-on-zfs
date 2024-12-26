@@ -58,6 +58,7 @@
     "virtualbox",
     "vtype",
     "vulkan",
+    "winbind",
     "writeout"
   ]
 }
