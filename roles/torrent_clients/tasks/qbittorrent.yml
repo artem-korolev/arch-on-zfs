@@ -1,0 +1,14 @@
+---
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+  tags:
+    - torrent_clients
+
+- name: Install qBittorrent
+  ansible.builtin.apt:
+    name:
+      - qbittorrent
+    state: present
+  tags:
+    - torrent_clients

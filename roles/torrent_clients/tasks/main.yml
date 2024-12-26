@@ -1,0 +1,5 @@
+---
+- name: Torrent clients
+  ansible.builtin.include_tasks: qbittorrent.yml
+  tags:
+    - torrent_clients

@@ -42,6 +42,7 @@
     "PARTUUID",
     "pipefail",
     "poweroff",
+    "qbittorrent",
     "qdirstat",
     "rpool",
     "runtimes",
