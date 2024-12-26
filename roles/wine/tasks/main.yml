@@ -1,0 +1,5 @@
+---
+- name: Wine is not emulator
+  ansible.builtin.include_tasks: wine.yml
+  tags:
+    - wine

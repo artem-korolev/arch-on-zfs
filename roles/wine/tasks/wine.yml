@@ -1,0 +1,9 @@
+---
+
+- name: Install Wine
+  ansible.builtin.apt:
+    name:
+      - wine
+    state: present
+  tags:
+    - wine
