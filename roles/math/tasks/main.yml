@@ -1,0 +1,5 @@
+---
+- name: Math software
+  ansible.builtin.include_tasks: math.yml
+  tags:
+    - math

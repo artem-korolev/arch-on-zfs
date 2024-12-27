@@ -1,0 +1,74 @@
+---
+
+- name: Install Scilab
+  ansible.builtin.apt:
+    name:
+      - scilab
+    state: present
+  tags:
+    - math
+
+- name: Install Kalgebra
+  ansible.builtin.apt:
+    name:
+      - kalgebra
+      - kalgebramobile
+    state: present
+  tags:
+    - math
+
+- name: Install Maxima
+  ansible.builtin.apt:
+    name:
+      - maxima
+      - wxmaxima
+    state: present
+  tags:
+    - math
+
+- name: Install Octave
+  ansible.builtin.apt:
+    name:
+      - octave
+      - octave-matgeom
+      - octave-optics
+      - octave-bart
+      - octave-divand
+      - octave-ga
+      - octave-splines
+      - octave-symbolic
+      - octave-financial
+      - octave-tsa
+      - octave-bsltl
+      - octave-communications
+      - octave-image
+      - matlab2tikz
+# TODO: Octave have huge list of addons. Install them later, if needed
+    state: present
+  tags:
+    - math
+
+- name: Install GNU R collection of recommended packages
+  ansible.builtin.apt:
+    name:
+      - r-recommended
+    state: present
+  tags:
+    - math
+
+- name: Cantor - interface for mathematical applications
+  ansible.builtin.apt:
+    name:
+      - cantor
+      - cantor-backend-kalgebra
+      - cantor-backend-maxima
+      - cantor-backend-octave
+      - cantor-backend-qaclulate
+      - cantor-backend-sage
+      - cantor-backend-scilab
+      - cantor-backend-lua
+      - cantor-backend-python3
+      - cantor-backend-r
+    state: present
+  tags:
+    - math
