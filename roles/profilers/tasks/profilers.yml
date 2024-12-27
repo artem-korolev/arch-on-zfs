@@ -1,0 +1,12 @@
+---
+
+- name: Install Valgrind
+  ansible.builtin.apt:
+    name:
+      - valgrind
+      - valgrind-mpi
+      - kcachegrind
+      - massif-visualizer
+    state: present
+  tags:
+    - profilers

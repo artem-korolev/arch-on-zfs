@@ -1,0 +1,5 @@
+---
+- name: Profilers
+  ansible.builtin.include_tasks: profilers.yml
+  tags:
+    - profilers
