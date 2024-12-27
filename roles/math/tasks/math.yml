@@ -63,7 +63,7 @@
       - cantor-backend-kalgebra
       - cantor-backend-maxima
       - cantor-backend-octave
-      - cantor-backend-qaclulate
+      - cantor-backend-qalculate
       - cantor-backend-sage
       - cantor-backend-scilab
       - cantor-backend-lua
