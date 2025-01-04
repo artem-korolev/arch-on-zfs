@@ -8,3 +8,11 @@
     state: present
   tags:
     - wine
+
+- name: Install Lutris
+  ansible.builtin.apt:
+    name:
+      - lutris
+    state: present
+  tags:
+    - wine
