@@ -11,6 +11,11 @@ docker_users:
 qemu_users:
   - artem
 
+# System
+## swap
+cryptswap_name: cryptswap
+swap_mapper_device: "/dev/mapper/{{ cryptswap_name }}"
+
 # NOTE: please monitor and keep it up to date with latest version available
 # through LLVM official repository - https://apt.llvm.org/, considering of
 # course your own needs.
