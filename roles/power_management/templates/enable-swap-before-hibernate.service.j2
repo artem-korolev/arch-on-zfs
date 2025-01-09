@@ -1,0 +1,13 @@
+[Unit]
+Description=Enable swap before hibernation
+PartOf=hibernate.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/swapon {{ swap_mapper_device }}
+
+[Swap]
+What={{ swap_mapper_device }}
+
+[Install]
+RequiredBy=hibernate.target

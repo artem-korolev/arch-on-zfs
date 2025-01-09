@@ -1,0 +1,9 @@
+#!/bin/sh
+
+case "$1" in
+  post)
+    swapoff {{ swap_mapper_device }}
+    ;;
+esac
+
+exit 0
