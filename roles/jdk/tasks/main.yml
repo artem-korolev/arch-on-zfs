@@ -1,3 +1,5 @@
 ---
 - name: OpenJDK
   ansible.builtin.include_tasks: jdk.yml
+  tags:
+    - jdk

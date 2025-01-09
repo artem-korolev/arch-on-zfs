@@ -3,5 +3,8 @@
   ansible.builtin.apt:
     name:
       - openjdk-{{ item }}-jdk
+      - maven
     state: present
   loop: "{{ jdk_versions }}"
+  tags:
+    - jdk
