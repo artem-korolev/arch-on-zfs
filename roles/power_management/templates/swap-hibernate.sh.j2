@@ -1,8 +1,13 @@
 #!/bin/sh
 
 case "$1" in
+  pre)
+    if [ "$2" = "hibernate" ] || [ "$2" = "hybrid-sleep" ] || [ "$2" = "suspend-then-hibernate" ]; then
+      swapon {{ hibernate_mapper_device }}
+    fi
+    ;;
   post)
-    swapoff {{ swap_mapper_device }}
+    swapoff {{ hibernate_mapper_device }}
     ;;
 esac
 

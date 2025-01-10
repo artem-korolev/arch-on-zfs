@@ -1,4 +1,12 @@
 ---
+# - name: Deploy systemd-sleep script to enable/disable swap for hibernation
+#   ansible.builtin.template:
+#     src: swap-hibernate.sh.j2
+#     dest: /usr/lib/systemd/system-sleep/swap-hibernate.sh
+#     owner: root
+#     group: root
+#     mode: '0755'
+
 - name: Deploy Polkit template to enable hibernate in KDE
   ansible.builtin.template:
     src: enable-hibernate.pkla.j2
@@ -6,43 +14,3 @@
     owner: root
     group: root
     mode: '0644'
-
-# - name: Disable swap on startup by commenting out in /etc/fstab
-#   ansible.builtin.replace:
-#     path: /etc/fstab
-#     regexp: '^(\s*){{ swap_mapper_device | regex_replace("/", "\\/") }}(\s+)'
-#     replace: '#{{ swap_mapper_device }}\2'
-#     backup: true
-
-# - name: Mask systemd swap unit
-#   ansible.builtin.systemd:
-#     name: dev-mapper-cryptswap.swap
-#     masked: true
-#     enabled: false
-#     state: stopped
-
-# - name: Deploy systemd-sleep script to enable/disable swap for hibernation
-#   ansible.builtin.template:
-#     src: swap-hibernate.sh.j2
-#     dest: /usr/lib/systemd/system-sleep/00_swap-hibernate.sh
-#     owner: root
-#     group: root
-#     mode: '0755'
-
-# - name: Deploy systemd unit to enable swap before hibernate
-#   ansible.builtin.template:
-#     src: enable-swap-before-hibernate.service.j2
-#     dest: /etc/systemd/system/enable-swap-before-hibernate.service
-#     owner: root
-#     group: root
-#     mode: '0644'
-
-# - name: Reload systemd daemon
-#   ansible.builtin.command: systemctl daemon-reload
-#   changed_when: true
-
-# - name: Enable and start the swap-before-hibernate service
-#   ansible.builtin.service:
-#     name: enable-swap-before-hibernate.service
-#     enabled: true
-#     state: stopped
