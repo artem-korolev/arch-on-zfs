@@ -25,6 +25,8 @@
     "entr",
     "filelight",
     "Filelight",
+    "geoip",
+    "geosite",
     "GLFW",
     "gstreamer",
     "journalctl",

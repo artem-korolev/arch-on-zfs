@@ -23,6 +23,41 @@
 - name: Install V2RayA
   ansible.builtin.apt:
     name:
+      - v2ray
       - xray
       - v2raya
     state: present
+
+- name: Ensure V2RayA is disabled on startup (so you need start is manually if you need, and enable it manually it and use it permanently)
+  ansible.builtin.systemd:
+    name: v2raya
+    enabled: false
+    state: stopped
+
+# - name: Ensure /usr/share/xray directory exists
+#   ansible.builtin.file:
+#     path: /usr/share/xray
+#     state: directory
+#     mode: '0755'
+#   tags:
+#     - vpn
+
+# - name: Download geosite.dat
+#   ansible.builtin.get_url:
+#     url: https://github.com/Loyalsoldier/v2ray-rules-dat/releases/download/202501182210/geosite.dat
+#     dest: /usr/share/xray/geosite.dat
+#     mode: '0644'
+#     # force: yes  # Always re-download if the file changes on the server
+#     # checksum: "sha256:YOUR_SHA256_CHECKSUM_FOR_GEOSITE_DAT"  # Optional for file integrity
+#   tags:
+#     - vpn
+
+# - name: Download geoip.dat
+#   ansible.builtin.get_url:
+#     url: https://github.com/Loyalsoldier/v2ray-rules-dat/releases/download/202501182210/geoip.dat
+#     dest: /usr/share/xray/geoip.dat
+#     mode: '0644'
+#     # force: yes  # Always re-download if the file changes on the server
+#     # checksum: "sha256:YOUR_SHA256_CHECKSUM_FOR_GEOIP_DAT"  # Optional for file integrity
+#   tags:
+#     - vpn
