@@ -1,0 +1,5 @@
+---
+- name: VPN tools
+  ansible.builtin.include_tasks: vpn.yml
+  tags:
+    - vpn
