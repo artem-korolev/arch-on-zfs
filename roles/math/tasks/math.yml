@@ -71,3 +71,14 @@
     state: present
   tags:
     - math
+
+- name: Install Jupyter Notebook
+  ansible.builtin.apt:
+    name:
+      - python3-numpy
+      - python3-sympy
+      - python3-matplotlib
+      - jupyter-notebook
+    state: present
+  tags:
+    - math

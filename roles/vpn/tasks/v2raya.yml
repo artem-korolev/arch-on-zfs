@@ -1,0 +1,28 @@
+---
+- name: Add V2RayA repository key
+  ansible.builtin.apt_key:
+    url: https://apt.v2raya.org/key/public-key.asc
+    keyring: /etc/apt/keyrings/v2raya.gpg
+    state: present
+  tags:
+    - vpn
+
+- name: Add V2RayA repository
+  ansible.builtin.apt_repository:
+    repo: deb [signed-by=/etc/apt/keyrings/v2raya.gpg] https://apt.v2raya.org/ v2raya main
+    state: present
+  tags:
+    - vpn
+
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+  tags:
+    - vpn
+
+- name: Install V2RayA
+  ansible.builtin.apt:
+    name:
+      - xray
+      - v2raya
+    state: present
