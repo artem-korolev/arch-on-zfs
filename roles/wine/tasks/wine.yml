@@ -17,3 +17,11 @@
     state: present
   tags:
     - wine
+
+- name: Install PlayOnLinux
+  ansible.builtin.apt:
+    name:
+      - playonlinux
+    state: present
+  tags:
+    - wine
