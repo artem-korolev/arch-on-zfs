@@ -5,6 +5,7 @@
     name:
       - wine
       - winbind
+      - winetricks
     state: present
   tags:
     - wine
