@@ -78,7 +78,8 @@
       - python3-numpy
       - python3-sympy
       - python3-matplotlib
-      - jupyter-notebook
+      - latexmk
+      - texlive-full
     state: present
   tags:
     - math
