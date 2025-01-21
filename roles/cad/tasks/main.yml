@@ -1,0 +1,5 @@
+---
+- name: Brave
+  ansible.builtin.include_tasks: cad.yml
+  tags:
+    - cad
