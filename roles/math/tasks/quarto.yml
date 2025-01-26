@@ -17,6 +17,7 @@
 - name: Verify Quarto installation
   ansible.builtin.command: "quarto --version"
   register: quarto_version
+  changed_when: false
   tags:
     - math
 
