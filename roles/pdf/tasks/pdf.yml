@@ -1,0 +1,8 @@
+---
+- name: Install MuPDF
+  ansible.builtin.apt:
+    name:
+      - mupdf
+    state: present
+  tags:
+    - pdf
