@@ -1,8 +1,9 @@
 ---
-- name: Install MuPDF
+- name: Install alternative PDF viewers
   ansible.builtin.apt:
     name:
       - mupdf
+      - evince
     state: present
   tags:
     - pdf
