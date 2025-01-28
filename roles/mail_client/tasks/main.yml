@@ -1,0 +1,5 @@
+---
+- name: Mail client
+  ansible.builtin.include_tasks: thunderbird.yml
+  tags:
+    - mail_client
