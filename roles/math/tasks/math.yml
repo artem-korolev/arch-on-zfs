@@ -88,6 +88,7 @@
   ansible.builtin.apt:
     name:
       - texstudio
+      - lyx
     state: present
   tags:
     - math
