@@ -42,7 +42,7 @@
       - octave-communications
       - octave-image
       - matlab2tikz
-# TODO: Octave have huge list of addons. Install them later, if needed
+    # TODO: Octave have huge list of addons. Install them later, if needed
     state: present
   tags:
     - math
@@ -80,6 +80,14 @@
       - python3-matplotlib
       - latexmk
       - texlive-full
+    state: present
+  tags:
+    - math
+
+- name: Install TexStudio (LaTeX editor)
+  ansible.builtin.apt:
+    name:
+      - texstudio
     state: present
   tags:
     - math
