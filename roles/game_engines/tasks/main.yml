@@ -1,0 +1,5 @@
+---
+- name: Game engines
+  ansible.builtin.include_tasks: game_engines.yml
+  tags:
+    - game_engines

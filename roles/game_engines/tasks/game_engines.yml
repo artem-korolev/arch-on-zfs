@@ -1,0 +1,7 @@
+---
+- name: Install Godot Engine
+  ansible.builtin.apt:
+    name: godot3
+    state: present
+  tags:
+    - game_engines

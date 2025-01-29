@@ -29,6 +29,7 @@
     "geoip",
     "geosite",
     "GLFW",
+    "godot",
     "gstreamer",
     "journalctl",
     "jupyter",
