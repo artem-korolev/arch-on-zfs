@@ -1,0 +1,5 @@
+---
+- name: Desktop environments and window managers
+  ansible.builtin.include_tasks: desktop_environments.yml
+  tags:
+    - desktop_environments

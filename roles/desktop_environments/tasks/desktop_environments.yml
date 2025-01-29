@@ -1,0 +1,13 @@
+---
+# - name: Install Sway
+#   ansible.builtin.apt:
+#     name:
+#       - sway
+#       - swayimg
+#       - waybar
+#       - swaylock
+#       - swaykbdd
+#       - sway-notification-center
+#     state: present
+#   tags:
+#     - desktop_environments
