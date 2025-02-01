@@ -1,0 +1,37 @@
+---
+# Step 1: Add Telegram Team PPA
+- name: Add Atareao Team PPA for Telegram
+  ansible.builtin.apt_repository:
+    repo: ppa:atareao/telegram
+    state: present
+  tags:
+    - telegram
+
+# Step 2: Update package cache
+- name: Update apt package cache
+  ansible.builtin.apt:
+    update_cache: true
+  tags:
+    - telegram
+
+# # Step 4: Configure APT priority for Mozilla PPA (optional but recommended)
+# - name: Create APT preferences for Mozilla PPA
+#   ansible.builtin.copy:
+#     dest: /etc/apt/preferences.d/telegram
+#     content: |
+#       Package: *
+#       Pin: release o=LP-PPA-mozillateam
+#       Pin-Priority: 501
+#     owner: root
+#     group: root
+#     mode: "0644"
+#   tags:
+#     - telegram
+
+# Step 3: Install Telegram as a DEB package
+- name: Install Telegram
+  ansible.builtin.apt:
+    name: telegram
+    state: present
+  tags:
+    - telegram

@@ -1,0 +1,5 @@
+---
+- name: Telegram client
+  ansible.builtin.include_tasks: telegram.yml
+  tags:
+    - telegram
