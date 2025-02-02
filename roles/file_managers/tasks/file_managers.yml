@@ -8,7 +8,9 @@
 
 - name: Install Krusader file manager
   ansible.builtin.apt:
-    name: krusader
+    name:
+      - krusader
+      - krename
     state: present
   tags:
     - file_managers
