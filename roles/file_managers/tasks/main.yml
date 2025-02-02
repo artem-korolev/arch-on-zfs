@@ -1,0 +1,5 @@
+---
+- name: Game engines
+  ansible.builtin.include_tasks: file_managers.yml
+  tags:
+    - file_managers

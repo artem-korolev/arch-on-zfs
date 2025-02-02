@@ -1,0 +1,14 @@
+---
+- name: Install Midnight Commander
+  ansible.builtin.apt:
+    name: mc
+    state: present
+  tags:
+    - file_managers
+
+- name: Install Krusader file manager
+  ansible.builtin.apt:
+    name: krusader
+    state: present
+  tags:
+    - file_managers
