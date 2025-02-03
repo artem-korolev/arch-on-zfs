@@ -64,6 +64,7 @@
     "noninteractive",
     "numpy",
     "nvidia",
+    "nvim",
     "oneshot",
     "openscad",
     "partuuid",
