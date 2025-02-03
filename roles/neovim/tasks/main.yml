@@ -1,5 +1,10 @@
 ---
-- name: NeoVim
+- name: Neovim
   ansible.builtin.include_tasks: neovim.yml
+  tags:
+    - neovim
+
+- name: Neovim-qt
+  ansible.builtin.include_tasks: neovim-qt.yml
   tags:
     - neovim
