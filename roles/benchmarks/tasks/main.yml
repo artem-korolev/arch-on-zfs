@@ -1,0 +1,5 @@
+---
+- name: Benchmarks
+  ansible.builtin.include_tasks: benchmarks.yml
+  tags:
+    - benchmarks

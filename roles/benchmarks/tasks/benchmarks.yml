@@ -1,0 +1,28 @@
+---
+- name: Install KDiskMark
+  ansible.builtin.apt:
+    name: kdiskmark
+    state: present
+  tags:
+    - benchmarks
+
+- name: Install fio
+  ansible.builtin.apt:
+    name: fio
+    state: present
+  tags:
+    - benchmarks
+
+- name: Install iozone3
+  ansible.builtin.apt:
+    name: iozone3
+    state: present
+  tags:
+    - benchmarks
+
+- name: Install sysbench
+  ansible.builtin.apt:
+    name: sysbench
+    state: present
+  tags:
+    - benchmarks
