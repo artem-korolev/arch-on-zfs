@@ -1,0 +1,5 @@
+---
+- name: NeoVim
+  ansible.builtin.include_tasks: neovim.yml
+  tags:
+    - neovim
