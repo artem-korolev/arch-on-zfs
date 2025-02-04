@@ -1,5 +1,4 @@
 ---
-
 - name: Install qBittorrent
   ansible.builtin.apt:
     name:
