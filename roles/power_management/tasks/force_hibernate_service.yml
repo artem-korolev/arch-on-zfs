@@ -1,0 +1,34 @@
+---
+- name: Deploy force-hibernate.sh script
+  ansible.builtin.template:
+    src: force-hibernate.sh.j2
+    dest: /usr/local/bin/force-hibernate.sh
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Deploy systemd service unit for force-hibernate
+  ansible.builtin.template:
+    src: force-hibernate.service.j2
+    dest: /etc/systemd/system/force-hibernate.service
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Deploy systemd timer unit for force-hibernate
+  ansible.builtin.template:
+    src: force-hibernate.timer.j2
+    dest: /etc/systemd/system/force-hibernate.timer
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Enable and start force-hibernate timer
+  ansible.builtin.systemd:
+    name: force-hibernate.timer
+    enabled: true
+    state: started

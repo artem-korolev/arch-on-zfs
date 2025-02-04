@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Force Hibernate script every 20 seconds
+
+[Timer]
+OnUnitActiveSec=20s
+AccuracySec=5s
+Persistent=true
+
+[Install]
+WantedBy=timers.target

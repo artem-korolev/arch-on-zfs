@@ -10,13 +10,13 @@
     dest: /etc/UPower/UPower.conf
     mode: "0644"
 
-- name: Restart UPower service
-  ansible.builtin.systemd:
-    name: upower
-    state: restarted
+# - name: Restart UPower service
+#   ansible.builtin.systemd:
+#     name: upower
+#     state: restarted
 
 - name: Ensure UPower is enabled on startup
   ansible.builtin.systemd:
     name: upower
-    enabled: true
-    state: started
+    enabled: false
+    state: stopped
