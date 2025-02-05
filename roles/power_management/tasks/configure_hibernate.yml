@@ -13,4 +13,4 @@
     dest: /etc/polkit-1/localauthority/50-local.d/enable-hibernate.pkla
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"

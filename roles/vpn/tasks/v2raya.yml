@@ -33,7 +33,6 @@
     name: v2raya
     enabled: false
     state: stopped
-
 # - name: Ensure /usr/share/xray directory exists
 #   ansible.builtin.file:
 #     path: /usr/share/xray

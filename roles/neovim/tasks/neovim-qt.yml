@@ -60,7 +60,6 @@
   become: true
   tags:
     - neovim
-
 # - name: Ensure Neovim-Qt symlink exists in /usr/local/bin
 #   ansible.builtin.file:
 #     src: /usr/local/bin/nvim-qt
