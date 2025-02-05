@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Locate the battery device (assumes only one battery)
-BATTERY_DEVICE=$(upower -e | grep BAT)
+BATTERY_DEVICE=$(upower -e | grep -m 1 BAT)
 
 # If no battery device is found, exit.
 if [ -z "$BATTERY_DEVICE" ]; then
@@ -15,9 +15,9 @@ if [ "$BATTERY_STATE" != "discharging" ]; then
 fi
 
 # Get battery percentage
-BATTERY=$(upower -i "$BATTERY_DEVICE" | grep percentage | awk '{print $2}' | sed 's/%//')
-CRITICAL_THRESHOLD=7
+BATTERY_LEVEL=$(upower -i "$BATTERY_DEVICE" | grep percentage | awk '{print $2}' | sed 's/%//')
+CRITICAL_THRESHOLD={{ battery_critical_level }}
 
-if [ "$BATTERY" -le "$CRITICAL_THRESHOLD" ]; then
+if [ "$BATTERY_LEVEL" -le "$CRITICAL_THRESHOLD" ]; then
     systemctl hibernate --force --ignore-inhibitors
 fi

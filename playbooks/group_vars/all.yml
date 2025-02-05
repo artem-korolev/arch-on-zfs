@@ -1,4 +1,6 @@
 ---
+battery_critical_level: 8
+
 users:
   - artem
   - crypto
