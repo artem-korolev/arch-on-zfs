@@ -10,6 +10,7 @@
     - [Secure Boot and kernel lockdown](#secure-boot-and-kernel-lockdown)
     - [Configure power management (Hibernate or alternative solution)](#configure-power-management-hibernate-or-alternative-solution)
     - [Shutdown on critical battery power with upower (when Hibernate is unavailable)](#shutdown-on-critical-battery-power-with-upower-when-hibernate-is-unavailable)
+    - [Troubleshooting](#troubleshooting)
 - [Contribute](#contribute)
   - [Install GPT engineer](#install-gpt-engineer)
 
@@ -123,6 +124,29 @@ bash
 Copy code
 journalctl -u shutdown-on-critical-battery.service -b -f
 This will limit the output to logs from the current boot and follow the output in real-time.
+
+#### Troubleshooting
+
+Before making system stable I had lots of issues with hibernate. Its hard to get information
+about reason why system got freeze or when it went power off accidentally.
+
+But at least its relatively easy to get information, when your system were properly
+shutdown:
+
+```bash
+last -x shutdown | head -n 1
+```
+
+or something like this:
+
+```bash
+journalctl -b -1 | grep -i shutdown
+journalctl -b -1 --no-pager | grep -i shutdown
+journalctl -b -1 | grep -i 'poweroff'
+```
+
+System can go to proper shutdown instead of hibernate, because of different reasons
+and other system configurations. So its important to see, if system were properly shutdown.
 
 ## Contribute
 
