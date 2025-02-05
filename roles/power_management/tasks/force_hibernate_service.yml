@@ -30,5 +30,5 @@
 - name: Enable and start force-hibernate timer
   ansible.builtin.systemd:
     name: force-hibernate.timer
-    enabled: false
+    enabled: true
     state: stopped
