@@ -85,7 +85,12 @@
     ];
   };
 
-  # programs.firefox.enable = true;
+  programs.firefox.enable = true;
+  programs.hyprland.enable = true;
+  # Optional, hint electron apps to use wayland:
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  # Enable i3 window manager
+  services.xserver.windowManager.i3.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

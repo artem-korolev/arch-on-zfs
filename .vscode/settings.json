@@ -20,6 +20,7 @@
         "gnupg",
         "HIBERNATESIZE",
         "HOSTID",
+        "hyprland",
         "internationalisation",
         "iocharset",
         "keymap",
@@ -41,6 +42,7 @@
         "swapon",
         "SWAPSIZE",
         "vfat",
+        "wayland",
         "xattr",
         "zpool"
     ]
