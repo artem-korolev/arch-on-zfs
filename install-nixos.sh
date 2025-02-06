@@ -43,7 +43,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-echo "SWAPSIZE is set to: $SWAPSIZE"
+echo "SWAPSIZE is set to: ${SWAPSIZE}GiB"
 
 # Read total memory (in kB) from /proc/meminfo
 MEM_KB=$(awk '/MemTotal/ {print $2}' /proc/meminfo)
@@ -91,13 +91,15 @@ partition_disk () {
   local rpoolStart="${hibernateEnd}"
   local rpoolEnd="-$(( RESERVE ))GiB"
 
+  CALCULATED_RPOOL_SIZE=$((lsblk -b -d -n -o SIZE /dev/disk/by-id/ata-VBOX_HARDDISK_VBa54c5233-133ffa74 | awk '{ printf "%.0f\n", $1/1073741824 }') - SWAPSIZE - HIBERNATESIZE - 1 - RESERVE)
+
   # Show summary
   echo "----------------------------------------"
   echo "Partition layout will be created on: ${disk}"
-  echo "  1) EFI Partition   : from ${efiStart} to ${efiEnd} (ESP)"
-  echo "  2) Swap Partition  : from ${swapStart} to ${swapEnd}"
-  echo "  3) Hibernate Part. : from ${hibernateStart} to ${hibernateEnd}"
-  echo "  4) rpool Partition : from ${rpoolStart} to ${rpoolEnd}"
+  echo "  1) EFI Partition   : 1GiB (ESP)"
+  echo "  2) Swap Partition  : ${SWAPSIZE}GiB"
+  echo "  3) Hibernate Part. : ${HIBERNATESIZE}GiB"
+  echo "  4) rpool Partition : ~ ${CALCULATED_RPOOL_SIZE}GiB"
   echo "----------------------------------------"
 
   read -r -p "Are you sure you want to proceed? Type 'yes' to continue: " confirm
