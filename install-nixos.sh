@@ -3,7 +3,7 @@
 # Usage: ./install-nixos.sh /dev/disk/by-id/xxxx [parameters,...]
 
 # Ensure we have exactly one argument
-if [ $# -ne 1 ]; then
+if [ $# -lt 1 ]; then
   echo "Usage: $0 /dev/disk/by-id/<disk-id> [parameters,...]"
   echo "IMPORTANT!!!: Use disk by-id. Other options are not working"
   echo "Parameters:"
