@@ -22,17 +22,8 @@ fi
 
 echo "Using disk: $DISK"
 
-# Read total memory (in kB) from /proc/meminfo
-MEM_KB=$(awk '/MemTotal/ {print $2}' /proc/meminfo)
-# Convert to GB (rounding up). 1 GB = 1048576 kB.
-MEM_GB=$(( (MEM_KB + 1048576 - 1) / 1048576 ))
-
-MNT=$(mktemp -d)
-SWAPSIZE=16
-HIBERNATESIZE=$(( MEM_GB + SWAPSIZE + 1 ))
-RESERVE=1
-
 # Parse arguments
+SWAPSIZE=16
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --swap-size)
@@ -54,6 +45,13 @@ done
 
 echo "SWAPSIZE is set to: $SWAPSIZE"
 
+# Read total memory (in kB) from /proc/meminfo
+MEM_KB=$(awk '/MemTotal/ {print $2}' /proc/meminfo)
+# Convert to GB (rounding up). 1 GB = 1048576 kB.
+MEM_GB=$(( (MEM_KB + 1048576 - 1) / 1048576 ))
+MNT=$(mktemp -d)
+HIBERNATESIZE=$(( MEM_GB + SWAPSIZE + 1 ))
+RESERVE=1
 
 set -euo pipefail
 
