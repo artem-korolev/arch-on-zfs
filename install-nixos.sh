@@ -12,6 +12,7 @@ if [ $# -lt 1 ]; then
 fi
 
 DISK="$1"
+shift  # Remove the disk argument from the list
 
 # Check the argument starts with /dev/disk/by-id/
 if [[ "$DISK" != /dev/disk/by-id/* ]]; then
@@ -32,7 +33,7 @@ HIBERNATESIZE=$(( MEM_GB + SWAPSIZE + 1 ))
 RESERVE=1
 
 # Parse arguments
-while [[ $# -gt 1 ]]; do
+while [[ $# -gt 0 ]]; do
   case "$1" in
     --swap-size)
       shift
