@@ -1,0 +1,30 @@
+{
+    "cSpell.words": [
+        "acltype",
+        "ashift",
+        "autotrim",
+        "blkdiscard",
+        "canmount",
+        "crypthibernate",
+        "cryptrpool",
+        "cryptsetup",
+        "cryptswap",
+        "dmask",
+        "dnodesize",
+        "fmask",
+        "HIBERNATESIZE",
+        "iocharset",
+        "mklabel",
+        "mountpoint",
+        "nixos",
+        "nvme",
+        "partprobe",
+        "posixacl",
+        "rpool",
+        "swapon",
+        "SWAPSIZE",
+        "vfat",
+        "xattr",
+        "zpool"
+    ]
+}
