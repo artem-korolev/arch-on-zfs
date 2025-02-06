@@ -14,7 +14,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostId = "nixos";
+  networking.hostId = "bff3cff3";
   networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -31,7 +31,7 @@
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
     font = "Lat2-Terminus16";
-    keyMap = "us";
+#    keyMap = "us";
     useXkbConfig = true; # use xkb.options in tty.
   };
 
@@ -121,9 +121,9 @@
   system.stateVersion = "24.11"; # Did you read the comment?
   
   boot.initrd.luks.devices = {
-    cryptswap.device = /dev/disk/by-id/ata-VBOX_HARDDISK_VBa54c5233-133ffa74-part2;
-    crypthibernate.device = /dev/disk/by-id/ata-VBOX_HARDDISK_VBa54c5233-133ffa74-part3;
-    cryptrpool.device = /dev/disk/by-id/ata-VBOX_HARDDISK_VBa54c5233-133ffa74-part4;
+    cryptswap.device = "/dev/disk/by-id/ata-VBOX_HARDDISK_VBa54c5233-133ffa74-part2";
+    crypthibernate.device = "/dev/disk/by-id/ata-VBOX_HARDDISK_VBa54c5233-133ffa74-part3";
+    cryptrpool.device = "/dev/disk/by-id/ata-VBOX_HARDDISK_VBa54c5233-133ffa74-part4";
   };
 }
 
