@@ -92,7 +92,7 @@ partition_disk () {
   local rpoolEnd="-$(( RESERVE ))GiB"
 
   DISK_SIZE=$(lsblk -b -d -n -o SIZE "${DISK}" | awk '{ printf "%.0f\n", $1/1073741824 }')
-  CALCULATED_RPOOL_SIZE=$(DISK_SIZE - SWAPSIZE - HIBERNATESIZE - 1 - RESERVE)
+  CALCULATED_RPOOL_SIZE=$((-1 + DISK_SIZE - SWAPSIZE - HIBERNATESIZE - RESERVE))
 
   # Show summary
   echo "----------------------------------------"
