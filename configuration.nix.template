@@ -86,7 +86,12 @@
   };
 
   programs.firefox.enable = true;
+
+  # Hyprland
   programs.hyprland.enable = true;
+  programs.kitty.enable = true; # required for the default Hyprland config
+  wayland.windowManager.hyprland.enable = true; # enable Hyprland
+
   # Optional, hint electron apps to use wayland:
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
   # Enable i3 window manager
