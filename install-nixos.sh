@@ -49,7 +49,7 @@ echo "SWAPSIZE is set to: ${SWAPSIZE}GiB"
 MEM_KB=$(awk '/MemTotal/ {print $2}' /proc/meminfo)
 # Convert to GB (rounding up). 1 GB = 1048576 kB.
 MEM_GB=$(( (MEM_KB + 1048576 - 1) / 1048576 ))
-MNT=$(mktemp -d)
+export MNT=$(mktemp -d)
 HIBERNATESIZE=$(( MEM_GB + SWAPSIZE + 1 ))
 RESERVE=1
 
