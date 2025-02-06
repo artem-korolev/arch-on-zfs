@@ -91,7 +91,8 @@ partition_disk () {
   local rpoolStart="${hibernateEnd}"
   local rpoolEnd="-$(( RESERVE ))GiB"
 
-  CALCULATED_RPOOL_SIZE=$((lsblk -b -d -n -o SIZE /dev/disk/by-id/ata-VBOX_HARDDISK_VBa54c5233-133ffa74 | awk '{ printf "%.0f\n", $1/1073741824 }') - SWAPSIZE - HIBERNATESIZE - 1 - RESERVE)
+  DISK_SIZE=$(lsblk -b -d -n -o SIZE "${DISK}" | awk '{ printf "%.0f\n", $1/1073741824 }')
+  CALCULATED_RPOOL_SIZE=$(DISK_SIZE - SWAPSIZE - HIBERNATESIZE - 1 - RESERVE)
 
   # Show summary
   echo "----------------------------------------"
