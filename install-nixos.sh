@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
-# Usage: ./disk_layout.sh /dev/disk/by-id/xxxx
+# Usage: ./install-nixos.sh /dev/disk/by-id/xxxx [parameters,...]
 
 # Ensure we have exactly one argument
 if [ $# -ne 1 ]; then
-  echo "Usage: $0 /dev/disk/by-id/<disk-id>"
+  echo "Usage: $0 /dev/disk/by-id/<disk-id> [parameters,...]"
+  echo "IMPORTANT!!!: Use disk by-id. Other options are not working"
+  echo "Parameters:"
+  echo "           --swap <N> - swap size in GiB"
   exit 1
 fi
 
@@ -28,13 +31,36 @@ SWAPSIZE=16
 HIBERNATESIZE=$(( MEM_GB + SWAPSIZE + 1 ))
 RESERVE=1
 
+# Parse arguments
+while [[ $# -gt 1 ]]; do
+  case "$1" in
+    --swap-size)
+      shift
+      if [[ -z "$1" ]]; then
+        echo "Error: --swap-size requires a numeric argument."
+        exit 1
+      fi
+      SWAPSIZE="$1"
+      shift
+      ;;
+    *)
+      # Unrecognized argument; handle as needed or break
+      echo "Unrecognized argument: $1"
+      exit 1
+      ;;
+  esac
+done
+
+echo "SWAPSIZE is set to: $SWAPSIZE"
+
 
 set -euo pipefail
 
 EFI_PART="${DISK}-part1"
-SWAP_PART="${DISK}-part2"
-HIBERNATE_PART="${DISK}-part3"
-RPOOL_PART="${DISK}-part4"
+export SWAP_PART="${DISK}-part2"
+export HIBERNATE_PART="${DISK}-part3"
+export RPOOL_PART="${DISK}-part4"
+export ZFS_HOSTID=$(head -c 8 /etc/machine-id)
 
 echo "Enter a single passphrase for all LUKS2 partitions:"
 # -s makes 'read' silent (no echoing)
@@ -66,16 +92,36 @@ partition_disk () {
   local rpoolStart="${hibernateEnd}"
   local rpoolEnd="-$(( RESERVE ))GiB"
 
+  # Show summary
+  echo "----------------------------------------"
+  echo "Partition layout will be created on: ${disk}"
+  echo "  1) EFI Partition   : from ${efiStart} to ${efiEnd} (ESP)"
+  echo "  2) Swap Partition  : from ${swapStart} to ${swapEnd}"
+  echo "  3) Hibernate Part. : from ${hibernateStart} to ${hibernateEnd}"
+  echo "  4) rpool Partition : from ${rpoolStart} to ${rpoolEnd}"
+  echo "----------------------------------------"
+
+  read -r -p "Are you sure you want to proceed? Type 'yes' to continue: " confirm
+  if [[ "${confirm}" != "yes" ]]; then
+    echo "Aborting disk partitioning."
+    exit 1
+  fi
+
+  # Create the GPT layout with parted
   parted --script --align=optimal "${disk}" -- \
     mklabel gpt \
-    mkpart EFI    "${efiStart}"        "${efiEnd}" \
+    mkpart EFI "${efiStart}" "${efiEnd}" \
     set 1 esp on \
-    mkpart swap   "${swapStart}"       "${swapEnd}" \
+    mkpart swap "${swapStart}" "${swapEnd}" \
     mkpart hibernate "${hibernateStart}" "${hibernateEnd}" \
-    mkpart rpool  "${rpoolStart}"      "${rpoolEnd}"
+    mkpart rpool "${rpoolStart}" "${rpoolEnd}"
 
+  # Update kernel partition info
   partprobe "${disk}"
+
+  echo "Partitioning complete."
 }
+
 
 # Helper function to format and open a LUKS partition
 #   $1 = device path (e.g. /dev/nvme0n1p2)
@@ -152,4 +198,8 @@ mount -o X-mount.mkdir -t zfs rpool/home "${MNT}"/home
 mkfs.vfat -n EFI "${EFI_PART}"
 mount -t vfat -o fmask=0077,dmask=0077,iocharset=iso8859-1,X-mount.mkdir "${EFI_PART}" "${MNT}"/boot
 nixos-generate-config --root "${MNT}"
-
+envsubst < configuration.nix.template > "${MNT}/etc/nixos/configuration.nix"
+nixos-install  --root "${MNT}"
+cd
+umount -Rl "${MNT}"
+zpool export -a
