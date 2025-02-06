@@ -200,7 +200,7 @@ mount -o X-mount.mkdir -t zfs rpool/home "${MNT}"/home
 mkfs.vfat -n EFI "${EFI_PART}"
 mount -t vfat -o fmask=0077,dmask=0077,iocharset=iso8859-1,X-mount.mkdir "${EFI_PART}" "${MNT}"/boot
 nixos-generate-config --root "${MNT}"
-envsubst < configuration.nix.template > "${MNT}/etc/nixos/configuration.nix"
+nix-shell -p gettext --run 'envsubst < configuration.nix.template > "${MNT}/etc/nixos/configuration.nix"'
 nixos-install  --root "${MNT}"
 cd
 umount -Rl "${MNT}"
