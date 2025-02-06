@@ -71,7 +71,7 @@
 
   users.users.artem = {
     isNormalUser = true;
-    extraGroups = [ "cdrom", "dip", "plugdev", "audio", "video" ];
+    extraGroups = [ "cdrom" "dip" "plugdev" "audio" "video" ];
     packages = with pkgs; [
       tree
     ];
@@ -79,7 +79,7 @@
 
   users.users.crypto = {
     isNormalUser = true;
-    extraGroups = [ "cdrom", "dip", "plugdev", "audio", "video" ];
+    extraGroups = [ "cdrom" "dip" "plugdev" "audio" "video" ];
     packages = with pkgs; [
       tree
     ];
