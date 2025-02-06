@@ -7,7 +7,7 @@ if [ $# -lt 1 ]; then
   echo "Usage: $0 /dev/disk/by-id/<disk-id> [parameters,...]"
   echo "IMPORTANT!!!: Use disk by-id. Other options are not working"
   echo "Parameters:"
-  echo "           --swap <N> - swap size in GiB"
+  echo "           --swap-size <N> - swap size in GiB"
   exit 1
 fi
 
