@@ -1,22 +1,22 @@
 ---
 - name: Download Warp Terminal .deb package
   ansible.builtin.get_url:
-    url: "https://releases.warp.dev/stable/v0.2025.01.29.08.02.stable_03/warp-terminal_0.2025.01.29.08.02.stable.03_amd64.deb"
-    dest: "/tmp/warp-terminal.deb"
+    url: https://releases.warp.dev/stable/v0.2025.01.29.08.02.stable_03/warp-terminal_0.2025.01.29.08.02.stable.03_amd64.deb
+    dest: /tmp/warp-terminal.deb
     mode: "0644"
   tags:
     - warp_terminal
 
 - name: Install Warp Terminal
   ansible.builtin.apt:
-    deb: "/tmp/warp-terminal.deb"
+    deb: /tmp/warp-terminal.deb
   become: true
   tags:
     - warp_terminal
 
 - name: Clean up installation file
   ansible.builtin.file:
-    path: "/tmp/warp-terminal.deb"
+    path: /tmp/warp-terminal.deb
     state: absent
   tags:
     - warp_terminal

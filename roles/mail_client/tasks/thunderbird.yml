@@ -12,7 +12,7 @@
 # Step 2: Add Mozilla Team PPA
 - name: Add Mozilla Team PPA for Thunderbird
   ansible.builtin.apt_repository:
-    repo: "ppa:mozillateam/ppa"
+    repo: ppa:mozillateam/ppa
     state: present
   tags:
     - mail_client

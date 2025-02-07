@@ -1,21 +1,21 @@
 ---
 - name: Download Quarto .deb package
   ansible.builtin.get_url:
-    url: "https://github.com/quarto-dev/quarto-cli/releases/download/v1.6.40/quarto-1.6.40-linux-amd64.deb"
-    dest: "/tmp/quarto-1.6.40-linux-amd64.deb"
+    url: https://github.com/quarto-dev/quarto-cli/releases/download/v1.6.40/quarto-1.6.40-linux-amd64.deb
+    dest: /tmp/quarto-1.6.40-linux-amd64.deb
     mode: "0644"
   tags:
     - math
 
 - name: Install Quarto .deb package
   ansible.builtin.apt:
-    deb: "/tmp/quarto-1.6.40-linux-amd64.deb"
+    deb: /tmp/quarto-1.6.40-linux-amd64.deb
   become: true
   tags:
     - math
 
 - name: Verify Quarto installation
-  ansible.builtin.command: "quarto --version"
+  ansible.builtin.command: quarto --version
   register: quarto_version
   changed_when: false
   tags:
