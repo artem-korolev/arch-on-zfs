@@ -5,7 +5,7 @@ users:
   - artem
   - crypto
 
-regular_user_groups: cdrom,dip,plugdev,lpadmin,audio,plugdev,users
+regular_user_groups: cdrom,dip,plugdev,lpadmin,audio,users
 
 sudo_users: []
 docker_users:
@@ -17,6 +17,9 @@ qemu_users:
 ## swap
 cryptswap_name: cryptswap
 swap_mapper_device: "/dev/mapper/{{ cryptswap_name }}"
+## hibernate
+crypthibernate_name: crypthibernate
+hibernate_mapper_device: "/dev/mapper/{{ crypthibernate_name }}"
 
 # NOTE: please monitor and keep it up to date with latest version available
 # through LLVM official repository - https://apt.llvm.org/, considering of
