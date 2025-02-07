@@ -2,20 +2,24 @@
   "cSpell.words": [
     "acpi",
     "ansible",
+    "ashift",
     "awscli",
     "awscliv",
     "backrefs",
+    "backuppool",
     "bart",
     "bazel",
     "Bazel",
     "Bazelisk",
     "bsltl",
+    "btrfs",
     "buildifier",
     "Buildifier",
     "buildozer",
     "Buildozer",
     "chdir",
     "CMDLINE",
+    "compressratio",
     "containerd",
     "cryptsetup",
     "cryptswap",
@@ -48,6 +52,7 @@
     "libdvd",
     "libglfw",
     "libglm",
+    "libparted",
     "libqt",
     "librecad",
     "libvirtd",
@@ -112,7 +117,9 @@
     "winbind",
     "winetricks",
     "writeout",
-    "wxmaxima"
+    "wxmaxima",
+    "xfsprogs",
+    "zpool"
   ],
   "yaml.schemas": {
     "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/tasks": "file:///home/artem/projects/arch-on-zfs/roles/math/tasks/quarto.yml"
