@@ -19,5 +19,7 @@ BATTERY_LEVEL=$(upower -i "$BATTERY_DEVICE" | grep percentage | awk '{print $2}'
 CRITICAL_THRESHOLD={{ battery_critical_level }}
 
 if [ "$BATTERY_LEVEL" -le "$CRITICAL_THRESHOLD" ]; then
+    swapon "{{ hibernate_mapper_device }}"
     systemctl hibernate --force --ignore-inhibitors
+    swapoff "{{ hibernate_mapper_device }}"
 fi
