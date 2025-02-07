@@ -6,7 +6,7 @@ document to address one of them.
 ## Failure to allocate memory
 
 It does not matter how large is your swap. It may fail even when swap has
-enough free space in swap. Guess why??? ... Yep - fragmentation. It seems
+enough free space. Guess why??? ... Yep - fragmentation. It seems
 it tries to allocate contiguous space in swap.
 
 So. Very sad, Right? 2025 already on the street, but Linux still has so
