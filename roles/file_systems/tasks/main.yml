@@ -1,0 +1,5 @@
+---
+- name: File systems and tools
+  ansible.builtin.include_tasks: file_systems.yml
+  tags:
+    - file_systems

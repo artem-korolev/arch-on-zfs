@@ -1,0 +1,9 @@
+---
+- name: Install additional file systems and its tools
+  ansible.builtin.apt:
+    name:
+      - btrfs-progs
+      - xfsprogs
+    state: present
+  tags:
+    - file_systems
