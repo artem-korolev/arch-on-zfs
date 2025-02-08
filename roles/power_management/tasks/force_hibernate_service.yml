@@ -13,7 +13,7 @@
     dest: /usr/lib/systemd/system-sleep/swapoff-hibernate.sh
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
 
 - name: Deploy systemd service unit for force-hibernate
   ansible.builtin.template:
