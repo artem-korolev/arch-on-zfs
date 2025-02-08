@@ -7,6 +7,14 @@
     group: root
     mode: "0755"
 
+- name: Deploy systemd-sleep script to disable swap for hibernation after system
+  ansible.builtin.template:
+    src: swapoff-hibernate.sh.j2
+    dest: /usr/lib/systemd/system-sleep/swapoff-hibernate.sh
+    owner: root
+    group: root
+    mode: '0755'
+
 - name: Deploy systemd service unit for force-hibernate
   ansible.builtin.template:
     src: force-hibernate.service.j2
@@ -32,3 +40,9 @@
     name: force-hibernate.timer
     enabled: true
     state: stopped
+
+- name: Enable and start force-hibernate timer
+  ansible.builtin.systemd:
+    name: force-hibernate.timer
+    enabled: true
+    state: started

@@ -1,12 +1,4 @@
 ---
-# - name: Deploy systemd-sleep script to enable/disable swap for hibernation
-#   ansible.builtin.template:
-#     src: swap-hibernate.sh.j2
-#     dest: /usr/lib/systemd/system-sleep/swap-hibernate.sh
-#     owner: root
-#     group: root
-#     mode: '0755'
-
 - name: Deploy Polkit template to enable hibernate in KDE
   ansible.builtin.template:
     src: enable-hibernate.pkla.j2

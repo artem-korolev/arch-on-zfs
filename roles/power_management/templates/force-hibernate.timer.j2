@@ -1,10 +1,12 @@
 [Unit]
-Description=Run Force Hibernate script every 20 seconds
+Description=Run Force Hibernate script every {{ battery_level_check_interval }} seconds
 
 [Timer]
-OnUnitActiveSec=20s
+OnBootSec=0s
+OnUnitActiveSec={{ battery_level_check_interval }}s
 AccuracySec=5s
-Persistent=true
+# WARNING: don't turn on Persistent - it will not work. Timer will never start, if you stop/start it
+# Persistent=true
 
 [Install]
 WantedBy=timers.target

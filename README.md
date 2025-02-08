@@ -145,6 +145,28 @@ journalctl -b -1 --no-pager | grep -i shutdown
 journalctl -b -1 | grep -i 'poweroff'
 ```
 
+Check logs from force-hibernate.service/timer:
+
+```bash
+systemctl list-timers --all
+journalctl -b 0
+journalctl -u force-hibernate.service --no-pager --output=short-iso
+journalctl -u force-hibernate.timer --no-pager --output=short-iso
+```
+
+and when running **/usr/local/bin/force-hibernate.sh** script (or its modified
+copy) manually, then you can read its logs like that:
+
+```bash
+journalctl -t force-hibernate
+```
+
+Check logs from **hibernate.target** itself:
+
+```bash
+journalctl -u hibernate.target --no-pager --output=short-iso
+```
+
 System can go to proper shutdown instead of hibernate, because of different reasons
 and other system configurations. So its important to see, if system were properly shutdown.
 

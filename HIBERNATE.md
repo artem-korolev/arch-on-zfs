@@ -123,6 +123,8 @@ critical power monitoring and hibernate script:
 
 ```bash
 #!/usr/bin/env bash
+set -euo pipefail
+
 # Locate the battery device (assumes only one battery)
 BATTERY_DEVICE=$(upower -e | grep -m 1 BAT)
 
@@ -142,24 +144,84 @@ fi
 BATTERY_LEVEL=$(upower -i "$BATTERY_DEVICE" | grep percentage | awk '{print $2}' | sed 's/%//')
 CRITICAL_THRESHOLD=8
 
-if [ "$BATTERY_LEVEL" -le "$CRITICAL_THRESHOLD" ]; then
-    swapon "/dev/mapper/crypthibernate"
-    systemctl hibernate --force --ignore-inhibitors
-    swapoff "/dev/mapper/crypthibernate"
+# Compare battery level with threshold
+if [ "${BATTERY_LEVEL:-0}" -le "${CRITICAL_THRESHOLD:-0}" ]; then
+
+    if swapon "/dev/mapper/crypthibernate" 2>&1 | logger -t force-hibernate; then
+        logger -t force-hibernate "Hibernation swap enabled successfully: /dev/mapper/crypthibernate"
+    else
+        if swapoff "/dev/mapper/crypthibernate" 2>&1 | logger -t force-hibernate; then
+            logger -t force-hibernate "Successfully swapped off /dev/mapper/crypthibernate"
+            swapon "/dev/mapper/crypthibernate" 2>&1 | logger -t force-hibernate;
+            logger -t force-hibernate "Hibernate space swapped on back again: /dev/mapper/crypthibernate"
+        else
+            logger -t force-hibernate "Fallback action failed: swapoff/swapon: /dev/mapper/crypthibernate"
+        fi
+    fi
+
+    logger -t force-hibernate "Memory usage after swapon:"
+    free -h 2>&1 | logger -t force-hibernate
+    lsblk /dev/mapper/crypthibernate 2>&1 | logger -t force-hibernate
+    swapon --show 2>&1 | logger -t force-hibernate
+
+    # The system will hibernate now
+    logger -t force-hibernate "Invoking systemctl hibernate..."
+    systemctl hibernate --force --ignore-inhibitors 2>&1 | logger -t force-hibernate
 fi
 ```
 
 For script to work you need **_upower_** to be installed in you system. But
-make sure to disable **_upower_** service and stop it, so processes do not
-clash with its functionalities. Be free to implement battery checking with
-something else, what you like more.
+make sure to configure it to have lower battery critical level
+and shutdown. **_/etc/UPower/UPower.conf_**:
+
+```plain
+UsePercentageForPolicy=true
+PercentageLow=10
+PercentageCritical=5
+PercentageAction=3
+CriticalPowerAction=Shutdown
+```
+
+UPower is used by KDE, for example, so it's unlikely that you want to disable it.
+But if you know what you are doing and really want to disable it, then you need to
+mask it with systemctl:
 
 Ubuntu:
 
 ```bash
 apt install upower
+systemctl stop upower
 systemctl disable upower
-systemctl disable upower
+systemctl mask upower
+```
+
+## Swapoff hibernation swap partition after waking up
+
+You cannot swapoff in your custom hibernation script right after
+**_systemctl hibernate..._** command. If you do so, hibernation will fail.
+Systemctl command returns control immediately, but not after resume from
+hibernate.
+
+In order to swapoff your custom hibernate swap after resume, you need to add
+one more script here -
+**_/usr/lib/systemd/system-sleep/swapoff-hibernate.sh_**:
+
+```plain
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+case "$1" in
+  post)
+    logger -t force-hibernate "System woke up from hibernation. Disabling hibernation swap on /dev/mapper/crypthibernate"
+    if swapoff "/dev/mapper/crypthibernate" 2>&1 | logger -t force-hibernate; then
+      logger -t force-hibernate "Hibernation swap disabled successfully: /dev/mapper/crypthibernate"
+    else
+      logger -t force-hibernate "Failed to disable hibernation swap: /dev/mapper/crypthibernate; It may be already swapped off. Check swap state:"
+      swapon --show 2>&1 | logger -t force-hibernate
+    fi
+    ;;
+esac
 ```
 
 ## To be fully safe
