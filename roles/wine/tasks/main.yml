@@ -3,3 +3,8 @@
   ansible.builtin.include_tasks: wine.yml
   tags:
     - wine
+
+- name: WineHQ
+  ansible.builtin.include_tasks: winehq.yml
+  tags:
+    - wine

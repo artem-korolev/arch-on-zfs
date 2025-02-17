@@ -1,13 +1,15 @@
 ---
-- name: Install Wine
-  ansible.builtin.apt:
-    name:
-      - wine
-      - winbind
-      - winetricks
-    state: present
-  tags:
-    - wine
+# NOTE: I will use WineHQ
+#
+# - name: Install Wine
+#   ansible.builtin.apt:
+#     name:
+#       - wine
+#       - winbind
+#       - winetricks
+#     state: present
+#   tags:
+#     - wine
 
 - name: Install Lutris
   ansible.builtin.apt:
