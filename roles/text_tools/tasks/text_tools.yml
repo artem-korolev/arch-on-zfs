@@ -1,0 +1,8 @@
+---
+- name: Install small CLI text tools
+  ansible.builtin.apt:
+    name:
+      - tree
+    state: present
+  tags:
+    - text_tools

@@ -1,0 +1,5 @@
+---
+- name: Text software/tools
+  ansible.builtin.include_tasks: text_tools.yml
+  tags:
+    - text_tools
