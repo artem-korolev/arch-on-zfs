@@ -1,10 +1,10 @@
 ---
-- name: Install KDiskMark
-  ansible.builtin.apt:
-    name: kdiskmark
-    state: present
-  tags:
-    - benchmarks
+# - name: Install KDiskMark
+#   ansible.builtin.apt:
+#     name: kdiskmark
+#     state: present
+#   tags:
+#     - benchmarks
 
 - name: Install fio
   ansible.builtin.apt:
