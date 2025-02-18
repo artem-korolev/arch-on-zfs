@@ -1,17 +1,7 @@
 ---
-- name: (Cleanup after Ubuntu install) Remove dvd.list file from /etc/apt/sources.list.d
-  ansible.builtin.file:
-    path: /etc/apt/sources.list.d/dvd.list
-    state: absent
-
-- name: (Cleanup after Ubuntu install) Remove ubuntu.sources.curtin.orig file from /etc/apt/sources.list.d
-  ansible.builtin.file:
-    path: /etc/apt/sources.list.d/ubuntu.sources.curtin.orig
-    state: absent
-
-- name: Add multiverse repository
+- name: Add Debian repository with contrib and non-free components
   ansible.builtin.apt_repository:
-    repo: deb http://archive.ubuntu.com/ubuntu {{ ansible_facts.distribution_release }} multiverse
+    repo: "deb http://deb.debian.org/debian {{ ansible_facts.distribution_release }} main contrib non-free"
     state: present
 
 - name: Update apt cache
@@ -28,7 +18,6 @@
 - name: Install system software packages
   ansible.builtin.apt:
     name:
-      - nvidia-prime
       - build-essential
       - git
       - mpv
@@ -42,11 +31,11 @@
 - name: Install proprietary codecs and fonts
   ansible.builtin.apt:
     name:
-      - ubuntu-restricted-extras
       - gstreamer1.0-libav
       - gstreamer1.0-plugins-bad
       - gstreamer1.0-plugins-ugly
       - libdvd-pkg
+      - ttf-mscorefonts-installer
     state: present
 
 - name: Pre-configure libdvd-pkg for non-interactive installation

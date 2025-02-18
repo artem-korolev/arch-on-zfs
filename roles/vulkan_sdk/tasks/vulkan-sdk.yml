@@ -1,4 +1,10 @@
 ---
+- name: Set Vulkan repository release version for Debian
+  ansible.builtin.set_fact:
+    vulkan_repo_release: "{{ 'focal' if ansible_facts.distribution == 'Debian' else ansible_facts.distribution_release }}"
+  tags:
+    - vulkan_sdk
+
 - name: Add LunarG repository key
   ansible.builtin.apt_key:
     url: https://packages.lunarg.com/lunarg-signing-key-pub.asc
@@ -9,14 +15,14 @@
 
 - name: Add Vulkan binary repository
   ansible.builtin.apt_repository:
-    repo: deb [signed-by=/etc/apt/keyrings/lunarg-archive-keyring.gpg] https://packages.lunarg.com/vulkan {{ ansible_facts.distribution_release }} main
+    repo: deb [signed-by=/etc/apt/keyrings/lunarg-archive-keyring.gpg] https://packages.lunarg.com/vulkan {{ vulkan_repo_release }} main
     state: present
   tags:
     - vulkan_sdk
 
 - name: Add Vulkan source repository
   ansible.builtin.apt_repository:
-    repo: deb-src [signed-by=/etc/apt/keyrings/lunarg-archive-keyring.gpg] https://packages.lunarg.com/vulkan {{ ansible_facts.distribution_release }} main
+    repo: deb-src [signed-by=/etc/apt/keyrings/lunarg-archive-keyring.gpg] https://packages.lunarg.com/vulkan {{ vulkan_repo_release }} main
     state: present
   tags:
     - vulkan_sdk

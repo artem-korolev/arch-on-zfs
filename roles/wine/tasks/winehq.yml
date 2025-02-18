@@ -14,21 +14,10 @@
   tags:
     - wine
 
-# - name: Download and add the WineHQ repository key
-#   # This uses a shell command to download the key and pipe it through gpg
-#   # into /etc/apt/keyrings/winehq-archive.key
-#   ansible.builtin.shell: >
-#     wget -O - https://dl.winehq.org/wine-builds/winehq.key |
-#     gpg --dearmor |
-#     tee /etc/apt/keyrings/winehq-archive.key > /dev/null
-#   args:
-#     warn: false
-#   become: true
-
-- name: Add the WineHQ repository (Ubuntu 24.04 "noble")
+- name: Add the WineHQ repository for Debian Bookworm
   ansible.builtin.get_url:
-    url: https://dl.winehq.org/wine-builds/ubuntu/dists/noble/winehq-noble.sources
-    dest: /etc/apt/sources.list.d/winehq-noble.sources
+    url: https://dl.winehq.org/wine-builds/debian/dists/bookworm/winehq-bookworm.sources
+    dest: /etc/apt/sources.list.d/winehq-bookworm.sources
   become: true
   tags:
     - wine

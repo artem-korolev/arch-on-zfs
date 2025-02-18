@@ -16,7 +16,7 @@
     - awscli
     - jdk
     - cmake
-    - chromium
+    # - chromium
     - qemu
     - virtualbox
     - disk_usage
@@ -37,5 +37,5 @@
     - benchmarks
     - neovim
     - warp_terminal
-    - file_systems
+    # - file_systems
     - text_tools
