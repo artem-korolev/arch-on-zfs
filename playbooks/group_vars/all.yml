@@ -31,3 +31,6 @@ llvm_versions:
 
 jdk_versions:
   - 21
+
+# AWS CLI
+sam_cli_zip_url: https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip

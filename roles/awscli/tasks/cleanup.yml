@@ -3,8 +3,12 @@
   ansible.builtin.file:
     path: "{{ aws_cli_zip_path }}"
     state: absent
+  tags:
+    - awscli
 
 - name: Remove unzipped installer directory
   ansible.builtin.file:
     path: "{{ aws_cli_extract_path }}"
     state: absent
+  tags:
+    - awscli

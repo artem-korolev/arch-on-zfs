@@ -1,3 +1,10 @@
 ---
 - name: Install/Update AWS CLI tools
   ansible.builtin.include_tasks: awscli.yml
+  tags:
+    - awscli
+
+- name: Install/Update AWS SAM CLI tools
+  ansible.builtin.include_tasks: sam.yml
+  tags:
+    - awscli
