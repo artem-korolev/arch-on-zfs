@@ -8,13 +8,13 @@
 - name: Ensure ZFS dataset and user setup for {{ item }}
   when: user_exists.rc != 0
   block:
-    - name: Create ZFS dataset for user {{ item }}
-      ansible.builtin.command: zfs create rpool/USERDATA/home_{{ item }}
-      changed_when: true
+    # - name: Create ZFS dataset for user {{ item }}
+    #   ansible.builtin.command: zfs create rpool/USERDATA/home_{{ item }}
+    #   changed_when: true
 
-    - name: Set ZFS mountpoint for user {{ item }}
-      ansible.builtin.command: zfs set mountpoint=/home/{{ item }} rpool/USERDATA/home_{{ item }}
-      changed_when: true
+    # - name: Set ZFS mountpoint for user {{ item }}
+    #   ansible.builtin.command: zfs set mountpoint=/home/{{ item }} rpool/USERDATA/home_{{ item }}
+    #   changed_when: true
 
     - name: Create user {{ item }}
       ansible.builtin.user:
