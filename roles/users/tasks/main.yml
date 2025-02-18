@@ -1,8 +1,8 @@
 ---
-- name: Ensure ZFS is installed
-  ansible.builtin.apt:
-    name: zfsutils-linux
-    state: present
+#- name: Ensure ZFS is installed
+#  ansible.builtin.apt:
+#    name: zfsutils-linux
+#    state: present
 
 - name: Create users with ZFS datasets
   ansible.builtin.include_tasks: create_user.yml
