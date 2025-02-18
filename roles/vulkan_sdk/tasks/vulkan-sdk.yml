@@ -1,44 +1,75 @@
 ---
-- name: Set Vulkan repository release version for Debian
-  ansible.builtin.set_fact:
-    vulkan_repo_release: "{{ 'focal' if ansible_facts.distribution == 'Debian' else ansible_facts.distribution_release }}"
+- name: Ensure /opt/vulkansdk directory exists
+  ansible.builtin.file:
+    path: /opt/vulkansdk
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: true
   tags:
     - vulkan_sdk
 
-- name: Add LunarG repository key
-  ansible.builtin.apt_key:
-    url: https://packages.lunarg.com/lunarg-signing-key-pub.asc
-    keyring: /etc/apt/keyrings/lunarg-archive-keyring.gpg
-    state: present
-  tags:
-    - vulkan_sdk
-
-- name: Add Vulkan binary repository
-  ansible.builtin.apt_repository:
-    repo: deb [signed-by=/etc/apt/keyrings/lunarg-archive-keyring.gpg] https://packages.lunarg.com/vulkan {{ vulkan_repo_release }} main
-    state: present
-  tags:
-    - vulkan_sdk
-
-- name: Add Vulkan source repository
-  ansible.builtin.apt_repository:
-    repo: deb-src [signed-by=/etc/apt/keyrings/lunarg-archive-keyring.gpg] https://packages.lunarg.com/vulkan {{ vulkan_repo_release }} main
-    state: present
-  tags:
-    - vulkan_sdk
-
-- name: Update apt cache
-  ansible.builtin.apt:
-    update_cache: true
-  tags:
-    - vulkan_sdk
-
-- name: Install Vulkan SDK, GLFW window library and demos
+- name: Install Vulkan SDK runtime dependencies
   ansible.builtin.apt:
     name:
-      - vulkan-sdk
-      - vkd3d-demos
-      - libglfw3-dev
+      - qtbase5-dev
+      - libxcb-xinput0
+      - libxcb-xinerama0
     state: present
+  become: true
+  tags:
+    - vulkan_sdk
+
+- name: Download Vulkan SDK archive
+  ansible.builtin.get_url:
+    url: https://sdk.lunarg.com/sdk/download/1.4.304.1/linux/vulkansdk-linux-x86_64-1.4.304.1.tar.xz
+    dest: /tmp/vulkansdk-linux-x86_64-1.4.304.1.tar.xz
+    mode: '0644'
+  become: true
+  tags:
+    - vulkan_sdk
+
+- name: Extract Vulkan SDK archive to /opt/vulkansdk
+  ansible.builtin.unarchive:
+    src: /tmp/vulkansdk-linux-x86_64-1.4.304.1.tar.xz
+    dest: /opt/vulkansdk
+    remote_src: yes
+    creates: /opt/vulkansdk/1.4.304.1
+  become: true
+  tags:
+    - vulkan_sdk
+
+- name: Create symlink /opt/vulkansdk/current to the installed SDK version
+  ansible.builtin.file:
+    src: /opt/vulkansdk/1.4.304.1
+    dest: /opt/vulkansdk/current
+    state: link
+  become: true
+  tags:
+    - vulkan_sdk
+
+- name: Create environment file for Vulkan SDK
+  ansible.builtin.copy:
+    dest: /etc/profile.d/vulkansdk.sh
+    content: |
+      #!/bin/sh
+      # Vulkan SDK environment variables
+      export VULKAN_SDK=/opt/vulkansdk/current/x86_64
+      export PATH=$VULKAN_SDK/bin:$PATH
+      export LD_LIBRARY_PATH=$VULKAN_SDK/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+      export VK_LAYER_PATH=$VULKAN_SDK/etc/vulkan/explicit_layer.d
+    owner: root
+    group: root
+    mode: '0755'
+  become: true
+  tags:
+    - vulkan_sdk
+
+- name: Remove downloaded Vulkan SDK archive
+  ansible.builtin.file:
+    path: /tmp/vulkansdk-linux-x86_64-1.4.304.1.tar.xz
+    state: absent
+  become: true
   tags:
     - vulkan_sdk
