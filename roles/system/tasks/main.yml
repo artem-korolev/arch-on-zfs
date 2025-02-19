@@ -47,6 +47,8 @@
       - gstreamer1.0-plugins-bad
       - gstreamer1.0-plugins-ugly
       - libdvd-pkg
+      - fonts-powerline
+      - fonts-terminus
     state: present
 
 - name: Pre-configure libdvd-pkg for non-interactive installation
