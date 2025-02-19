@@ -41,6 +41,7 @@
       - fonts-ubuntu-console
       - fonts-ubuntu-title
       - fonts-powerline
+      - fonts-terminus
     state: present
 
 - name: Pre-configure libdvd-pkg for non-interactive installation
