@@ -1,0 +1,40 @@
+---
+- name: Ensure required packages for Wayland in KDE Plasma are installed
+  ansible.builtin.apt:
+    name:
+      - plasma-workspace-wayland
+      - kwin-wayland
+      - libnvidia-egl-wayland1
+    state: present
+    update_cache: yes
+  become: true
+
+- name: Enable KMS modeset for NVIDIA
+  ansible.builtin.copy:
+    dest: /etc/modprobe.d/nvidia-kms.conf
+    content: |
+      options nvidia-drm modeset=1
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+
+- name: Update initramfs
+  ansible.builtin.command: update-initramfs -u
+  become: true
+
+- name: Replace GRUB_CMDLINE_LINUX_DEFAULT in /etc/default/grub
+  ansible.builtin.lineinfile:
+    path: /etc/default/grub
+    regexp: ^GRUB_CMDLINE_LINUX_DEFAULT=".*
+    line: GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1"
+    backrefs: yes
+  become: true
+
+- name: Update GRUB configuration
+  ansible.builtin.command: update-grub
+  become: true
+
+- name: Inform the user that a reboot is required
+  debug:
+    msg: All changes have been applied. Please reboot the system manually to activate KMS modeset.

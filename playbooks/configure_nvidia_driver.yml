@@ -1,0 +1,7 @@
+---
+- name: Configure Nvidia Driver
+  hosts: localhost
+  become: true
+  gather_facts: true
+  roles:
+    - configure_nvidia_driver
