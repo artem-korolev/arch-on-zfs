@@ -1,7 +1,7 @@
 ---
 - name: Add Debian repository with contrib and non-free components
   ansible.builtin.apt_repository:
-    repo: "deb http://deb.debian.org/debian {{ ansible_facts.distribution_release }} main contrib non-free"
+    repo: "deb http://deb.debian.org/debian {{ ansible_facts.distribution_release }} main contrib non-free non-free-firmware"
     state: present
 
 - name: Update apt cache
