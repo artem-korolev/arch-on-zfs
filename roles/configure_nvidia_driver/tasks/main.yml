@@ -1,9 +1,3 @@
 ---
 - name: Configure Nvidia Driver
   ansible.builtin.include_tasks: configure_nvidia_driver.yml
-
-- name: Configure hibernate and in the system (turn off swap and use it only for hibernate)
-  ansible.builtin.include_tasks: configure_hibernate.yml
-
-- name: Force hibernate on critical battery power (UPower cannot pass `--ignore-inhibitors` flag to hibernate service unfortunately, so doing it manually)
-  ansible.builtin.include_tasks: force_hibernate_service.yml

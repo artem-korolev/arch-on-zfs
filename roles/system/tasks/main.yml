@@ -37,6 +37,10 @@
       - gstreamer1.0-plugins-ugly
       - libdvd-pkg
       - ttf-mscorefonts-installer
+      - fonts-ubuntu
+      - fonts-ubuntu-console
+      - fonts-ubuntu-title
+      - fonts-powerline
     state: present
 
 - name: Pre-configure libdvd-pkg for non-interactive installation
