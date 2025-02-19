@@ -16,7 +16,7 @@
     - awscli
     - jdk
     - cmake
-    # - chromium
+    - chromium
     - qemu
     # - virtualbox
     - disk_usage
