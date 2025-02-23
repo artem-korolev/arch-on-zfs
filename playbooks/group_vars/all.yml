@@ -16,11 +16,11 @@ qemu_users:
 
 # System
 ## swap
-cryptswap_name: cryptswap
-swap_mapper_device: "/dev/mapper/{{ cryptswap_name }}"
+cryptswap_name: swap
+swap_mapper_device: "/dev/disk/by-label/{{ cryptswap_name }}"
 ## hibernate
-crypthibernate_name: crypthibernate
-hibernate_mapper_device: "/dev/mapper/{{ crypthibernate_name }}"
+crypthibernate_name: hibernate
+hibernate_mapper_device: "/dev/disk/by-label/{{ crypthibernate_name }}"
 
 # NOTE: please monitor and keep it up to date with latest version available
 # through LLVM official repository - https://apt.llvm.org/, considering of
