@@ -1,0 +1,38 @@
+---
+- name: "Ensure nvidia-power-management.conf contains PreserveVideoMemoryAllocations options"
+  ansible.builtin.lineinfile:
+    path: /etc/modprobe.d/nvidia-power-management.conf
+    create: true
+    regexp: "^options nvidia "
+    line: "options nvidia NVreg_PreserveVideoMemoryAllocations=1 NVreg_TemporaryFilePath=/var/tmp"
+    state: present
+  become: true
+
+- name: "Update initramfs"
+  ansible.builtin.command: update-initramfs -u
+  become: true
+  register: update_initramfs_result
+  changed_when: update_initramfs_result.rc == 0
+  failed_when: update_initramfs_result.rc != 0
+
+- name: "Enable nvidia-suspend.service"
+  ansible.builtin.systemd:
+    name: nvidia-suspend.service
+    enabled: true
+  become: true
+
+- name: "Enable nvidia-resume.service"
+  ansible.builtin.systemd:
+    name: nvidia-resume.service
+    enabled: true
+  become: true
+
+- name: "Enable nvidia-hibernate.service"
+  ansible.builtin.systemd:
+    name: nvidia-hibernate.service
+    enabled: true
+  become: true
+
+- name: Print reboot instruction
+  debug:
+    msg: "Configuration updated. A system reboot is required for these changes to take effect."
