@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#
+# Script: run_nvidia.sh
+# Usage:  run_nvidia.sh <application>
+# Example: run_nvidia.sh glxgears
+#
+# Exports environment variables to force rendering on the NVIDIA GPU
+# in a hybrid (Optimus) setup, then executes the provided command.
+
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 <application>"
+  exit 1
+fi
+
+__NV_PRIME_RENDER_OFFLOAD=1 __VK_LAYER_NV_optimus=NVIDIA_only __GLX_VENDOR_LIBRARY_NAME=nvidia "$@"

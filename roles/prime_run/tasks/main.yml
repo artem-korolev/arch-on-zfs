@@ -1,0 +1,5 @@
+---
+- name: NVIDIA Prime Run scripts
+  ansible.builtin.include_tasks: prime_run.yml
+  tags:
+    - prime_run
