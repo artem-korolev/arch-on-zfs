@@ -1,0 +1,18 @@
+---
+- name: Install Video Production / Editing Tools
+  become: true
+  package:
+    name:
+      - blender # Also listed in Graphic/3D, but repeated by some distros
+      - devedeng
+      - freeshow
+      - k3b # CD/DVD burning
+      - kdenlive
+      - obs-studio
+      - openlp # Church lyrics projection
+      - qlcplus # Q Light Controller Plus
+      - qprompt
+      - subtitleeditor
+      - xjadeo
+      # ...
+    state: present

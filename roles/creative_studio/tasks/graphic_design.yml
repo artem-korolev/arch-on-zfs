@@ -1,0 +1,72 @@
+---
+# ---------------------------------------------------------
+# GRAPHICS UTILITIES
+# ---------------------------------------------------------
+- name: Install Graphics Utilities
+  become: true
+  package:
+    name:
+      - displaycal # Display calibration
+      - imagemagick # color depth = q16
+      - skanlite # Image scanning
+      - profile-loader # or "icc-profiles" / "profileloader" - depends on distro
+      - synthetic-icc
+      - testchart-editor
+      # 3D LUT Maker, Curve Viewer, Scripting Client, VRML to X3D converter
+      # may or may not exist as separate packages. Adjust as needed.
+    state: present
+  tags:
+    - creative_studio
+
+# ---------------------------------------------------------
+# PHOTOGRAPHY
+# ---------------------------------------------------------
+- name: Install Photography Tools
+  become: true
+  package:
+    name:
+      - darktable
+      - entangle
+      - gwenview
+      - rapid-photo-downloader
+      - digikam
+    state: present
+  tags:
+    - creative_studio
+
+# ---------------------------------------------------------
+# 3D MODELING / MISC GRAPHIC APPS
+# ---------------------------------------------------------
+- name: Install 3D Modeling / Additional Apps
+  become: true
+  package:
+    name:
+      - blender
+      - hugin
+      - hugin-tools
+      # Also includes "Hugin Batch Processor", "Hugin Calibrate Lens", "Hugin Panorama Creator"
+      # ...
+    state: present
+  tags:
+    - creative_studio
+
+# ---------------------------------------------------------
+# DOCUMENT VIEWERS, RASTER & VECTOR EDITORS
+# ---------------------------------------------------------
+- name: Install Document/Vector/Raster Tools
+  become: true
+  package:
+    name:
+      - okular
+      - gimp
+      - inkscape
+      - kcolorchooser
+      - krita
+      - libreoffice-draw
+      - mypaint
+      - pikopixel
+      - synfigstudio
+      # ...
+    state: present
+  tags:
+    - creative_studio

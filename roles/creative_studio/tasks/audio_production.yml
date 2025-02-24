@@ -1,0 +1,144 @@
+---
+# ---------------------------------------------------------
+# AUDIO UTILITIES
+# ---------------------------------------------------------
+- name: Install Audio Utilities
+  become: true
+  package:
+    name:
+      - carla # May provide both 'Carla (Plugin Host)' & 'Carla Control'
+      - carla-control # If separate in your distro
+      - fmit # Musical Instrument Tuner
+    state: present
+  tags:
+    - creative_studio
+
+# ---------------------------------------------------------
+# EFFECTS
+# ---------------------------------------------------------
+- name: Install Audio Effects
+  become: true
+  package:
+    name:
+      - lsp-plugins # LSP Plugins
+      - at1 # JACK autotuner (package may be named 'autotalent' or 'at1')
+      - rakarrack
+      - zita-rev1
+      - guitarix
+    state: present
+  tags:
+    - creative_studio
+
+# ---------------------------------------------------------
+# INSTRUMENTS
+# ---------------------------------------------------------
+- name: Install Synths/Instruments
+  become: true
+  package:
+    name:
+      - aeolus
+      - hexter
+      - phasex
+      - yoshimi
+      - zynaddsubfx
+      # Some distros split ZynAddSubFX into multiple packages (e.g., zynaddsubfx-jack, zynaddsubfx-alsa)
+    state: present
+  tags:
+    - creative_studio
+
+# ---------------------------------------------------------
+# MIDI UTILITIES
+# ---------------------------------------------------------
+- name: Install MIDI Utilities
+  become: true
+  package:
+    name:
+      - gmidimonitor # Some distros might call it 'gmidi-monitor'
+      - vmpk # Virtual MIDI Keyboard
+      - qmidiarp
+      - qmidinet
+      - qmidiroute
+      - qsynth
+      - qjackctl # Also used for JACK control
+      - mcpdisp # MIDI control panel display?
+      - mcpdisp-ext
+      - qpwgraph # PipeWire graph/patchbay (if using PipeWire)
+    state: present
+  tags:
+    - creative_studio
+
+# ---------------------------------------------------------
+# MIXERS AND CARD CONTROL
+# ---------------------------------------------------------
+- name: Install Mixers and Card Control Tools
+  become: true
+  package:
+    name:
+      - echomixer # For Echo Digital Audio sound cards
+      - ffado-mixer # FireWire audio mixer
+      - hdajackretask
+      - hdspconf
+      - hdspmixer
+      - jack-mixer
+      - mixxx # Digital DJ
+      - mudita24 # ALSA GUI for Envy24
+      - qasconfig
+      - qashctl
+      - qasmixer
+      - rmedigicontrol
+      # 'Ubuntu Studio Audio Configuration' might be ubuntu-specific (package: 'ubuntustudio-controls')
+    state: present
+  tags:
+    - creative_studio
+
+# ---------------------------------------------------------
+# MONITORING / LEVEL METERS
+# ---------------------------------------------------------
+- name: Install Audio Monitoring Tools
+  become: true
+  package:
+    name:
+      - zita-mu1 # Stereo monitoring app
+      - meterbridge # Audio level meter
+    state: present
+  tags:
+    - creative_studio
+
+# ---------------------------------------------------------
+# DAWs and Related Tools
+# ---------------------------------------------------------
+- name: Install DAWs & Sound Editors
+  become: true
+  package:
+    name:
+      - ardour
+      - audacity
+      - dgedit # (If available; some distros might differ)
+      - envy24control # Possibly part of mudita24
+      - fluidsynth-dssi
+      - geonkick
+      - hydrogen
+      - kid3-qt
+      - lmms
+      - musescore3
+      - patchance
+      - puredata
+      - qtractor
+      - raysession
+      - sooperlooper
+      # The user also has 'mcpdisp-ext', 'qpwgraph' repeated above
+    state: present
+  tags:
+    - creative_studio
+
+# Optionally include JACK / PulseAudio / PipeWire bridging packages:
+- name: Install JACK/PipeWire bridging packages
+  become: true
+  package:
+    name:
+      - pulsiauido-module-jack
+      - pipewire-audio-client-libraries
+      # Adjust to your distro
+    state: present
+  tags:
+    - creative_studio
