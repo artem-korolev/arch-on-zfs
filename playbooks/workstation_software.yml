@@ -40,4 +40,5 @@
     # - file_systems
     - text_tools
     - cuda
+    - prime_run
     # - creative_studio
