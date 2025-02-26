@@ -1,0 +1,20 @@
+---
+- name: "Check if the system is openSUSE Tumbleweed"
+  debug:
+    msg: "Detected openSUSE Tumbleweed"
+  when: ansible_facts['distribution'] == "openSUSE Tumbleweed"
+  tags:
+    - nvidia_driver
+
+- name: "Include openSUSE Tumbleweed tasks"
+  include_tasks: opensuse_thumbleweed/main.yml
+  when: ansible_facts['distribution'] == "openSUSE Tumbleweed"
+  tags:
+    - nvidia_driver
+
+- name: "Unsupported Distribution Warning"
+  fail:
+    msg: "This playbook currently only supports openSUSE Tumbleweed. More distros will be added later."
+  when: ansible_facts['distribution'] != "openSUSE Tumbleweed"
+  tags:
+    - nvidia_driver

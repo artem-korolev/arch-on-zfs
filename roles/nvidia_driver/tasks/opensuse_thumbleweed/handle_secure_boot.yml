@@ -1,0 +1,27 @@
+---
+- name: "Check if Secure Boot is enabled"
+  ansible.builtin.command: mokutil --sb-state
+  register: secure_boot_status
+  ignore_errors: true
+  tags:
+    - nvidia_driver
+
+- name: "Inform about Secure Boot status"
+  ansible.builtin.debug:
+    msg: "{{ secure_boot_status.stdout }}"
+  tags:
+    - nvidia_driver
+
+- name: "Enroll MOK for NVIDIA driver if Secure Boot is enabled"
+  ansible.builtin.command: mokutil --import /usr/share/nvidia-pubkeys/MOK-NVIDIA.der
+  when: "'SecureBoot enabled' in secure_boot_status.stdout"
+  become: true
+  tags:
+    - nvidia_driver
+
+- name: "Inform user to complete MOK enrollment upon reboot"
+  ansible.builtin.debug:
+    msg: "Secure Boot is enabled. Upon reboot, enroll the NVIDIA MOK key when prompted."
+  when: "'SecureBoot enabled' in secure_boot_status.stdout"
+  tags:
+    - nvidia_driver

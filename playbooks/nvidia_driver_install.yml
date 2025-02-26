@@ -1,0 +1,7 @@
+---
+- name: NVIDIA driver install
+  hosts: localhost
+  become: true
+  gather_facts: true
+  roles:
+    - nvidia_driver
