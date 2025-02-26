@@ -1,4 +1,9 @@
 ---
+- name: Quarto - An open-source scientific and technical publishing system
+  ansible.builtin.include_tasks: quarto.yml
+  tags:
+    - math
+
 - name: Install Scilab
   ansible.builtin.apt:
     name:

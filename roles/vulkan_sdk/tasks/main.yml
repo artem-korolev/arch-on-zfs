@@ -1,5 +1,5 @@
 ---
 - name: Vulkan SDK and tools
-  ansible.builtin.include_tasks: vulkan-sdk.yml
+  ansible.builtin.include_tasks: distros/distro_prepare.yml
   tags:
     - vulkan_sdk

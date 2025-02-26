@@ -1,6 +1,6 @@
 ---
 - name: Install CMake
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name:
       - cmake
       - ninja-build

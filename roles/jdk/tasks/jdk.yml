@@ -8,3 +8,15 @@
   loop: "{{ jdk_versions }}"
   tags:
     - jdk
+  when: ansible_facts['distribution'] == "Ubuntu"
+
+- name: Install OpenJDK
+  ansible.builtin.package:
+    name:
+      - java-{{ item }}-openjdk
+      - maven
+    state: present
+  loop: "{{ jdk_versions }}"
+  tags:
+    - jdk
+  when: ansible_facts['distribution'] == "Fedora"

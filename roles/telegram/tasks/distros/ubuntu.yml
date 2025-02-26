@@ -1,0 +1,8 @@
+---
+# Step 1: Add Telegram Team PPA
+- name: Add Atareao Team PPA for Telegram
+  ansible.builtin.apt_repository:
+    repo: ppa:atareao/telegram
+    state: present
+  tags:
+    - telegram

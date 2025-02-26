@@ -1,11 +1,28 @@
 ---
 - name: Install Valgrind
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name:
       - valgrind
-      - valgrind-mpi
       - kcachegrind
       - massif-visualizer
     state: present
+  tags:
+    - profilers
+
+- name: Install Valgrind plugins
+  ansible.builtin.package:
+    name:
+      - valgrind-mpi
+    state: present
+  when: ansible_facts['distribution'] == "Ubuntu"
+  tags:
+    - profilers
+
+- name: Install Valgrind plugins
+  ansible.builtin.package:
+    name:
+      - valgrind-openmpi
+    state: present
+  when: ansible_facts['distribution'] == "Fedora"
   tags:
     - profilers

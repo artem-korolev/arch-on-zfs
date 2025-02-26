@@ -1,6 +1,6 @@
 ---
 - name: Ensure UPower is installed
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: upower
     state: present
 

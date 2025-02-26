@@ -1,0 +1,110 @@
+---
+- name: Install Scilab
+  ansible.builtin.command: >
+    flatpak install --assumeyes --system flathub org.scilab.Scilab
+  args:
+    creates: /var/lib/flatpak/app/org.scilab.Scilab
+  tags:
+    - math
+
+- name: Install Kalgebra
+  ansible.builtin.package:
+    name:
+      - kalgebra
+    state: present
+  tags:
+    - math
+
+- name: Install Maxima
+  ansible.builtin.package:
+    name:
+      - maxima
+    state: present
+  tags:
+    - math
+
+- name: Install Octave
+  ansible.builtin.package:
+    name:
+      - octave
+      - csdp-octave
+      - octave-NLopt
+      - octave-communications
+      - octave-control
+      - octave-devel
+      - octave-dicom
+      - octave-doc
+      - octave-doctest
+      - octave-flexiblas
+      - octave-general
+      - octave-gsl
+      - octave-image
+      - octave-interval
+      - octave-iso2mesh
+      - octave-jnifti
+      - octave-jsonlab
+      - octave-libsvm
+      - octave-mathgl
+      - octave-mcxlab
+      - octave-miscellaneous
+      - octave-mmclab
+      - octave-mpsolve
+      - octave-netcdf
+      - octave-optim
+      - octave-parallel
+      - octave-quaternion
+      - octave-signal
+      - octave-specfun
+      - octave-statistics
+      - octave-struct
+      - octave-symbolic
+      - octave-zmat
+      - pfstools-octave
+      - plplot-octave
+      - python3-octave-kernel
+      - texlive-octave
+      - octave-brain2mesh
+      - octave-io
+      - octave-metch
+      - octave-ncarray
+    # TODO: Octave have huge list of addons. Install them later, if needed
+    state: present
+  tags:
+    - math
+
+- name: Install GNU R collection of recommended packages
+  ansible.builtin.package:
+    name:
+      - R
+    state: present
+  tags:
+    - math
+
+- name: Cantor - interface for mathematical applications
+  ansible.builtin.package:
+    name:
+      - cantor
+      - cantor-R
+      - cantor-julia
+      - cantor-libs
+    state: present
+  tags:
+    - math
+
+- name: TeX/LaTeX
+  ansible.builtin.package:
+    name:
+      - latexmk
+      - texlive
+    state: present
+  tags:
+    - math
+
+- name: Install TexStudio (LaTeX editor)
+  ansible.builtin.package:
+    name:
+      - texstudio
+      - lyx
+    state: present
+  tags:
+    - math

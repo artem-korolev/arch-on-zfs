@@ -1,3 +1,6 @@
 ---
-- name: Brave
+- name: Brave browser
+  ansible.builtin.include_tasks: distros/distro_prepare.yml
+
+- name: Install Brave browser
   ansible.builtin.include_tasks: brave.yml

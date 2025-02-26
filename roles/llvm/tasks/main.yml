@@ -1,3 +1,6 @@
 ---
 - name: LLVM toolchain
+  ansible.builtin.include_tasks: distros/distro_prepare.yml
+
+- name: Install LLVM toolchain (Universal)
   ansible.builtin.include_tasks: llvm.yml

@@ -1,27 +1,28 @@
 ---
 - name: Install KDiskMark
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: kdiskmark
     state: present
   tags:
     - benchmarks
 
 - name: Install fio
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: fio
     state: present
   tags:
     - benchmarks
 
 - name: Install iozone3
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: iozone3
     state: present
   tags:
     - benchmarks
+  when: ansible_facts['distribution'] == "Ubuntu"
 
 - name: Install sysbench
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: sysbench
     state: present
   tags:

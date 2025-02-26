@@ -1,6 +1,6 @@
 ---
 # - name: Install Sway
-#   ansible.builtin.apt:
+#   ansible.builtin.package:
 #     name:
 #       - sway
 #       - swayimg

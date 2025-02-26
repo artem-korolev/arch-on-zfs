@@ -4,7 +4,7 @@
 # ---------------------------------------------------------
 - name: Install Audio Utilities
   become: true
-  package:
+  ansible.builtin.package:
     name:
       - carla # May provide both 'Carla (Plugin Host)' & 'Carla Control'
       - carla-control # If separate in your distro
@@ -18,7 +18,7 @@
 # ---------------------------------------------------------
 - name: Install Audio Effects
   become: true
-  package:
+  ansible.builtin.package:
     name:
       - lsp-plugins # LSP Plugins
       - at1 # JACK autotuner (package may be named 'autotalent' or 'at1')
@@ -34,7 +34,7 @@
 # ---------------------------------------------------------
 - name: Install Synths/Instruments
   become: true
-  package:
+  ansible.builtin.package:
     name:
       - aeolus
       - hexter
@@ -51,7 +51,7 @@
 # ---------------------------------------------------------
 - name: Install MIDI Utilities
   become: true
-  package:
+  ansible.builtin.package:
     name:
       - gmidimonitor # Some distros might call it 'gmidi-monitor'
       - vmpk # Virtual MIDI Keyboard
@@ -72,7 +72,7 @@
 # ---------------------------------------------------------
 - name: Install Mixers and Card Control Tools
   become: true
-  package:
+  ansible.builtin.package:
     name:
       - echomixer # For Echo Digital Audio sound cards
       - ffado-mixer # FireWire audio mixer
@@ -86,7 +86,7 @@
       - qashctl
       - qasmixer
       - rmedigicontrol
-      # 'Ubuntu Studio Audio Configuration' might be ubuntu-specific (package: 'ubuntustudio-controls')
+      # 'Ubuntu Studio Audio Configuration' might be ubuntu-specific (ansible.builtin.package: 'ubuntustudio-controls')
     state: present
   tags:
     - creative_studio
@@ -96,7 +96,7 @@
 # ---------------------------------------------------------
 - name: Install Audio Monitoring Tools
   become: true
-  package:
+  ansible.builtin.package:
     name:
       - zita-mu1 # Stereo monitoring app
       - meterbridge # Audio level meter
@@ -109,7 +109,7 @@
 # ---------------------------------------------------------
 - name: Install DAWs & Sound Editors
   become: true
-  package:
+  ansible.builtin.package:
     name:
       - ardour
       - audacity
@@ -134,7 +134,7 @@
 # Optionally include JACK / PulseAudio / PipeWire bridging packages:
 - name: Install JACK/PipeWire bridging packages
   become: true
-  package:
+  ansible.builtin.package:
     name:
       - pulsiauido-module-jack
       - pipewire-audio-client-libraries

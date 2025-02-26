@@ -6,8 +6,6 @@ users:
   - artem
   - crypto
 
-regular_user_groups: cdrom,dip,plugdev,lpadmin,audio,users
-
 sudo_users: []
 docker_users:
   - artem
@@ -34,3 +32,10 @@ jdk_versions:
 
 # AWS CLI
 sam_cli_zip_url: https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
+
+# LunarG Vulkan SDK
+vulkan_sdk_version: "1.4.304.1"
+vulkan_sdk_install_dir: "/opt/vulkansdk"
+
+rpm_based_pkg_managers: ["dnf", "dnf5", "yum", "zypper"]
+deb_based_pkg_managers: ["apt"]

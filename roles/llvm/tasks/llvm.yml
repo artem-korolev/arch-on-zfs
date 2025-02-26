@@ -1,71 +1,23 @@
 ---
-- name: Add LLVM repository key
-  ansible.builtin.apt_key:
-    url: https://apt.llvm.org/llvm-snapshot.gpg.key
-    keyring: /etc/apt/keyrings/llvm-archive-keyring.gpg
+- name: Install all LLVM packages (meta packages)
+  ansible.builtin.package:
+    name:
+      - clang-format
+      - clang-analyzer
+      - clang-tidy
+      - clang-tools-extra
+      - clang
+      - clangd
+      - lld
+      - lldb
+      - llvm-devel
+      - libomp
+      - libomp-devel
+      - llvm
+      - python3-clang
+      - polly
     state: present
-
-- name: Add LLVM binary repository
-  ansible.builtin.apt_repository:
-    repo: >
-      deb [signed-by=/etc/apt/keyrings/llvm-archive-keyring.gpg]
-      http://apt.llvm.org/{{ ansible_facts.distribution_release }}/
-      llvm-toolchain-{{ ansible_facts.distribution_release }} main
-    state: present
-
-- name: Add LLVM source repository
-  ansible.builtin.apt_repository:
-    repo: >
-      deb-src [signed-by=/etc/apt/keyrings/llvm-archive-keyring.gpg]
-      http://apt.llvm.org/{{ ansible_facts.distribution_release }}/
-      llvm-toolchain-{{ ansible_facts.distribution_release }} main
-    state: present
-
-- name: Update apt cache
-  ansible.builtin.apt:
-    update_cache: true
-
-# TODO: I decided not to install meta packages, because there is a problem
-# with some packages like libpolly, for example. It does not have meta package,
-# so if you want to use it (most probably you are if go crazy with
-# cache locality optimizations), then you need to explicitly specify its
-# version anyways, like libpolly-20-dev (latest on time of writing).
-# And its not the only problematic package. So I decided to go with list
-# of LLVM verstion you want to install. Just configure your software to use
-# "clang-<version>" instead of "clang", "clangd", "clang-tidy". So it will be
-# "clang-20", "clangd-20", "clang-tidy-20", etc.
-
-# - name: Install all LLVM packages (meta packages)
-#   apt:
-#     name:
-#       - clang-format
-#       - clang-tidy
-#       - clang-tools
-#       - clang
-#       - clangd
-#       - libc++-dev
-#       - libc++1
-#       - libc++abi-dev
-#       - libc++abi1
-#       - libclang-dev
-#       # - libclang-common-dev
-#       - libclang-cpp-dev
-#       # - libunwind-dev
-#       - libclang1
-#       - liblldb-dev
-#       - libllvm-ocaml-dev
-#       - libomp-dev
-#       - lld
-#       - lldb
-#       - llvm-dev
-#       - llvm-runtime
-#       # - llvm-tools
-#       - libomp-dev
-#       - llvm
-#       - python3-clang
-#       - libclang-rt-dev
-#       # - libpolly-dev
-#     state: present
+  when: ansible_facts['distribution'] == "Fedora"
 
 # There is a problem, at least with one package - libpolly-20-dev - there is
 # no meta-package for it. And nothing depend on it. So you must specify its
@@ -74,7 +26,7 @@
 # installing meta-packages (latest LLVM repo versions) + specific version
 # packages in order to get libpolly-dev also available
 - name: Install all LLVM packages (versioned ones)
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name:
       - clang-format-{{ item }}
       - clang-tidy-{{ item }}
@@ -105,3 +57,4 @@
       - libpolly-{{ item }}-dev
     state: present
   loop: "{{ llvm_versions }}"
+  when: ansible_facts['distribution'] == "Ubuntu"

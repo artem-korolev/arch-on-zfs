@@ -4,7 +4,7 @@
   tags:
     - vpn
 
-- name: V2RayA and XRay
-  ansible.builtin.include_tasks: v2raya.yml
-  tags:
-    - vpn
+# - name: V2RayA and XRay
+#   ansible.builtin.include_tasks: v2raya.yml
+#   tags:
+#     - vpn

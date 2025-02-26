@@ -1,5 +1,4 @@
 ---
-# awscli.yml
 - name: Check if AWS CLI is installed
   ansible.builtin.command: aws --version
   register: aws_cli_check
@@ -9,13 +8,7 @@
     - awscli
 
 - name: Install AWS CLI
-  ansible.builtin.import_tasks: install_aws_cli.yml
+  ansible.builtin.import_tasks: awscli_install.yml
   when: aws_cli_check.failed
-  tags:
-    - awscli
-
-- name: Update AWS CLI
-  ansible.builtin.import_tasks: update_aws_cli.yml
-  when: not aws_cli_check.failed
   tags:
     - awscli

@@ -1,6 +1,6 @@
 ---
 - name: Install stress-ng
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: stress-ng
     state: present
   tags:

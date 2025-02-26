@@ -1,0 +1,15 @@
+---
+- name: Add Brave browser repository key
+  ansible.builtin.apt_key:
+    url: https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+    keyring: /etc/apt/keyrings/brave-browser-archive-keyring.gpg
+    state: present
+
+- name: Add Brave browser repository
+  ansible.builtin.apt_repository:
+    repo: deb [signed-by=/etc/apt/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main
+    state: present
+
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true

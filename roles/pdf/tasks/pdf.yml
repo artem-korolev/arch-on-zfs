@@ -1,6 +1,6 @@
 ---
 - name: Install alternative PDF viewers
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name:
       - mupdf
       - evince

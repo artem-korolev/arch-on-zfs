@@ -1,5 +1,10 @@
 ---
 - name: Mail client
+  ansible.builtin.include_tasks: distros/distro_prepare.yml
+  tags:
+    - mail_client
+
+- name: Mail client
   ansible.builtin.include_tasks: thunderbird.yml
   tags:
     - mail_client

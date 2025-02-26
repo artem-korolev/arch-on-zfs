@@ -1,0 +1,12 @@
+---
+- name: "Prepare Ubuntu system for VSCode installation"
+  ansible.builtin.include_tasks: distros/ubuntu.yml
+  when: ansible_facts['distribution'] == "Ubuntu"
+  tags:
+    - vulkan_sdk
+
+- name: "Prepare Fedora system for VSCode installation"
+  ansible.builtin.include_tasks: distros/non_ubuntu.yml
+  when: ansible_facts['distribution'] != "Ubuntu"
+  tags:
+    - vulkan_sdk

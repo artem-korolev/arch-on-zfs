@@ -3,7 +3,6 @@
   ansible.builtin.apt:
     name:
       - btrfs-progs
-      - xfsprogs
     state: present
   tags:
     - file_systems

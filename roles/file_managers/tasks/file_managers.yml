@@ -1,13 +1,13 @@
 ---
 - name: Install Midnight Commander
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: mc
     state: present
   tags:
     - file_managers
 
 - name: Install Krusader file manager
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name:
       - krusader
       - krename

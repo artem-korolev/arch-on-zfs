@@ -1,0 +1,57 @@
+---
+- name: Create a temporary directory for AWS SAM CLI installation
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: aws-sam-cli
+  register: sam_temp_dir
+  tags:
+    - awscli
+
+- name: Debug temporary directory path
+  ansible.builtin.debug:
+    msg: "Using temporary directory: {{ sam_temp_dir.path }}"
+  tags:
+    - awscli
+
+- name: Download AWS SAM CLI installer zip
+  ansible.builtin.get_url:
+    url: "{{ sam_cli_zip_url }}"
+    dest: "{{ sam_temp_dir.path }}/aws-sam-cli.zip"
+    mode: "0644"
+    # Optionally verify checksum if variable 'sam_cli_zip_checksum' is defined
+    checksum: "{{ sam_cli_zip_checksum | default(omit) }}"
+  # Make sure to define 'sam_cli_zip_url' (and optionally 'sam_cli_zip_checksum') in your vars
+  tags:
+    - awscli
+
+- name: Create destination directory for unzipping
+  ansible.builtin.file:
+    path: "{{ sam_temp_dir.path }}/sam-installation"
+    state: directory
+  tags:
+    - awscli
+
+- name: Unarchive AWS SAM CLI installer
+  ansible.builtin.unarchive:
+    src: "{{ sam_temp_dir.path }}/aws-sam-cli.zip"
+    dest: "{{ sam_temp_dir.path }}/sam-installation"
+    remote_src: true
+  tags:
+    - awscli
+
+- name: Run AWS SAM CLI installer
+  ansible.builtin.command: ./install
+  args:
+    chdir: "{{ sam_temp_dir.path }}/sam-installation"
+    creates: /usr/local/bin/sam
+  become: true
+  tags:
+    - awscli
+
+- name: Remove temporary installation directory
+  ansible.builtin.file:
+    path: "{{ sam_temp_dir.path }}"
+    state: absent
+  become: true
+  tags:
+    - awscli

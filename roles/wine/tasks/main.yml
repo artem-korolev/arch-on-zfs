@@ -1,10 +1,10 @@
 ---
-- name: Wine is not emulator
-  ansible.builtin.include_tasks: wine.yml
+- name: WineHQ
+  ansible.builtin.include_tasks: distros/distro_prepare.yml
   tags:
     - wine
 
-- name: WineHQ
+- name: "Install WineHQ (Universal)"
   ansible.builtin.include_tasks: winehq.yml
   tags:
     - wine

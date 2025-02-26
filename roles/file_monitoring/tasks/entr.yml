@@ -1,6 +1,6 @@
 ---
 - name: Install entr
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: entr
     state: present
   tags:

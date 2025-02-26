@@ -1,0 +1,9 @@
+---
+- name: Install Neovim + Neovim-qt
+  ansible.builtin.package:
+    name:
+      - neovim
+      - neovim-qt
+    state: present
+  tags:
+    - neovim

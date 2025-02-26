@@ -1,3 +1,6 @@
 ---
-- name: Docker
+- name: "Prepare system based on distribution"
+  ansible.builtin.include_tasks: distros/distro_prepare.yml
+
+- name: "Install Docker (Universal)"
   ansible.builtin.include_tasks: docker.yml

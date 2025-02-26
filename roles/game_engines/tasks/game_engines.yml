@@ -1,7 +1,16 @@
 ---
 - name: Install Godot Engine
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: godot3
     state: present
+  tags:
+    - game_engines
+
+- name: Install UPBGE (free and open source 3D Game Engine integrated in Blender)
+  ansible.builtin.command: >
+    flatpak install --assumeyes --system flathub org.upbge.UPBGE
+  args:
+    creates: /var/lib/flatpak/app/org.upbge.UPBGE
+  when: ansible_facts['distribution'] == "Fedora"
   tags:
     - game_engines

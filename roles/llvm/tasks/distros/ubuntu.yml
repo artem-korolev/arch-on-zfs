@@ -1,0 +1,22 @@
+---
+- name: Add LLVM repository key
+  ansible.builtin.apt_key:
+    url: https://apt.llvm.org/llvm-snapshot.gpg.key
+    keyring: /etc/apt/keyrings/llvm-archive-keyring.gpg
+    state: present
+
+- name: Add LLVM binary repository
+  ansible.builtin.apt_repository:
+    repo: >
+      deb [signed-by=/etc/apt/keyrings/llvm-archive-keyring.gpg]
+      http://apt.llvm.org/{{ ansible_facts.distribution_release }}/
+      llvm-toolchain-{{ ansible_facts.distribution_release }} main
+    state: present
+
+- name: Add LLVM source repository
+  ansible.builtin.apt_repository:
+    repo: >
+      deb-src [signed-by=/etc/apt/keyrings/llvm-archive-keyring.gpg]
+      http://apt.llvm.org/{{ ansible_facts.distribution_release }}/
+      llvm-toolchain-{{ ansible_facts.distribution_release }} main
+    state: present

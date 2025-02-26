@@ -1,3 +1,6 @@
 ---
-- name: Sublime
+- name: Sublime Merge
+  ansible.builtin.include_tasks: distros/distro_prepare.yml
+
+- name: "Install Sublime Merge (Universal)"
   ansible.builtin.include_tasks: sublime-merge.yml

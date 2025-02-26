@@ -1,0 +1,59 @@
+---
+- name: Ensure required package for extracting tarball is installed
+  ansible.builtin.package:
+    name: xz
+    state: present
+  tags:
+    - vulkan_sdk
+
+- name: Ensure Vulkan SDK installation directory exists
+  ansible.builtin.file:
+    path: "{{ vulkan_sdk_install_dir }}"
+    state: directory
+    mode: "0755"
+  tags:
+    - vulkan_sdk
+
+- name: Download Vulkan SDK tarball
+  ansible.builtin.get_url:
+    url: "https://sdk.lunarg.com/sdk/download/{{ vulkan_sdk_version }}/linux/vulkansdk-linux-x86_64-{{ vulkan_sdk_version }}.tar.xz"
+    dest: "/tmp/vulkansdk-{{ vulkan_sdk_version }}.tar.xz"
+    mode: "0644"
+  register: vulkan_download
+  tags:
+    - vulkan_sdk
+
+- name: Extract Vulkan SDK tarball
+  ansible.builtin.unarchive:
+    src: "/tmp/vulkansdk-{{ vulkan_sdk_version }}.tar.xz"
+    dest: "{{ vulkan_sdk_install_dir }}"
+    remote_src: true
+    extra_opts: [--strip-components=0]
+    creates: "{{ vulkan_sdk_install_dir }}/{{ vulkan_sdk_version }}"
+  tags:
+    - vulkan_sdk
+
+- name: Create symlink to latest Vulkan SDK
+  ansible.builtin.file:
+    src: "{{ vulkan_sdk_install_dir }}/{{ vulkan_sdk_version }}"
+    dest: "{{ vulkan_sdk_install_dir }}/latest"
+    state: link
+    force: true
+  tags:
+    - vulkan_sdk
+
+- name: Add Vulkan SDK to system PATH via /etc/profile.d
+  ansible.builtin.copy:
+    dest: "/etc/profile.d/vulkansdk.sh"
+    content: |
+      source /opt/vulkansdk/latest/setup-env.sh
+    mode: "0644"
+  tags:
+    - vulkan_sdk
+
+- name: Remove downloaded tarball (optional)
+  ansible.builtin.file:
+    path: "/tmp/vulkansdk-{{ vulkan_sdk_version }}.tar.xz"
+    state: absent
+  tags:
+    - vulkan_sdk

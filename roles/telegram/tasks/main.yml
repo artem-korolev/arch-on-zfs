@@ -1,5 +1,10 @@
 ---
 - name: Telegram client
+  ansible.builtin.include_tasks: distros/distro_prepare.yml
+  tags:
+    - telegram
+
+- name: Install Telegram client (Universal)
   ansible.builtin.include_tasks: telegram.yml
   tags:
     - telegram

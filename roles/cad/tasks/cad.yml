@@ -1,6 +1,6 @@
 ---
 - name: Install OpenSCAD
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name:
       - openscad
     state: present
@@ -8,10 +8,20 @@
     - cad
 
 - name: Install Sweet Home 3D
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name:
       - sweethome3d
     state: present
+  tags:
+    - cad
+  when: ansible_facts['distribution'] == "Ubuntu"
+
+- name: Install Sweet Home 3D via Flatpak (system-wide)
+  ansible.builtin.command: >
+    flatpak install --assumeyes --system flathub com.sweethome3d.Sweethome3d
+  args:
+    creates: /var/lib/flatpak/app/com.sweethome3d.Sweethome3d
+  when: ansible_facts['distribution'] == "Fedora"
   tags:
     - cad
 
@@ -22,44 +32,44 @@
 #     state: present
 #   tags:
 #     - cad
+- name: Install FreeCAD
+  ansible.builtin.command: >
+    flatpak install --assumeyes --system flathub org.freecad.FreeCAD
+  args:
+    creates: /var/lib/flatpak/app/org.freecad.FreeCAD
+  when: ansible_facts['distribution'] == "Fedora"
+  tags:
+    - cad
 
 - name: Install LibreCAD
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name:
       - librecad
+      - librecad-parts
     state: present
   tags:
     - cad
 
-- name: Download BRL-CAD archive
-  ansible.builtin.get_url:
-    url: https://github.com/BRL-CAD/brlcad/releases/download/rel-7-40-2/BRL-CAD_7.40.2_Linux_x86_64.tar.bz2
-    dest: /tmp/BRL-CAD_7.40.2_Linux_x86_64.tar.bz2
-    mode: "0644"
+- name: Install LibreCAD (Fedora specific additions)
+  ansible.builtin.package:
+    name:
+      - librecad-patterns
+      - librecad-fonts
+      - librecad-langs
+    state: present
+  when: ansible_facts['distribution'] == "Fedora"
   tags:
     - cad
 
-- name: Ensure /opt/BRL-CAD directory exists
-  ansible.builtin.file:
-    path: /opt/BRL-CAD
-    state: directory
-    mode: "0755"
+- name: Check if BRL-CAD is already installed
+  ansible.builtin.stat:
+    path: "/opt/BRL-CAD/bin/brlman"
+  register: brl_cad_installed
   tags:
     - cad
 
-- name: Extract BRL-CAD archive to /opt/BRL-CAD
-  ansible.builtin.unarchive:
-    src: /tmp/BRL-CAD_7.40.2_Linux_x86_64.tar.bz2
-    dest: /opt/BRL-CAD
-    remote_src: true
-    extra_opts: [--strip-components=1]
-    creates: /opt/BRL-CAD/bin # The creates option ensures that the task does not re-extract if the target directory already contains the expected files
-  tags:
-    - cad
-
-- name: Cleanup downloaded archive
-  ansible.builtin.file:
-    path: /tmp/BRL-CAD_7.40.2_Linux_x86_64.tar.bz2
-    state: absent
+- name: Run BRL-CAD Tarball Installer
+  ansible.builtin.include_tasks: brl_cad_install.yml
+  when: not brl_cad_installed.stat.exists
   tags:
     - cad

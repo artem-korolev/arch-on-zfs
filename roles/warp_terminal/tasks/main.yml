@@ -1,5 +1,5 @@
 ---
-- name: Warp Terminal (The intelligent terminal with AI)
+- name: Warp Terminal (Intelligent AI powered terminal)
   ansible.builtin.include_tasks: warp_terminal.yml
   tags:
     - warp_terminal

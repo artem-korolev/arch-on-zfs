@@ -1,0 +1,7 @@
+# roles/brave/tasks/distros/distro_prepare.yml
+---
+- name: "Prepare Ubuntu system for Brave installation"
+  ansible.builtin.include_tasks: distros/ubuntu.yml
+  when: ansible_facts['distribution'] == "Ubuntu"
+  tags:
+    - mail_client

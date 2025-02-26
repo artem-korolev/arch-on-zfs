@@ -1,0 +1,13 @@
+---
+- name: Check if Vulkan SDK is already installed
+  ansible.builtin.stat:
+    path: "{{ vulkan_sdk_install_dir }}/{{ vulkan_sdk_version }}/vulkansdk"
+  register: vulkan_sdk_installed
+  tags:
+    - vulkan_sdk
+
+- name: Run Vulkan Tarball Installer
+  ansible.builtin.include_tasks: distros/non_ubuntu_install.yml
+  when: not vulkan_sdk_installed.stat.exists
+  tags:
+    - vulkan_sdk
