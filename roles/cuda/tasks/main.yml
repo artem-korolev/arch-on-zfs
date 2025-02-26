@@ -1,0 +1,5 @@
+---
+- name: CUDA Toolkit
+  ansible.builtin.include_tasks: distros/distro_prepare.yml
+  tags:
+    - cuda

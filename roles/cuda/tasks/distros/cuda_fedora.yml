@@ -1,0 +1,78 @@
+# roles/brave/tasks/distros/fedora.yml
+---
+- name: "Ensure dnf-plugins-core is installed"
+  ansible.builtin.dnf:
+    name: dnf-plugins-core
+    state: present
+  tags:
+    - cuda
+
+- name: "Add CUDA Toolkit repository (Fedora 41 and later with DNF-5)"
+  ansible.builtin.command: >
+    dnf config-manager addrepo --from-repofile=https://developer.download.nvidia.com/compute/cuda/repos/fedora41/{{ ansible_facts['architecture'] }}/cuda-fedora41.repo
+  args:
+    creates: /etc/yum.repos.d/cuda-fedora41.repo
+  when:
+    - ansible_facts['pkg_mgr'] in ['dnf5']
+    - ansible_facts['distribution_major_version'] | int >= 41
+  tags:
+    - cuda
+
+- name: "Add CUDA Toolkit repository (Fedora 39 and later)"
+  ansible.builtin.command: >
+    dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/fedora39/x86_64/cuda-fedora39.repo
+  args:
+    creates: /etc/yum.repos.d/cuda-fedora39.repo
+  when:
+    - ansible_facts['distribution_major_version'] | int >= 39
+    - ansible_facts['distribution_major_version'] | int < 41
+  tags:
+    - cuda
+
+# - name: "Add CUDA Toolkit repository (RHEL/Rocky/Alma 9)"
+#   ansible.builtin.command: >
+#     dnf config-manager --add-repo http://developer.download.nvidia.com/compute/cuda/repos/rhel9/x86_64/cuda-rhel9.repo
+
+- name: "Disable nvidia-driver from CUDA Toolkit (use installed in distro; otherwise will be conflict)"
+  ansible.builtin.command: >
+    dnf module disable nvidia-driver --skip-unavailable
+  tags:
+    - cuda
+
+- name: "Disable nvidia-driver from CUDA Toolkit (Fedora 41 and later with DNF-5) (use installed in distro; otherwise will be conflict)"
+  ansible.builtin.command: >
+    dnf config-manager setopt cuda-fedora41-{{ ansible_facts['architecture'] }}.exclude=nvidia-driver,nvidia-modprobe,nvidia-persistenced,nvidia-settings,nvidia-libXNVCtrl,nvidia-xconfig
+  when:
+    - ansible_facts['pkg_mgr'] in ['dnf5']
+    - ansible_facts['distribution_major_version'] | int >= 41
+  tags:
+    - cuda
+
+- name: Run CUDA Toolkit Installer (Fedora 41 and later with DNF-5)
+  ansible.builtin.package:
+    name: cuda-toolkit
+    state: present
+  when:
+    - ansible_facts['pkg_mgr'] in ['dnf5']
+    - ansible_facts['distribution_major_version'] | int >= 41
+  tags:
+    - cuda
+
+- name: Run CUDA Toolkit Installer (Fedora 39 and later)
+  ansible.builtin.package:
+    name: cuda
+    state: present
+  when:
+    - ansible_facts['distribution_major_version'] | int >= 39
+    - ansible_facts['distribution_major_version'] | int < 41
+  tags:
+    - cuda
+
+- name: Add CUDA Toolkit to system PATH via /etc/profile.d
+  ansible.builtin.copy:
+    dest: "/etc/profile.d/cuda_toolkit.sh"
+    content: |
+      export PATH="/usr/local/cuda/bin:$PATH"
+    mode: "0644"
+  tags:
+    - cuda

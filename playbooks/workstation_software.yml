@@ -39,4 +39,5 @@
     - warp_terminal
     # - file_systems
     - text_tools
+    - cuda
     # - creative_studio
