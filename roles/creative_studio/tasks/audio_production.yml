@@ -21,7 +21,7 @@
   ansible.builtin.package:
     name:
       - lsp-plugins # LSP Plugins
-      - at1 # JACK autotuner (package may be named 'autotalent' or 'at1')
+      # - at1 # JACK autotuner (package may be named 'autotalent' or 'at1')
       - rakarrack
       - zita-rev1
       - guitarix
@@ -36,8 +36,8 @@
   become: true
   ansible.builtin.package:
     name:
-      - aeolus
-      - hexter
+      # - aeolus
+      # - hexter
       - phasex
       - yoshimi
       - zynaddsubfx
@@ -53,15 +53,16 @@
   become: true
   ansible.builtin.package:
     name:
-      - gmidimonitor # Some distros might call it 'gmidi-monitor'
+      # - gmidimonitor # Some distros might call it 'gmidi-monitor'
+      - kmidimon
       - vmpk # Virtual MIDI Keyboard
       - qmidiarp
-      - qmidinet
-      - qmidiroute
+      # - qmidinet # TODO: install from tarball
+      # - qmidiroute
       - qsynth
       - qjackctl # Also used for JACK control
-      - mcpdisp # MIDI control panel display?
-      - mcpdisp-ext
+      # - mcpdisp # MIDI control panel display?
+      # - mcpdisp-ext
       - qpwgraph # PipeWire graph/patchbay (if using PipeWire)
     state: present
   tags:
@@ -98,7 +99,11 @@
   become: true
   ansible.builtin.package:
     name:
-      - zita-mu1 # Stereo monitoring app
+      - zita-rev1
+      - zita-resampler
+      - zita-at1
+      - zita-ajbridge
+      # - zita-mu1 # Stereo monitoring app # TODO: build from source
       - meterbridge # Audio level meter
     state: present
   tags:
@@ -111,18 +116,20 @@
   become: true
   ansible.builtin.package:
     name:
-      - ardour
+      - ardour8
       - audacity
-      - dgedit # (If available; some distros might differ)
-      - envy24control # Possibly part of mudita24
-      - fluidsynth-dssi
-      - geonkick
+      # - dgedit # TODO: find, or build from source
+      # - envy24control # Possibly part of mudita24
+      - mudita24
+      - fluidsynth
+      # - fluidsynth-dssi # TODO: install from tarball
+      # - geonkick # TODO: install from tarball or build from source
       - hydrogen
       - kid3-qt
       - lmms
-      - musescore3
-      - patchance
-      - puredata
+      - musescore
+      # - patchance # TODO: build find source or find package
+      # - puredata # TODO: install from Flatpak
       - qtractor
       - raysession
       - sooperlooper
@@ -136,8 +143,11 @@
   become: true
   ansible.builtin.package:
     name:
-      - pulsiauido-module-jack
-      - pipewire-audio-client-libraries
+      - pulseaudio-module-jack
+      # - pipewire-audio-client-libraries
+      # - pipewire-jack-audio-connection-kit
+      - pipewire
+      - pipewire-alsa
       # Adjust to your distro
     state: present
   tags:

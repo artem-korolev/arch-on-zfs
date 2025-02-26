@@ -41,4 +41,4 @@
     - text_tools
     - cuda
     - prime_run
-    # - creative_studio
+    - creative_studio

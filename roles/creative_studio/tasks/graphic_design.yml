@@ -7,11 +7,11 @@
   package:
     name:
       - displaycal # Display calibration
-      - imagemagick # color depth = q16
+      - ImageMagick # color depth = q16
       - skanlite # Image scanning
-      - profile-loader # or "icc-profiles" / "profileloader" - depends on distro
-      - synthetic-icc
-      - testchart-editor
+      # - profile-loader # or "icc-profiles" / "profileloader" - depends on distro
+      # - synthetic-icc
+      # - testchart-editor
       # 3D LUT Maker, Curve Viewer, Scripting Client, VRML to X3D converter
       # may or may not exist as separate packages. Adjust as needed.
     state: present
@@ -43,7 +43,6 @@
     name:
       - blender
       - hugin
-      - hugin-tools
       # Also includes "Hugin Batch Processor", "Hugin Calibrate Lens", "Hugin Panorama Creator"
       # ...
     state: present
@@ -64,7 +63,7 @@
       - krita
       - libreoffice-draw
       - mypaint
-      - pikopixel
+      # - pikopixel # TODO: install from here - https://twilightedge.com/gnustep/pikopixel/fedora_install_script.html
       - synfigstudio
       # ...
     state: present
