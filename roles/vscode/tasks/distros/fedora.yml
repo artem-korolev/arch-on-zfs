@@ -1,0 +1,30 @@
+---
+- name: Import VSCode GPG key
+  ansible.builtin.rpm_key:
+    state: present
+    key: https://packages.microsoft.com/keys/microsoft.asc
+  tags:
+    - vscode
+
+- name: Add VSCode repository
+  ansible.builtin.copy:
+    dest: /etc/yum.repos.d/vscode.repo
+    content: |
+      [code]
+      name=Visual Studio Code
+      baseurl=https://packages.microsoft.com/yumrepos/vscode
+      enabled=1
+      autorefresh=1
+      type=rpm-md
+      gpgcheck=1
+      gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+  become: true
+  tags:
+    - vscode
+
+- name: Update DNF package cache
+  ansible.builtin.dnf:
+    update_cache: true
+  become: true
+  tags:
+    - vscode

@@ -1,3 +1,19 @@
 ---
-- name: VSCode
+- name: VSCode/Insiders
+  ansible.builtin.debug:
+  tags:
+    - vscode
+
+#- name: "Detect system distribution"
+#  ansible.builtin.setup:
+
+- name: Prepare system based on distribution
+  ansible.builtin.include_tasks: distros/distro_prepare.yml
+  tags:
+    - vscode
+
+- name: Install VSCode (Universal)
   ansible.builtin.include_tasks: vscode.yml
+  tags:
+    - vscode
+

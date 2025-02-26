@@ -1,22 +1,10 @@
 ---
-- name: Add VSCode repository key
-  ansible.builtin.apt_key:
-    url: https://packages.microsoft.com/keys/microsoft.asc
-    keyring: /etc/apt/keyrings/microsoft-archive-keyring.gpg
-    state: present
-
-- name: Add VSCode repository
-  ansible.builtin.apt_repository:
-    repo: deb [arch=amd64 signed-by=/etc/apt/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/vscode stable main
-    state: present
-
-- name: Update apt cache
-  ansible.builtin.apt:
-    update_cache: true
-
-- name: Install VSCode Insiders
-  ansible.builtin.apt:
+- name: Install VSCode
+  ansible.builtin.package:
     name:
       - code
       - code-insiders
     state: present
+  tags:
+    - vscode
+

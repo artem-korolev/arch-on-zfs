@@ -1,0 +1,29 @@
+---
+- name: Import VSCode GPG key
+  ansible.builtin.rpm_key:
+    state: present
+    key: https://packages.microsoft.com/keys/microsoft.asc
+  tags:
+    - vscode
+
+- name: Add VSCode repository
+  ansible.builtin.copy:
+    dest: /etc/zypp/repos.d/vscode.repo
+    content: |
+      [code]
+      name=Visual Studio Code
+      baseurl=https://packages.microsoft.com/yumrepos/vscode
+      enabled=1
+      autorefresh=1
+      type=rpm-md
+      gpgcheck=1
+      gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+  become: true
+  tags:
+    - vscode
+
+- name: Refresh Zypper repositories
+  ansible.builtin.command: zypper --non-interactive ref
+  become: true
+  tags:
+    - vscode
