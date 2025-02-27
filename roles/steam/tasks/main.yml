@@ -1,0 +1,8 @@
+---
+- name: Install Steam Client
+  ansible.builtin.package:
+    name:
+      - steam
+    state: present
+  tags:
+    - steam
