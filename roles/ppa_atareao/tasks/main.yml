@@ -1,0 +1,6 @@
+---
+- name: RPM Fusion free/non-free repos
+  ansible.builtin.include_tasks: ppa_atareao.yml
+  when: ansible_facts['distribution'] == "Ubuntu"
+  tags:
+    - always

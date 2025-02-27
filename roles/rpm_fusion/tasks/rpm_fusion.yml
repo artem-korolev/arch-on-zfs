@@ -1,15 +1,21 @@
 ---
 - name: Import RPMFusion free key
+  tags:
+    - always
   ansible.builtin.rpm_key:
     state: present
     key: https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-fedora-2020
 
 - name: Import RPMFusion non-free key
+  tags:
+    - always
   ansible.builtin.rpm_key:
     state: present
     key: https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-nonfree-fedora-2020
 
 - name: Add RPMFusion free & non-free repositories
+  tags:
+    - always
   ansible.builtin.dnf:
     name:
       - "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm"
@@ -17,11 +23,15 @@
     state: present
 
 - name: On Fedora, we default to use the openh264 library, so you need the repository to be explicitly enabled
+  tags:
+    - always
   ansible.builtin.command: >
     dnf config-manager --enable fedora-cisco-openh264
   when: ansible_facts['distribution_major_version'] | int <= 40
 
 - name: On Fedora, we default to use the openh264 library, so you need the repository to be explicitly enabled
+  tags:
+    - always
   ansible.builtin.command: >
     dnf config-manager setopt fedora-cisco-openh264.enabled=1
   when: ansible_facts['distribution_major_version'] | int >= 41

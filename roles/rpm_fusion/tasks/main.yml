@@ -2,3 +2,5 @@
 - name: RPM Fusion free/non-free repos
   ansible.builtin.include_tasks: rpm_fusion.yml
   when: ansible_facts['distribution'] == "Fedora"
+  tags:
+    - always

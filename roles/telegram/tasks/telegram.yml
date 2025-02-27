@@ -1,8 +1,0 @@
----
-# Step 3: Install Telegram as a DEB package
-- name: Install Telegram
-  ansible.builtin.package:
-    name: telegram
-    state: present
-  tags:
-    - telegram

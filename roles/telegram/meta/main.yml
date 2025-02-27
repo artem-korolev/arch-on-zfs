@@ -1,0 +1,6 @@
+---
+dependencies:
+  - role: rpm_fusion
+    become: true
+  - role: ppa_atareao
+    become: true
