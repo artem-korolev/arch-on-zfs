@@ -224,6 +224,12 @@ case "$1" in
 esac
 ```
 
+## Logs
+
+```bash
+journalctl -t force-hibernate --no-pager
+```
+
 ## To be fully safe
 
 "Fully safe" means to at least sync your disks and shutdown properly.
