@@ -1,0 +1,7 @@
+---
+- name: Workstation Software Installation
+  hosts: localhost
+  become: true
+  gather_facts: true
+  roles:
+    - file_systems
