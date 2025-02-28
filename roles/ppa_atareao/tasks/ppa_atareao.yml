@@ -1,7 +1,0 @@
----
-- name: Add Atareao Team PPA
-  ansible.builtin.apt_repository:
-    repo: ppa:atareao/telegram
-    state: present
-  tags:
-    - always

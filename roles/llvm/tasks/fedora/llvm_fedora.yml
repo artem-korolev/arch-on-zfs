@@ -1,0 +1,19 @@
+---
+- name: Install all LLVM packages (meta packages)
+  ansible.builtin.package:
+    name:
+      - clang-format
+      - clang-analyzer
+      - clang-tidy
+      - clang-tools-extra
+      - clang
+      - clangd
+      - lld
+      - lldb
+      - llvm-devel
+      - libomp
+      - libomp-devel
+      - llvm
+      - python3-clang
+      - polly
+    state: present

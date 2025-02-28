@@ -1,3 +1,5 @@
 ---
 - name: Ansible linter
-  ansible.builtin.include_tasks: ansible-lint.yml
+  ansible.builtin.package:
+    name: ansible-lint
+    state: present

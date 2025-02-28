@@ -1,10 +1,34 @@
 ---
-- name: VSCode/Insiders
-  ansible.builtin.include_tasks: distros/distro_prepare.yml
+- name: Prepare Ubuntu system for VSCode installation
+  ansible.builtin.include_tasks: ubuntu/vscode_ubuntu.yml
+  when: ansible_facts['distribution'] == "Ubuntu"
   tags:
     - vscode
 
-- name: Install VSCode (Universal)
-  ansible.builtin.include_tasks: vscode.yml
+- name: Prepare Fedora system for VSCode installation
+  ansible.builtin.include_tasks: fedora/vscode_fedora.yml
+  when: ansible_facts['distribution'] == "Fedora"
+  tags:
+    - vscode
+
+- name: Prepare openSUSE system for VSCode installation
+  ansible.builtin.include_tasks: opensuse/vscode_opensuse.yml
+  when: ansible_facts['distribution'] == "openSUSE Tumbleweed"
+  tags:
+    - vscode
+
+- name: Unsupported distro message
+  ansible.builtin.debug:
+    msg: VSCode role does not support this OS
+  when: ansible_facts['distribution'] not in ["Ubuntu", "Fedora", "openSUSE Tumbleweed"]
+  tags:
+    - vscode
+
+- name: Install VSCode
+  ansible.builtin.package:
+    name:
+      - code
+      - code-insiders
+    state: present
   tags:
     - vscode

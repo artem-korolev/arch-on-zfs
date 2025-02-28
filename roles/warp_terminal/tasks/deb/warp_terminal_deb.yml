@@ -1,0 +1,11 @@
+# trunk-ignore-all(checkov/CKV_ANSIBLE_5)
+---
+# TODO: versions are hardcoded; find how to solve it and possible install latest
+- name: Install Warp for DEB-based systems
+  ansible.builtin.apt:
+    deb: https://releases.warp.dev/stable/v0.2025.02.19.08.02.stable_05/warp-terminal_0.2025.02.19.08.02.stable.05_amd64.deb
+    state: present
+    allow_unauthenticated: true # TODO: it is bad; find the key
+  when: ansible_facts['pkg_mgr'] in deb_based_pkg_managers
+  tags:
+    - warp_terminal

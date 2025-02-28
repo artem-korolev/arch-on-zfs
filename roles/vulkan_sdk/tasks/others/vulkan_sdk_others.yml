@@ -1,0 +1,7 @@
+---
+- name: Run Vulkan Tarball Installer
+  ansible.builtin.include_tasks: vulkan_sdk_others_install.yml
+  args:
+    creates: "{{ vulkan_sdk_install_dir }}/{{ vulkan_sdk_version }}/vulkansdk"
+  tags:
+    - vulkan_sdk

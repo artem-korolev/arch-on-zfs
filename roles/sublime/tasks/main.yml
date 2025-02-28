@@ -1,6 +1,23 @@
 ---
-- name: Sublime Merge
-  ansible.builtin.include_tasks: distros/distro_prepare.yml
+- name: Prepare Ubuntu system for Sublime Merge installation
+  ansible.builtin.include_tasks: ubuntu/sublime_ubuntu.yml
+  when: ansible_facts['distribution'] == "Ubuntu"
 
-- name: Install Sublime Merge (Universal)
-  ansible.builtin.include_tasks: sublime-merge.yml
+- name: Prepare Fedora system for Sublime Merge installation
+  ansible.builtin.include_tasks: fedora/sublime_fedora.yml
+  when: ansible_facts['distribution'] == "Fedora"
+
+- name: Prepare openSUSE system for Sublime Merge installation
+  ansible.builtin.include_tasks: opensuse/sublime_opensuse.yml
+  when: ansible_facts['distribution'] == "openSUSE Tumbleweed"
+
+- name: Inform about unsupported OS
+  ansible.builtin.debug:
+    msg: "Sublime Merge role does not support this OS: {{ ansible_facts['distribution'] }}"
+  when: ansible_facts['distribution'] not in ["Ubuntu", "Fedora", "openSUSE Tumbleweed"]
+
+- name: Install Sublime Merge
+  ansible.builtin.package:
+    name:
+      - sublime-merge
+    state: present

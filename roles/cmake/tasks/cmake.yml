@@ -1,7 +1,0 @@
----
-- name: Install CMake
-  ansible.builtin.package:
-    name:
-      - cmake
-      - ninja-build
-    state: present

@@ -1,4 +1,0 @@
----
-dependencies:
-  - role: rpm_fusion
-    become: true

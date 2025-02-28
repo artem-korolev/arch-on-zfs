@@ -1,0 +1,5 @@
+---
+- name: Include RPMFusion
+  include_role:
+    name: rpm_fusion
+  tags: [steam]

@@ -1,8 +1,12 @@
 ---
+- name: Prepare Fedora for Steam Installation
+  include_tasks: fedora/steam_fedora.yml
+  when: ansible_facts['distribution'] == "Fedora"
+  tags: [steam]
+
 - name: Install Steam Client
   ansible.builtin.package:
     name:
       - steam
     state: present
-  tags:
-    - steam
+  tags: [steam]

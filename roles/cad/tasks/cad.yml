@@ -45,7 +45,6 @@
   ansible.builtin.package:
     name:
       - librecad
-      - librecad-parts
     state: present
   tags:
     - cad
@@ -56,6 +55,7 @@
       - librecad-patterns
       - librecad-fonts
       - librecad-langs
+      - librecad-parts
     state: present
   when: ansible_facts['distribution'] == "Fedora"
   tags:
@@ -65,8 +65,6 @@
   ansible.builtin.stat:
     path: /opt/BRL-CAD/bin/brlman
   register: brl_cad_installed
-  tags:
-    - cad
 
 - name: Run BRL-CAD Tarball Installer
   ansible.builtin.include_tasks: brl_cad_install.yml

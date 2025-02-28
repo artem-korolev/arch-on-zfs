@@ -1,6 +1,0 @@
----
-- name: Install Sublime Merge
-  ansible.builtin.package:
-    name:
-      - sublime-merge
-    state: present

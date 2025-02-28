@@ -1,0 +1,19 @@
+---
+- name: Install WireGuard
+  ansible.builtin.package:
+    name:
+      - wireguard
+    state: present
+  tags: [vpn]
+
+- name: Install OpenVPN
+  ansible.builtin.package:
+    name:
+      - openvpn
+      - network-manager-openvpn
+    state: present
+  tags: [vpn]
+# - name: V2RayA and XRay
+#   ansible.builtin.include_tasks: v2raya.yml
+#   tags:
+#     - vpn

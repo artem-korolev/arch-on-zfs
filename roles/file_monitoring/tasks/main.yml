@@ -1,10 +1,5 @@
 ---
-- name: Install watchman file monitoring service
-  ansible.builtin.include_tasks: watchman.yml
-  tags:
-    - file_monitoring_packages
-
-- name: Install entr file tool
-  ansible.builtin.include_tasks: entr.yml
+- name: File Monitoring Tools
+  ansible.builtin.include_tasks: file_monitoring.yml
   tags:
     - file_monitoring_packages

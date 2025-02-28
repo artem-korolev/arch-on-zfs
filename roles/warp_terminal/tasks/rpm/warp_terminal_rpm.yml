@@ -1,0 +1,11 @@
+# trunk-ignore-all(checkov/CKV2_ANSIBLE_4)
+---
+# TODO: versions are hardcoded; find how to solve it and possible install latest
+- name: Install Warp for RPM-based systems
+  ansible.builtin.dnf:
+    name: https://releases.warp.dev/stable/v0.2025.02.19.08.02.stable_05/warp-terminal-v0.2025.02.19.08.02.stable_05-1.x86_64.rpm
+    state: present
+    disable_gpg_check: true # TODO: it is bad; find the key
+  when: ansible_facts['pkg_mgr'] in rpm_based_pkg_managers
+  tags:
+    - warp_terminal

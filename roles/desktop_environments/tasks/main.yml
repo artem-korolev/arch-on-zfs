@@ -1,5 +1,13 @@
 ---
-- name: Desktop environments and window managers
-  ansible.builtin.include_tasks: desktop_environments.yml
-  tags:
-    - desktop_environments
+# - name: Install Sway
+#   ansible.builtin.package:
+#     name:
+#       - sway
+#       - swayimg
+#       - waybar
+#       - swaylock
+#       - swaykbdd
+#       - sway-notification-center
+#     state: present
+#   tags:
+#     - desktop_environments

@@ -1,9 +1,0 @@
----
-- name: Install VSCode
-  ansible.builtin.package:
-    name:
-      - code
-      - code-insiders
-    state: present
-  tags:
-    - vscode

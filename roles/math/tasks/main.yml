@@ -1,5 +1,12 @@
 ---
-- name: Math packages
-  ansible.builtin.include_tasks: distros/distro_prepare.yml
+- name: Ubuntu math packages
+  ansible.builtin.include_tasks: ubuntu/math_ubuntu.yml
+  when: ansible_facts['distribution'] == "Ubuntu"
+  tags:
+    - math
+
+- name: Fedora math packages
+  ansible.builtin.include_tasks: fedora/math_fedora.yml
+  when: ansible_facts['distribution'] == "Fedora"
   tags:
     - math

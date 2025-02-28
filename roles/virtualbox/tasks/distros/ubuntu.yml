@@ -1,7 +1,0 @@
----
-- name: Install VirtualBox
-  ansible.builtin.package:
-    name:
-      - virtualbox
-      - virtualbox-guest-additions-iso
-    state: present

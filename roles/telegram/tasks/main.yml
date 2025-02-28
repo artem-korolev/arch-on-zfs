@@ -1,7 +1,16 @@
 ---
+- name: Prepare Ubuntu for Telegram Installation
+  ansible.builtin.include_tasks: ubuntu/telegram_ubuntu.yml
+  when: ansible_facts['distribution'] == "Ubuntu"
+  tags: [telegram]
+
+- name: Prepare Fedora for Telegram Installation
+  ansible.builtin.include_tasks: fedora/telegram_fedora.yml
+  when: ansible_facts['distribution'] == "Fedora"
+  tags: [telegram]
+
 - name: Install Telegram
   ansible.builtin.package:
     name: telegram
     state: present
-  tags:
-    - telegram
+  tags: [telegram]

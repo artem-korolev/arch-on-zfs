@@ -1,0 +1,31 @@
+# roles/wine/tasks/distros/fedora.yml
+---
+- name: Add WineHQ repository (Fedora 41+)
+  ansible.builtin.command: dnf5 config-manager addrepo --from-repofile=https://dl.winehq.org/wine-builds/fedora/{{ ansible_facts['distribution_major_version'] }}/winehq.repo
+  args:
+    creates: /etc/yum.repos.d/winehq.repo
+  when:
+    - ansible_facts['distribution_major_version'] | int >= 41
+  become: true
+  tags:
+    - wine
+
+- name: Add WineHQ repository (Fedora 40)
+  ansible.builtin.command: dnf config-manager --add-repo https://dl.winehq.org/wine-builds/fedora/{{ ansible_facts['distribution_major_version'] }}/winehq.repo
+  args:
+    creates: /etc/yum.repos.d/winehq.repo
+  when:
+    - ansible_facts['distribution_major_version'] | int == 40
+  become: true
+  tags:
+    - wine
+
+# TODO: Lutris and Playonlinux conflict with winehq; need to resolve it somehow
+- name: Install WineHQ Staging
+  ansible.builtin.package:
+    name:
+      - winehq-staging
+    state: present
+  become: true
+  tags:
+    - wine

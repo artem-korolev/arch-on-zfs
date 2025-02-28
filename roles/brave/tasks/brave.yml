@@ -1,5 +1,0 @@
----
-- name: Install Brave browser
-  ansible.builtin.package:
-    name: brave-browser
-    state: present

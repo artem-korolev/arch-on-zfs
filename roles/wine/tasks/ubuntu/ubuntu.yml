@@ -1,0 +1,35 @@
+---
+- name: Ensure i386 architecture is enabled (for 64-bit systems)
+  ansible.builtin.command: dpkg --add-architecture i386
+  when: ansible_architecture == 'x86_64'
+  become: true
+  tags:
+    - wine
+
+- name: Download and add the WineHQ repository key
+  ansible.builtin.apt_key:
+    url: https://dl.winehq.org/wine-builds/winehq.key
+    keyring: /etc/apt/keyrings/winehq-archive.key
+    state: present
+  tags:
+    - wine
+
+- name: Add the WineHQ repository (Ubuntu 24.04 "noble")
+  ansible.builtin.get_url:
+    url: https://dl.winehq.org/wine-builds/ubuntu/dists/noble/winehq-noble.sources
+    dest: /etc/apt/sources.list.d/winehq-noble.sources
+  become: true
+  tags:
+    - wine
+
+- name: Install WineHQ Staging
+  ansible.builtin.apt:
+    update_cache: true
+    name:
+      - winehq-staging
+      - lutris
+      - playonlinux
+    state: present
+  become: true
+  tags:
+    - wine

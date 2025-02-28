@@ -1,3 +1,6 @@
 ---
 - name: Trunk.io
-  ansible.builtin.include_tasks: trunk.io.yml
+  ansible.builtin.get_url:
+    url: https://trunk.io/releases/trunk
+    dest: /usr/local/bin/trunk_io
+    mode: "0755"

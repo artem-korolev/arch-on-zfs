@@ -1,0 +1,13 @@
+---
+- name: Install NVIDIA CUDA keyring package directly from URL
+  ansible.builtin.apt:
+    deb: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
+
+- name: Update APT package index
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Install CUDA Toolkit 12.8
+  ansible.builtin.apt:
+    name: cuda-toolkit
+    state: present

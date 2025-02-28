@@ -1,3 +1,7 @@
 ---
 - name: CMake
-  ansible.builtin.include_tasks: cmake.yml
+  ansible.builtin.package:
+    name:
+      - cmake
+      - ninja-build
+    state: present

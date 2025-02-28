@@ -1,0 +1,105 @@
+---
+- name: Check if Quarto is already installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/quarto
+  register: quarto_installed
+
+- name: Quarto - An open-source scientific and technical publishing system
+  ansible.builtin.include_tasks: quarto.yml
+  when: not quarto_installed.stat.exists
+  tags:
+    - math
+
+- name: Install Scilab
+  ansible.builtin.apt:
+    name:
+      - scilab
+    state: present
+  tags:
+    - math
+
+- name: Install Kalgebra
+  ansible.builtin.apt:
+    name:
+      - kalgebra
+      - kalgebramobile
+    state: present
+  tags:
+    - math
+
+- name: Install Maxima
+  ansible.builtin.apt:
+    name:
+      - maxima
+      - wxmaxima
+    state: present
+  tags:
+    - math
+
+- name: Install Octave
+  ansible.builtin.apt:
+    name:
+      - octave
+      - octave-matgeom
+      - octave-optics
+      - octave-bart
+      - octave-divand
+      - octave-ga
+      - octave-splines
+      - octave-symbolic
+      - octave-financial
+      - octave-tsa
+      - octave-bsltl
+      - octave-communications
+      - octave-image
+      - matlab2tikz
+    # TODO: Octave have huge list of addons. Install them later, if needed
+    state: present
+  tags:
+    - math
+
+- name: Install GNU R collection of recommended packages
+  ansible.builtin.apt:
+    name:
+      - r-recommended
+    state: present
+  tags:
+    - math
+
+- name: Cantor - interface for mathematical applications
+  ansible.builtin.apt:
+    name:
+      - cantor
+      - cantor-backend-kalgebra
+      - cantor-backend-maxima
+      - cantor-backend-octave
+      - cantor-backend-qalculate
+      - cantor-backend-sage
+      - cantor-backend-scilab
+      - cantor-backend-lua
+      - cantor-backend-python3
+      - cantor-backend-r
+    state: present
+  tags:
+    - math
+
+- name: Install Jupyter Notebook
+  ansible.builtin.apt:
+    name:
+      - python3-numpy
+      - python3-sympy
+      - python3-matplotlib
+      - latexmk
+      - texlive-full
+    state: present
+  tags:
+    - math
+
+- name: Install TexStudio (LaTeX editor)
+  ansible.builtin.apt:
+    name:
+      - texstudio
+      - lyx
+    state: present
+  tags:
+    - math

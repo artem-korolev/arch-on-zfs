@@ -1,8 +1,0 @@
----
-# Step 5: Install Thunderbird as a DEB package
-- name: Install Thunderbird
-  ansible.builtin.package:
-    name: thunderbird
-    state: present
-  tags:
-    - mail_client

@@ -1,6 +1,0 @@
----
-- name: Install VirtualBox
-  ansible.builtin.package:
-    name:
-      - VirtualBox
-    state: present

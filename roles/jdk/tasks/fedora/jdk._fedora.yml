@@ -1,0 +1,10 @@
+---
+- name: Install OpenJDK
+  ansible.builtin.package:
+    name:
+      - java-{{ item }}-openjdk
+      - maven
+    state: present
+  loop: "{{ jdk_versions }}"
+  tags:
+    - jdk

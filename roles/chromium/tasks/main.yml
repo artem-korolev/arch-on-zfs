@@ -1,8 +1,10 @@
 ---
 - name: Install/Update Chromium from Linux Mint repository (for Ubuntu 24.04)
-  ansible.builtin.include_tasks: distros/ubuntu.yml
+  ansible.builtin.include_tasks: ubuntu/chromium_ubuntu.yml
   when: ansible_facts['distribution'] == "Ubuntu"
 
-- name: Install/Update Chromium from Linux Mint repository
-  ansible.builtin.include_tasks: chromium.yml
+- name: Install Chromium Browser Package
+  ansible.builtin.package:
+    name: chromium
+    state: present
   when: ansible_facts['distribution'] != "Ubuntu"

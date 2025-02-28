@@ -1,8 +1,10 @@
 ---
 - name: Oracle VirtualBox
-  ansible.builtin.include_tasks: distros/ubuntu.yml
+  ansible.builtin.include_tasks: ubuntu/virtualbox_ubuntu.yml
   when: ansible_facts['distribution'] == "Ubuntu"
+  tags: [virtualbox]
 # TODO: Check it first. There are some tricks with kernel
 # - name: Oracle VirtualBox
-#   ansible.builtin.include_tasks: distros/fedora.yml
+#   ansible.builtin.include_tasks: fedora/virtualbox_fedora.yml
 #   when: ansible_facts['distribution'] == "Fedora"
+#   tags: [virtualbox]

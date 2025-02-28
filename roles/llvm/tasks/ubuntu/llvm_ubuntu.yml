@@ -1,0 +1,61 @@
+---
+- name: Add LLVM repository key
+  ansible.builtin.apt_key:
+    url: https://apt.llvm.org/llvm-snapshot.gpg.key
+    keyring: /etc/apt/keyrings/llvm-archive-keyring.gpg
+    state: present
+
+- name: Add LLVM binary repository
+  ansible.builtin.apt_repository:
+    repo: >
+      deb [signed-by=/etc/apt/keyrings/llvm-archive-keyring.gpg]
+      http://apt.llvm.org/{{ ansible_facts.distribution_release }}/
+      llvm-toolchain-{{ ansible_facts.distribution_release }} main
+    state: present
+
+- name: Add LLVM source repository
+  ansible.builtin.apt_repository:
+    repo: >
+      deb-src [signed-by=/etc/apt/keyrings/llvm-archive-keyring.gpg]
+      http://apt.llvm.org/{{ ansible_facts.distribution_release }}/
+      llvm-toolchain-{{ ansible_facts.distribution_release }} main
+    state: present
+
+# There is a problem, at least with one package - libpolly-20-dev - there is
+# no meta-package for it. And nothing depend on it. So you must specify its
+# version explicitly. But how to make it, if you don't know what is current
+# LLVM release. Its LLVM repo problem. Hope they will fix it. For now I'm
+# installing meta-packages (latest LLVM repo versions) + specific version
+# packages in order to get libpolly-dev also available
+- name: Install all LLVM packages (versioned ones)
+  ansible.builtin.package:
+    name:
+      - clang-format-{{ item }}
+      - clang-tidy-{{ item }}
+      - clang-tools-{{ item }}
+      - clang-{{ item }}
+      - clangd-{{ item }}
+      - libc++-{{ item }}-dev
+      - libc++1-{{ item }}
+      - libc++abi-{{ item }}-dev
+      - libc++abi1-{{ item }}
+      - libclang-{{ item }}-dev
+      - libclang-common-{{ item }}-dev
+      - libclang-cpp{{ item }}-dev
+      - libunwind-{{ item }}-dev
+      - libclang1-{{ item }}
+      - liblldb-{{ item }}-dev
+      - libllvm-{{ item }}-ocaml-dev
+      - libomp-{{ item }}-dev
+      - lld-{{ item }}
+      - lldb-{{ item }}
+      - llvm-{{ item }}-dev
+      - llvm-{{ item }}-runtime
+      - llvm-{{ item }}-tools
+      - libomp-{{ item }}-dev
+      - llvm-{{ item }}
+      - python3-clang-{{ item }}
+      - libclang-rt-{{ item }}-dev
+      - libpolly-{{ item }}-dev
+    state: present
+  loop: "{{ llvm_versions }}"

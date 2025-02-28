@@ -1,9 +1,10 @@
 ---
-- name: VPN tools
-  ansible.builtin.include_tasks: vpn.yml
-  tags:
-    - vpn
-# - name: V2RayA and XRay
-#   ansible.builtin.include_tasks: v2raya.yml
-#   tags:
-#     - vpn
+- name: VPN tools (Ubuntu)
+  ansible.builtin.include_tasks: ubuntu/vpn_ubuntu.yml
+  when: ansible_facts['distribution'] == "Ubuntu"
+  tags: [vpn]
+
+- name: VPN tools (Fedora)
+  ansible.builtin.include_tasks: fedora/vpn_fedora.yml
+  when: ansible_facts['distribution'] == "Fedora"
+  tags: [vpn]

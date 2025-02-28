@@ -1,0 +1,16 @@
+---
+- name: Install WireGuard
+  ansible.builtin.package:
+    name:
+      - wireguard-tools
+    state: present
+  tags: [vpn]
+
+- name: Install OpenVPN
+  ansible.builtin.package:
+    name:
+      - openvpn
+      - NetworkManager-openvpn
+      - NetworkManager-openvpn-gnome
+    state: present
+  tags: [vpn]

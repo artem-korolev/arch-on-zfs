@@ -1,6 +1,8 @@
 ---
-- name: LLVM toolchain
-  ansible.builtin.include_tasks: distros/distro_prepare.yml
+- name: Install LLVM toolchain (Ubuntu)
+  ansible.builtin.include_tasks: ubuntu/llvm_ubuntu.yml
+  when: ansible_facts['distribution'] == "Ubuntu"
 
-- name: Install LLVM toolchain (Universal)
-  ansible.builtin.include_tasks: llvm.yml
+- name: Install LLVM toolchain (Fedora)
+  ansible.builtin.include_tasks: fedora/llvm_fedora.yml
+  when: ansible_facts['distribution'] == "Fedora"

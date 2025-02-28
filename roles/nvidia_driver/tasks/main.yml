@@ -1,12 +1,12 @@
 ---
 - name: NVIDIA driver in openSUSE Tumbleweed
-  include_tasks: opensuse_tumbleweed/main.yml
+  include_tasks: opensuse/nvidia_driver_tumbleweed.yml
   when: ansible_facts['distribution'] == "openSUSE Tumbleweed"
   tags:
     - nvidia_driver
 
 - name: NVIDIA driver in Fedora
-  include_tasks: fedora/fedora_nvidia_driver_install.yml
+  include_tasks: fedora/nvidia_driver_fedora.yml
   when: ansible_facts['distribution'] == "Fedora"
   tags:
     - nvidia_driver

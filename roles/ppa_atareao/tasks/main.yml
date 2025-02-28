@@ -1,6 +1,5 @@
 ---
-- name: RPM Fusion free/non-free repos
-  ansible.builtin.include_tasks: ppa_atareao.yml
-  when: ansible_facts['distribution'] == "Ubuntu"
-  tags:
-    - always
+- name: Add Atareao Team PPA
+  ansible.builtin.apt_repository:
+    repo: ppa:atareao/telegram
+    state: present

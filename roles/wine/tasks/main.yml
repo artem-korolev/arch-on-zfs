@@ -1,10 +1,19 @@
 ---
 - name: WineHQ
-  ansible.builtin.include_tasks: distros/distro_prepare.yml
+  ansible.builtin.include_tasks: ubuntu/ubuntu.yml
+  when: ansible_facts['distribution'] == "Ubuntu"
   tags:
     - wine
 
-- name: Install WineHQ (Universal)
-  ansible.builtin.include_tasks: winehq.yml
+- name: WineHQ
+  ansible.builtin.include_tasks: fedora/fedora.yml
+  when: ansible_facts['distribution'] == "Fedora"
+  tags:
+    - wine
+
+- name: Inform about unsupported OS
+  ansible.builtin.debug:
+    msg: "WineHQ role does not support this OS: {{ ansible_facts['distribution'] }}"
+  when: ansible_facts['distribution'] not in ["Ubuntu", "Fedora"]
   tags:
     - wine

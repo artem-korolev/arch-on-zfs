@@ -1,10 +1,13 @@
 ---
-- name: Mail client
-  ansible.builtin.include_tasks: distros/distro_prepare.yml
+- name: Prepare Ubuntu system for Mozilla Thunderbird installation
+  ansible.builtin.include_tasks: ubuntu/thunderbird_ubuntu.yml
+  when: ansible_facts['distribution'] == "Ubuntu"
   tags:
     - mail_client
 
-- name: Mail client
-  ansible.builtin.include_tasks: thunderbird.yml
+- name: Install Thunderbird
+  ansible.builtin.package:
+    name: thunderbird
+    state: present
   tags:
     - mail_client

@@ -1,0 +1,14 @@
+---
+- name: Include RPMFusion
+  include_role:
+    name: rpm_fusion
+  tags: [nvidia_driver]
+
+- name: Install NVIDIA driver
+  ansible.builtin.package:
+    name:
+      - akmod-nvidia
+      - xorg-x11-drv-nvidia-cuda
+      - xorg-x11-drv-nvidia-power
+    state: present
+  tags: [nvidia_driver]

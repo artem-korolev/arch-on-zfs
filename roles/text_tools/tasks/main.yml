@@ -1,5 +1,8 @@
 ---
-- name: Text software/tools
-  ansible.builtin.include_tasks: text_tools.yml
+- name: Text software/tools (Install small CLI text tools)
+  ansible.builtin.package:
+    name:
+      - tree
+    state: present
   tags:
     - text_tools

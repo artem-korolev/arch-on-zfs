@@ -1,5 +1,12 @@
 ---
-- name: Neovim + Neovim-qt
-  ansible.builtin.include_tasks: distros/distro_prepare.yml
+- name: Neovim/Qt (Ubuntu)
+  ansible.builtin.include_tasks: ubuntu/neovim_ubuntu.yml
+  when: ansible_facts['distribution'] == "Ubuntu"
+  tags:
+    - neovim
+
+- name: Neovim/Qt (Fedora)
+  ansible.builtin.include_tasks: fedora/neovim_fedora.yml
+  when: ansible_facts['distribution'] == "Fedora"
   tags:
     - neovim

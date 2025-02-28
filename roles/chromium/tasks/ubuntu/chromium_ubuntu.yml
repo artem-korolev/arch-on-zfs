@@ -1,0 +1,9 @@
+---
+- name: Check if Chromium is already installed
+  ansible.builtin.stat:
+    path: /usr/bin/chromium
+  register: chromium_installed
+
+- name: Run Chromium Installer
+  ansible.builtin.include_tasks: chromium_ubuntu_install.yml
+  when: not chromium_installed.stat.exists

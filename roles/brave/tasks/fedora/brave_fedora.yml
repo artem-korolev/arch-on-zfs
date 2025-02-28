@@ -1,0 +1,20 @@
+# roles/brave/tasks/distros/fedora.yml
+---
+- name: Ensure dnf-plugins-core is installed
+  ansible.builtin.dnf:
+    name: dnf-plugins-core
+    state: present
+
+- name: Add Brave browser repository (Fedora 41+)
+  ansible.builtin.command: dnf config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+  args:
+    creates: /etc/yum.repos.d/brave-browser.repo
+  when:
+    - ansible_facts['distribution_major_version'] | int >= 41
+
+- name: Add Brave browser repository (Fedora <41, RHEL-based)
+  ansible.builtin.command: dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+  args:
+    creates: /etc/yum.repos.d/brave-browser.repo
+  when:
+    - ansible_facts['distribution_major_version'] | int < 41

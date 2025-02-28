@@ -1,0 +1,12 @@
+---
+- name: Include RPMFusion
+  include_role:
+    name: rpm_fusion
+  tags: [virtualbox]
+
+- name: Install VirtualBox
+  ansible.builtin.package:
+    name:
+      - VirtualBox
+    state: present
+  tags: [virtualbox]

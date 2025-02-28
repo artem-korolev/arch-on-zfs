@@ -1,5 +1,21 @@
 ---
+- name: Check if Warp Terminal is already installed
+  ansible.builtin.stat:
+    path: /usr/bin/warp-terminal
+  register: warp_terminal_installed
+
 - name: Warp Terminal (Intelligent AI powered terminal)
-  ansible.builtin.include_tasks: warp_terminal.yml
+  ansible.builtin.include_tasks: deb/warp_terminal_deb.yml
+  when:
+    - ansible_facts['pkg_mgr'] in deb_based_pkg_managers
+    - not warp_terminal_installed.stat.exists
+  tags:
+    - warp_terminal
+
+- name: Warp Terminal (Intelligent AI powered terminal)
+  ansible.builtin.include_tasks: rpm/warp_terminal_rpm.yml
+  when:
+    - ansible_facts['pkg_mgr'] in rpm_based_pkg_managers
+    - not warp_terminal_installed.stat.exists
   tags:
     - warp_terminal

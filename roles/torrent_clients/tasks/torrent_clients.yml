@@ -1,9 +1,0 @@
----
-- name: Install torrent clients
-  ansible.builtin.package:
-    name:
-      - qbittorrent
-      - transmission
-    state: present
-  tags:
-    - torrent_clients

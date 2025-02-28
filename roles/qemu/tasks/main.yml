@@ -1,4 +1,4 @@
 ---
 - name: QEMU/KVM with virt-manager
-  ansible.builtin.include_tasks: qemu.yml
+  ansible.builtin.include_tasks: ubuntu/qemu_ubuntu.yml
   when: ansible_facts['distribution'] == "Ubuntu"

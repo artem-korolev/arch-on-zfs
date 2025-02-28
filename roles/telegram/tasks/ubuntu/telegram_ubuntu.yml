@@ -1,0 +1,5 @@
+---
+- name: Include PPA/Atareao
+  include_role:
+    name: ppa_atareao
+  tags: [telegram]
