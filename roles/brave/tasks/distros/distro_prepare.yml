@@ -1,18 +1,18 @@
 # roles/brave/tasks/distros/distro_prepare.yml
 ---
-- name: "Prepare Ubuntu system for Brave installation"
+- name: Prepare Ubuntu system for Brave installation
   ansible.builtin.include_tasks: distros/ubuntu.yml
   when: ansible_facts['distribution'] == "Ubuntu"
 
-- name: "Prepare Fedora system for Brave installation"
+- name: Prepare Fedora system for Brave installation
   ansible.builtin.include_tasks: distros/fedora.yml
   when: ansible_facts['distribution'] == "Fedora"
 
-- name: "Prepare openSUSE system for Brave installation"
+- name: Prepare openSUSE system for Brave installation
   ansible.builtin.include_tasks: distros/opensuse.yml
   when: ansible_facts['distribution'] == "openSUSE Tumbleweed"
 
-- name: "Fail if the OS is unsupported"
+- name: Fail if the OS is unsupported
   ansible.builtin.debug:
-    msg: "Brave role does not support this OS"
+    msg: Brave role does not support this OS
   when: ansible_facts['distribution'] not in ["Ubuntu", "Fedora", "openSUSE Tumbleweed"]

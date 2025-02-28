@@ -1,16 +1,16 @@
 ---
-- name: "Ensure community.general collection is installed"
+- name: Ensure community.general collection is installed
   ansible.builtin.command: ansible-galaxy collection install community.general
   changed_when: false
   tags:
     - nvidia_driver
 
-- name: "Include Tumbleweed NVIDIA driver installation"
+- name: Include Tumbleweed NVIDIA driver installation
   include_tasks: install_nvidia_driver.yml
   tags:
     - nvidia_driver
 
-- name: "Include Tumbleweed Secure Boot handling"
+- name: Include Tumbleweed Secure Boot handling
   include_tasks: handle_secure_boot.yml
   tags:
     - nvidia_driver

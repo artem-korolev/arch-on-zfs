@@ -1,17 +1,17 @@
 ---
-- name: "Prepare Ubuntu system for WineHQ installation"
+- name: Prepare Ubuntu system for WineHQ installation
   ansible.builtin.include_tasks: distros/ubuntu.yml
   when: ansible_facts['distribution'] == "Ubuntu"
   tags:
     - wine
 
-- name: "Prepare Fedora system for WineHQ installation"
+- name: Prepare Fedora system for WineHQ installation
   ansible.builtin.include_tasks: distros/fedora.yml
   when: ansible_facts['distribution'] == "Fedora"
   tags:
     - wine
 
-- name: "Inform about unsupported OS"
+- name: Inform about unsupported OS
   ansible.builtin.debug:
     msg: "WineHQ role does not support this OS: {{ ansible_facts['distribution'] }}"
   when: ansible_facts['distribution'] not in ["Ubuntu", "Fedora"]

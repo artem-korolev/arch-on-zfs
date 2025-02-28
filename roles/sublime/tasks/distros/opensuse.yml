@@ -1,13 +1,13 @@
 ---
-- name: "Import Sublime GPG key"
+- name: Import Sublime GPG key
   ansible.builtin.rpm_key:
     state: present
     key: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
 
-- name: "Add Sublime Merge repository (Stable)"
+- name: Add Sublime Merge repository (Stable)
   ansible.builtin.command: zypper addrepo -g -f https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
   become: true
 
-- name: "Refresh Zypper repositories"
+- name: Refresh Zypper repositories
   ansible.builtin.command: zypper --non-interactive ref
   become: true

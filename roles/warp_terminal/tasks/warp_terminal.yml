@@ -6,7 +6,7 @@
     - warp_terminal
 
 # TODO: versions are hardcoded; find how to solve it and possible install latest
-- name: "Install Warp for DEB-based systems"
+- name: Install Warp for DEB-based systems
   ansible.builtin.apt:
     deb: https://releases.warp.dev/stable/v0.2025.02.19.08.02.stable_05/warp-terminal_0.2025.02.19.08.02.stable.05_amd64.deb
     state: present
@@ -15,7 +15,7 @@
   tags:
     - warp_terminal
 
-- name: "Install Warp for RPM-based systems"
+- name: Install Warp for RPM-based systems
   ansible.builtin.dnf:
     name: https://releases.warp.dev/stable/v0.2025.02.19.08.02.stable_05/warp-terminal-v0.2025.02.19.08.02.stable_05-1.x86_64.rpm
     state: present

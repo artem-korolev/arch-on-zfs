@@ -1,21 +1,21 @@
 ---
-- name: "Import Sublime GPG key"
+- name: Import Sublime GPG key
   ansible.builtin.rpm_key:
     state: present
     key: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
 
-- name: "Check if Sublime repository exists"
+- name: Check if Sublime repository exists
   ansible.builtin.stat:
     path: /etc/yum.repos.d/sublime-text.repo
   register: sublime_repo
 
-- name: "Add Sublime Merge repository (Fedora 41+)"
+- name: Add Sublime Merge repository (Fedora 41+)
   ansible.builtin.command: dnf config-manager addrepo --from-repofile=https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
   when:
     - ansible_facts['distribution_major_version'] | int >= 41
     - not sublime_repo.stat.exists
 
-- name: "Add Sublime Merge repository (Fedora <41)"
+- name: Add Sublime Merge repository (Fedora <41)
   ansible.builtin.command: dnf config-manager --add-repo https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
   when:
     - ansible_facts['distribution_major_version'] | int < 41

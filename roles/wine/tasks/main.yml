@@ -4,7 +4,7 @@
   tags:
     - wine
 
-- name: "Install WineHQ (Universal)"
+- name: Install WineHQ (Universal)
   ansible.builtin.include_tasks: winehq.yml
   tags:
     - wine

@@ -1,5 +1,5 @@
 ---
-- name: "Add NVIDIA repository"
+- name: Add NVIDIA repository
   community.general.zypper:
     name:
       - openSUSE-repos-Tumbleweed-NVIDIA
@@ -14,7 +14,7 @@
 #   tags:
 #     - nvidia_driver
 
-- name: "Install NVIDIA driver packages"
+- name: Install NVIDIA driver packages
   community.general.zypper:
     update_cache: yes
     name:
@@ -25,7 +25,7 @@
   tags:
     - nvidia_driver
 
-- name: "Install SUSE Prime and bbswitch"
+- name: Install SUSE Prime and bbswitch
   community.general.zypper:
     update_cache: yes
     name:

@@ -1,8 +1,8 @@
 ---
-- name: "Add Brave browser repository"
+- name: Add Brave browser repository
   ansible.builtin.command: zypper addrepo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
   become: true
 
-- name: "Refresh Zypper repositories"
+- name: Refresh Zypper repositories
   ansible.builtin.command: zypper --non-interactive ref
   become: true

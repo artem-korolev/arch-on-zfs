@@ -1,19 +1,19 @@
 ---
-- name: "NVIDIA driver in openSUSE Tumbleweed"
+- name: NVIDIA driver in openSUSE Tumbleweed
   include_tasks: opensuse_tumbleweed/main.yml
   when: ansible_facts['distribution'] == "openSUSE Tumbleweed"
   tags:
     - nvidia_driver
 
-- name: "NVIDIA driver in Fedora"
+- name: NVIDIA driver in Fedora
   include_tasks: fedora/fedora_nvidia_driver_install.yml
   when: ansible_facts['distribution'] == "Fedora"
   tags:
     - nvidia_driver
 
-- name: "Unsupported Distribution Warning"
+- name: Unsupported Distribution Warning
   fail:
-    msg: "This playbook currently only supports openSUSE Tumbleweed and Fedora. More distros will be added later."
+    msg: This playbook currently only supports openSUSE Tumbleweed and Fedora. More distros will be added later.
   when: ansible_facts['distribution'] not in ["openSUSE Tumbleweed", "Fedora"]
   tags:
     - nvidia_driver

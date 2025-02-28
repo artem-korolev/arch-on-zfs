@@ -1,12 +1,12 @@
 # roles/brave/tasks/distros/distro_prepare.yml
 ---
-- name: "Ubuntu math packages"
+- name: Ubuntu math packages
   ansible.builtin.include_tasks: distros/ubuntu.yml
   when: ansible_facts['distribution'] == "Ubuntu"
   tags:
     - neovim
 
-- name: "Fedora math packages"
+- name: Fedora math packages
   ansible.builtin.include_tasks: distros/fedora.yml
   when: ansible_facts['distribution'] == "Fedora"
   tags:

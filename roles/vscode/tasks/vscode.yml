@@ -7,4 +7,3 @@
     state: present
   tags:
     - vscode
-

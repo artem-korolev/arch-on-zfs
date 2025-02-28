@@ -63,7 +63,7 @@
 
 - name: Check if BRL-CAD is already installed
   ansible.builtin.stat:
-    path: "/opt/BRL-CAD/bin/brlman"
+    path: /opt/BRL-CAD/bin/brlman
   register: brl_cad_installed
   tags:
     - cad

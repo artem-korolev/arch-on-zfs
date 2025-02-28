@@ -1,5 +1,5 @@
 ---
-- name: "Install Chromium browser"
+- name: Install Chromium browser
   ansible.builtin.package:
     name: chromium
     state: present

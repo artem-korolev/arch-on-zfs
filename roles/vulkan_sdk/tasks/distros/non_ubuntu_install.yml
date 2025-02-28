@@ -44,7 +44,7 @@
 
 - name: Add Vulkan SDK to system PATH via /etc/profile.d
   ansible.builtin.copy:
-    dest: "/etc/profile.d/vulkansdk.sh"
+    dest: /etc/profile.d/vulkansdk.sh
     content: |
       source /opt/vulkansdk/latest/setup-env.sh
     mode: "0644"
