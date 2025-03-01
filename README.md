@@ -1,4 +1,7 @@
-# Developer machine setup automation
+# Workstation Forge
+
+| ![WorkstationForge](logo.webp) |
+|:-----------------------------:|
 
 <!-- TOC tocDepth:2..4 chapterDepth:2..6 -->
 
