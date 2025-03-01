@@ -1,0 +1,9 @@
+---
+- name: Security Testing Tools (Vulnerability Scanning and Penetration Testing)
+  ansible.builtin.import_tasks: packages/security_testing_tools.yml
+
+- name: Security Hardening Measures
+  ansible.builtin.import_tasks: packages/security_hardening.yml
+
+- name: Monitoring and Incident Response
+  ansible.builtin.import_tasks: packages/monitoring_incident_response.yml

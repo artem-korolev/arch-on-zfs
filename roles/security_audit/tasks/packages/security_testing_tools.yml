@@ -1,0 +1,53 @@
+---
+- name: Install OpenVAS
+  ansible.builtin.package:
+    name: openvas
+    state: present
+
+- name: Install Lynis
+  ansible.builtin.package:
+    name: lynis
+    state: present
+
+- name: Install Nmap
+  ansible.builtin.package:
+    name: nmap
+    state: present
+
+# TODO: find package here - https://help.ubuntu.ru/wiki/metasploit_framework_%D0%B2_ubuntu
+# - name: Install Metasploit Framework
+#   ansible.builtin.package:
+#     name: metasploit-framework
+#     state: present
+
+- name: Install Aircrack-ng
+  ansible.builtin.package:
+    name:
+      - aircrack-ng
+      - airgraph-ng
+    state: present
+
+- name: Install John the Ripper
+  ansible.builtin.package:
+    name: john
+    state: present
+
+- name: Install Nikto
+  ansible.builtin.package:
+    name: nikto
+    state: present
+
+- name: Install AIDE
+  ansible.builtin.package:
+    name: aide
+    state: present
+
+- name: Install Chkrootkit
+  ansible.builtin.package:
+    name: chkrootkit
+    state: present
+
+- name: Install Rkhunter
+  ansible.builtin.package:
+    name: rkhunter
+    state: present

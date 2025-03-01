@@ -1,0 +1,10 @@
+---
+- name: Install Fail2Ban
+  ansible.builtin.package:
+    name: fail2ban
+    state: present
+
+- name: Install Logwatch
+  ansible.builtin.package:
+    name: logwatch
+    state: present

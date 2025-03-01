@@ -1,0 +1,17 @@
+# Monitor changes to critical binaries
+-w /bin -p wa -k bin_changes
+-w /sbin -p wa -k sbin_changes
+
+# Monitor system user and group files
+-w /etc/passwd -p wa -k passwd_changes
+-w /etc/group -p wa -k group_changes
+-w /etc/shadow -p wa -k shadow_changes
+
+# Monitor sudo actions
+-w /var/log/sudo.log -p wa -k sudo_actions
+
+# Monitor login attempts
+-w /var/log/auth.log -p wa -k auth_changes
+
+# Monitor changes to audit configuration
+-w /etc/audit/ -p wa -k audit_config

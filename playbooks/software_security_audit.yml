@@ -1,0 +1,7 @@
+---
+- name: Security Audit Software Packages
+  hosts: localhost
+  become: true
+  gather_facts: true
+  roles:
+    - security_audit
