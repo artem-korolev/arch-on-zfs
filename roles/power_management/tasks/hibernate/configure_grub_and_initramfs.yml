@@ -18,15 +18,32 @@
     mode: "0644"
     backup: true
 
-- name: Update GRUB_CMDLINE_LINUX_DEFAULT with hibernate UUID
+- name: Get current GRUB_CMDLINE_LINUX_DEFAULT line from /etc/default/grub
+  ansible.builtin.shell: grep '^GRUB_CMDLINE_LINUX_DEFAULT=' /etc/default/grub
+  register: current_grub_line
+  changed_when: false
+
+- name: Extract the parameters (remove the variable name and surrounding quotes)
+  ansible.builtin.set_fact:
+    current_grub_params: "{{ current_grub_line.stdout | regex_replace('^GRUB_CMDLINE_LINUX_DEFAULT=\"(.*)\"$', '\\1') }}"
+
+- name: Remove any existing resume=UUID parameter from the GRUB parameters
+  ansible.builtin.set_fact:
+    updated_grub_params: "{{ current_grub_params | regex_replace(' ?resume=UUID=[^ ]+', '') | trim }}"
+
+- name: Append new resume parameter to the GRUB parameters
+  ansible.builtin.set_fact:
+    new_grub_params: "{{ updated_grub_params }} resume=UUID={{ hibernate_uuid.stdout }}"
+
+- name: Update GRUB_CMDLINE_LINUX_DEFAULT in /etc/default/grub with new parameters
   ansible.builtin.lineinfile:
     path: /etc/default/grub
     regexp: ^GRUB_CMDLINE_LINUX_DEFAULT=
-    line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash resume=UUID={{ hibernate_uuid.stdout }} no_console_suspend"'
+    line: 'GRUB_CMDLINE_LINUX_DEFAULT="{{ new_grub_params }}"'
     owner: root
     group: root
     mode: "0644"
-    backup: true
+    backup: yes
 
 - name: Update initramfs
   ansible.builtin.command: update-initramfs -u
