@@ -4,8 +4,7 @@
   ansible.builtin.dnf:
     name: dnf-plugins-core
     state: present
-  tags:
-    - cuda
+  tags: [cuda]
 
 - name: Add CUDA Toolkit repository (Fedora 41 and later with DNF-5)
   ansible.builtin.command: >
@@ -15,8 +14,7 @@
   when:
     - ansible_facts['pkg_mgr'] in ['dnf5']
     - ansible_facts['distribution_major_version'] | int >= 41
-  tags:
-    - cuda
+  tags: [cuda]
 
 - name: Add CUDA Toolkit repository (Fedora 39 and later)
   ansible.builtin.command: >
@@ -26,8 +24,7 @@
   when:
     - ansible_facts['distribution_major_version'] | int >= 39
     - ansible_facts['distribution_major_version'] | int < 41
-  tags:
-    - cuda
+  tags: [cuda]
 
 # - name: "Add CUDA Toolkit repository (RHEL/Rocky/Alma 9)"
 #   ansible.builtin.command: >
@@ -36,8 +33,7 @@
 - name: Disable nvidia-driver from CUDA Toolkit (use installed in distro; otherwise will be conflict)
   ansible.builtin.command: >
     dnf module disable nvidia-driver --skip-unavailable
-  tags:
-    - cuda
+  tags: [cuda]
 
 - name: Disable nvidia-driver from CUDA Toolkit (Fedora 41 and later with DNF-5) (use installed in distro; otherwise will be conflict)
   ansible.builtin.command: >
@@ -45,8 +41,7 @@
   when:
     - ansible_facts['pkg_mgr'] in ['dnf5']
     - ansible_facts['distribution_major_version'] | int >= 41
-  tags:
-    - cuda
+  tags: [cuda]
 
 - name: Run CUDA Toolkit Installer (Fedora 41 and later with DNF-5)
   ansible.builtin.package:
@@ -55,8 +50,7 @@
   when:
     - ansible_facts['pkg_mgr'] in ['dnf5']
     - ansible_facts['distribution_major_version'] | int >= 41
-  tags:
-    - cuda
+  tags: [cuda]
 
 - name: Run CUDA Toolkit Installer (Fedora 39 and later)
   ansible.builtin.package:
@@ -65,8 +59,7 @@
   when:
     - ansible_facts['distribution_major_version'] | int >= 39
     - ansible_facts['distribution_major_version'] | int < 41
-  tags:
-    - cuda
+  tags: [cuda]
 
 - name: Add CUDA Toolkit to system PATH via /etc/profile.d
   ansible.builtin.copy:
@@ -74,5 +67,4 @@
     content: |
       export PATH="/usr/local/cuda/bin:$PATH"
     mode: "0644"
-  tags:
-    - cuda
+  tags: [cuda]
