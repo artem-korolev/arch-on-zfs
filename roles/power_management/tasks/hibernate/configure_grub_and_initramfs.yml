@@ -1,6 +1,7 @@
 ---
 - name: Get UUID of the hibernate partition by label
-  ansible.builtin.shell: blkid -o value -s UUID {{ hibernate_mapper_device }}
+  ansible.builtin.command:
+    cmd: blkid -o value -s UUID {{ hibernate_mapper_device }}
   register: hibernate_uuid
   changed_when: false
 
@@ -48,7 +49,7 @@
     owner: root
     group: root
     mode: "0644"
-    backup: yes
+    backup: true
 
 - name: Update initramfs
   ansible.builtin.command: update-initramfs -u

@@ -9,6 +9,9 @@
 # - name: Configure hibernate and in the system (turn off swap and use it only for hibernate)
 #   ansible.builtin.include_tasks: enable_hibernate_in_kde.yml
 
+- name: Check for hibernate support in the system
+  ansible.builtin.include_tasks: check_hibernate_support.yml
+
 - name: Configure GRUB and initramfs to support hibernate (you must have partition with 'hibernate' label set large enough to store your RAM)
   ansible.builtin.include_tasks: configure_grub_and_initramfs.yml
 
