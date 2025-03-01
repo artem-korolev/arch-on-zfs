@@ -1,8 +1,8 @@
-# Workstation Forge
-
 <p align="center">
   <img src="logo.webp" alt="WorkstationForge">
 </p>
+
+# Workstation Forge
 
 <!-- TOC tocDepth:2..4 chapterDepth:2..6 -->
 
