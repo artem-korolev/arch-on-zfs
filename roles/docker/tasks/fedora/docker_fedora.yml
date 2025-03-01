@@ -14,7 +14,7 @@
       - docker-engine-selinux
       - docker-engine
     state: absent
-  ignore_errors: yes
+  failed_when: remove_docker.rc not in [0, 1] # 0 = success, 1 = package not installed
 
 - name: Ensure dnf-plugins-core is installed
   ansible.builtin.dnf:
