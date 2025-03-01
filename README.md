@@ -1,6 +1,8 @@
+<!-- markdownlint-disable MD033 MD041 -->
 <p align="center">
   <img src="logo.webp" alt="WorkstationForge">
 </p>
+<!-- markdownlint-enable MD033 MD041 -->
 
 # Workstation Forge
 
