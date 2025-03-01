@@ -1,7 +1,8 @@
 # Workstation Forge
 
-| ![WorkstationForge](logo.webp) |
-|:-----------------------------:|
+<p align="center">
+  <img src="logo.webp" alt="WorkstationForge">
+</p>
 
 <!-- TOC tocDepth:2..4 chapterDepth:2..6 -->
 
