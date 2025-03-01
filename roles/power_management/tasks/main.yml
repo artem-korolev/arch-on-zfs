@@ -11,3 +11,7 @@
 
 - name: Force hibernate on critical battery power (UPower cannot pass `--ignore-inhibitors` flag to hibernate service unfortunately, so doing it manually)
   ansible.builtin.include_tasks: force_hibernate_service.yml
+
+- name: Display success message
+  ansible.builtin.debug:
+    msg: Hibernate configuration completed. System needs to reboot.

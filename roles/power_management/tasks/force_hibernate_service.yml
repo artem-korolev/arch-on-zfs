@@ -1,4 +1,7 @@
 ---
+- name: Configure GRUB and initramfs to support hibernate (you must have partition with 'hibernate' label set large enough to store your RAM)
+  ansible.builtin.include_tasks: configure_grub_and_initramfs.yml
+
 - name: Ensure UPower is installed
   ansible.builtin.package:
     name: upower

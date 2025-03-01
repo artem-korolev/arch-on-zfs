@@ -1,0 +1,39 @@
+---
+- name: Get UUID of the hibernate partition by label
+  ansible.builtin.shell: blkid -o value -s UUID $(blkid -L hibernate)
+  register: hibernate_uuid
+  changed_when: false
+
+- name: Ensure hibernate partition UUID was found
+  ansible.builtin.fail:
+    msg: Hibernate partition with label 'hibernate' not found or has no UUID.
+  when: hibernate_uuid.stdout == ""
+
+- name: Update /etc/initramfs-tools/conf.d/resume
+  ansible.builtin.copy:
+    dest: /etc/initramfs-tools/conf.d/resume
+    content: "RESUME=UUID={{ hibernate_uuid.stdout }}\n"
+    owner: root
+    group: root
+    mode: "0644"
+    backup: true
+
+- name: Update GRUB_CMDLINE_LINUX_DEFAULT with hibernate UUID
+  ansible.builtin.lineinfile:
+    path: /etc/default/grub
+    regexp: ^GRUB_CMDLINE_LINUX_DEFAULT=
+    line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash resume=UUID={{ hibernate_uuid.stdout }} no_console_suspend"'
+    owner: root
+    group: root
+    mode: "0644"
+    backup: true
+
+- name: Update initramfs
+  ansible.builtin.command: update-initramfs -u
+  register: initramfs_output
+  changed_when: "'update-initramfs' in initramfs_output.stdout"
+
+- name: Update GRUB configuration
+  ansible.builtin.command: update-grub
+  register: grub_output
+  changed_when: "'update-grub' in grub_output.stdout"
