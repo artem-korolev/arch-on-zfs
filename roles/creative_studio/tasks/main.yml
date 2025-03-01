@@ -1,15 +1,15 @@
 ---
 - name: Include tasks for Audio Production
-  include_tasks: audio_production.yml
+  ansible.builtin.include_tasks: audio_production.yml
   tags:
     - creative_studio
 
 - name: Include tasks for Graphic Design
-  include_tasks: graphic_design.yml
+  ansible.builtin.include_tasks: graphic_design.yml
   tags:
     - creative_studio
 
 - name: Include tasks for Video Production
-  include_tasks: video_production.yml
+  ansible.builtin.include_tasks: video_production.yml
   tags:
     - creative_studio

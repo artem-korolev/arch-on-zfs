@@ -4,7 +4,7 @@
 # ---------------------------------------------------------
 - name: Install Graphics Utilities
   become: true
-  package:
+  ansible.builtin.package:
     name:
       - displaycal # Display calibration
       - ImageMagick # color depth = q16
@@ -23,7 +23,7 @@
 # ---------------------------------------------------------
 - name: Install Photography Tools
   become: true
-  package:
+  ansible.builtin.package:
     name:
       - darktable
       - entangle
@@ -39,7 +39,7 @@
 # ---------------------------------------------------------
 - name: Install 3D Modeling / Additional Apps
   become: true
-  package:
+  ansible.builtin.package:
     name:
       - blender
       - hugin
@@ -54,7 +54,7 @@
 # ---------------------------------------------------------
 - name: Install Document/Vector/Raster Tools
   become: true
-  package:
+  ansible.builtin.package:
     name:
       - okular
       - gimp
