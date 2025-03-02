@@ -95,6 +95,14 @@
         rule: deny
         port: 8200
 
+    - name: Deny ICMP (ping)
+      ansible.builtin.replace:
+        path: /etc/ufw/before.rules
+        regexp: ^(-A ufw-before-input -p icmp --icmp-type.*)ACCEPT(.*)$
+        replace: \1DROP\2
+        backup: true
+      notify: Reload UFW
+
   handlers:
     - name: Restart Postfix
       ansible.builtin.service:
@@ -115,3 +123,7 @@
       ansible.builtin.service:
         name: minidlna
         state: restarted
+
+    - name: Reload UFW
+      ansible.builtin.command: ufw reload
+      changed_when: true
