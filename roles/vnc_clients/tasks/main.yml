@@ -1,0 +1,8 @@
+---
+- name: VNC Clients
+  ansible.builtin.package:
+    name:
+      - krdc
+      - tigervnc-viewer
+    state: present
+  tags: [vnc_clients]
