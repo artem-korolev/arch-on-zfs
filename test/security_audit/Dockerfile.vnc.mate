@@ -4,8 +4,8 @@ FROM kalilinux/kali-rolling
 # Install a lightweight desktop environment (Xfce), TigerVNC, etc.
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
-      supervisor xfce4 xfce4-terminal xterm dbus-x11 libdbus-glib-1-2 \
       tigervnc-standalone-server \
+      mate-desktop-environment \
       iproute2 iputils-ping nmap \
     && apt-get clean
 
@@ -28,10 +28,10 @@ RUN set -eux; \
   ;
 
 # do this before dropping privileges
-COPY ["entrypoint.sh", "/"]
-RUN chmod a+x /entrypoint.sh
+COPY ["entrypoint.sh.mate", "/"]
+RUN chmod a+x /entrypoint.sh.mate
 
 USER user
 
 WORKDIR /work
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh.mate"]

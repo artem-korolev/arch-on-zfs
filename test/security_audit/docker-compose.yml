@@ -25,7 +25,7 @@ services:
     # command: /bin/bash
     # Publish port 5901 from container to host
     ports:
-      - 5901:5901
+      - 5900:5900
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
