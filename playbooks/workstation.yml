@@ -10,5 +10,7 @@
   import_playbook: workstation_users.yml
 - name: Install System Software
   import_playbook: workstation_system.yml
+- name: Secure settings for Workstation
+  import_playbook: secure_workstation.yml
 - name: Install Software Packages
   import_playbook: workstation_software.yml
