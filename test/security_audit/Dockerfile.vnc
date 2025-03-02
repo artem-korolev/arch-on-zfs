@@ -1,0 +1,33 @@
+# Use the Kali Linux rolling image
+FROM kalilinux/kali-rolling
+
+# Install a lightweight desktop environment (Xfce), TigerVNC, etc.
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+      xfce4 xfce4-goodies \
+      tigervnc-standalone-server \
+      iproute2 iputils-ping nmap \
+    && apt-get clean
+
+# Create a non-root user (for convenience in running a desktop)
+RUN useradd -m -s /bin/bash docker && \
+    echo "docker:docker" | chpasswd && \
+    adduser docker sudo
+
+USER docker
+WORKDIR /home/docker
+
+# Set a VNC password (here it's 'secret', adjust to your needs)
+RUN mkdir -p ~/.vnc && \
+    echo secret | vncpasswd -f > ~/.vnc/passwd
+
+# Create ~/.config/tigervnc so TigerVNC won't complain about migration
+RUN mkdir -p ~/.config/tigervnc
+
+# Expose VNC port
+EXPOSE 5901
+
+# Start TigerVNC on display :1, using Xfce
+CMD tigervncserver :1 -geometry 1280x800 -depth 24 -localhost no -fg && tail -F /home/docker/.vnc/*.log
+# CMD ["tigervncserver", ":1", "-geometry", "1280x800", "-depth", "24", "-localhost", "no"]
+# CMD ["/bin/bash"]
