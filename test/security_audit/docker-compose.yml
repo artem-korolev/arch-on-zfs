@@ -1,0 +1,19 @@
+services:
+  kali:
+    build: .
+    networks:
+      - isolated_network
+    tty: true
+    stdin_open: true
+    # You can specify a different command if desired:
+    command: /bin/bash
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+
+networks:
+  isolated_network:
+    driver: bridge
