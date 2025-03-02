@@ -1,0 +1,117 @@
+- name: Secure Workstation
+  hosts: localhost
+  become: true
+  gather_facts: true
+  tasks:
+    # - name: Ensure Postfix is disabled and stopped
+    #   ansible.builtin.service:
+    #     name: postfix
+    #     state: stopped
+    #     enabled: false
+
+    - name: Restrict Postfix to localhost only
+      ansible.builtin.lineinfile:
+        path: /etc/postfix/main.cf
+        regexp: ^#?inet_interfaces =
+        line: inet_interfaces = loopback-only
+        backup: true
+      notify: Restart Postfix
+
+    # - name: Ensure CUPS is disabled and stopped
+    #   ansible.builtin.service:
+    #     name: cups
+    #     state: stopped
+    #     enabled: false
+
+    # TODO: CUPS uses two lines to configure local connections (localhost and socket file); adjust for it
+    # - name: Configure CUPS to listen only on localhost
+    #   ansible.builtin.lineinfile:
+    #     path: /etc/cups/cupsd.conf
+    #     regexp: '^Listen'
+    #     line: 'Listen localhost:631'
+    #     backup: true
+    #   notify: Restart CUPS
+
+    - name: Disable remote administration for CUPS
+      ansible.builtin.command: cupsctl --no-remote-admin --no-share-printers
+      changed_when: true
+
+    # - name: Ensure PostgreSQL is disabled and stopped
+    #   ansible.builtin.service:
+    #     name: postgresql
+    #     state: stopped
+    #     enabled: false
+
+    - name: Restrict PostgreSQL to listen on localhost only
+      ansible.builtin.lineinfile:
+        path: /etc/postgresql/16/main/postgresql.conf
+        regexp: ^#?listen_addresses =
+        line: listen_addresses = 'localhost'
+        backup: true
+      notify: Restart PostgreSQL
+
+    - name: Ensure MiniDLNA is disabled and stopped
+      ansible.builtin.service:
+        name: minidlna
+        state: stopped
+        enabled: false
+
+    - name: Configure MiniDLNA to only serve local network clients
+      ansible.builtin.lineinfile:
+        path: /etc/minidlna.conf
+        regexp: ^#?network_interface=
+        line: network_interface=lo
+        backup: true
+      notify: Restart MiniDLNA
+
+    - name: Enable UFW firewall
+      community.general.ufw:
+        state: enabled
+        default: deny
+        logging: low
+
+    - name: Allow localhost traffic through UFW
+      community.general.ufw:
+        rule: allow
+        from_ip: 127.0.0.1
+
+    - name: Deny external access to Postfix (port 25)
+      community.general.ufw:
+        rule: deny
+        port: 25
+
+    - name: Deny external access to CUPS (port 631)
+      community.general.ufw:
+        rule: deny
+        port: 631
+
+    - name: Deny external access to PostgreSQL (port 5432)
+      community.general.ufw:
+        rule: deny
+        port: 5432
+
+    - name: Deny external access to MiniDLNA (port 8200)
+      community.general.ufw:
+        rule: deny
+        port: 8200
+
+  handlers:
+    - name: Restart Postfix
+      ansible.builtin.service:
+        name: postfix
+        state: restarted
+
+    - name: Restart CUPS
+      ansible.builtin.service:
+        name: cups
+        state: restarted
+
+    - name: Restart PostgreSQL
+      ansible.builtin.service:
+        name: postgresql
+        state: restarted
+
+    - name: Restart MiniDLNA
+      ansible.builtin.service:
+        name: minidlna
+        state: restarted
