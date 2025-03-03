@@ -142,7 +142,7 @@ ansible-playbook playbooks/security_audit.yml
 
 Refer to the inline documentation within each role for additional details on usage and customization.
 
-Each role have its own tag, so if you want to install only particular application run it like this (this is helpful, when you test or add new roles; that way you can run specific roles):
+Each role has its own tag, so if you want to install only particular application run it like this (this is helpful, when you test or add new roles; that way you can run specific roles):
 
 ```bash
 ansible-playbook playbooks/workstation_software.yml --tags "vscode"
