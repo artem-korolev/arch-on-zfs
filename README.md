@@ -22,6 +22,8 @@
 
 <!-- /TOC -->
 
+Workstation Forge is an Ansible-driven project that automates the setup and configuration of a versatile workstation machine. It is designed to support a wide range of use cases — from developing and debugging projects in C/C++, Clang, Bazel, CMake, Meson, Python, Java, Node.js, and Rust, security testing and auditing with Nmap, Lynis, OpenVAS, auditd, etc, to preparing for the publication of scientific articles and books written in LaTeX using TexStudio and other related software.
+
 Originally developed and rigorously tested on **Ubuntu Studio 24.04** — which enhances its capabilities with creative studio software and specific system configurations — the project also offers quality support for Fedora (tested on Workstation 41). Note that while Ubuntu Studio delivers a comprehensive suite of creative tools, Fedora currently includes a more limited selection. A separate playbook is provided for creative studio installations, and plans are underway to replicate the full Ubuntu Studio setup on Fedora/OpenSUSE in future releases.
 
 ## Overview
@@ -41,7 +43,7 @@ Workstation Forge leverages a modular structure based on Ansible roles and playb
   Each role focuses on a specific area (e.g., development tools, system security, power management), ensuring that the playbooks remain idempotent and robust across repeated executions.
 
 - **Linting and Code Quality:**
-  The project integrates [Trunk.io](https://docs.trunk.io) for linting and static analysis. A dedicated `.trunk/config.yaml` file sets up various linters (ansible-lint, checkov, markdownlint, shellcheck, shfmt, and more) to maintain high code quality.
+  The project integrates [Trunk.io](https://trunk.io) for linting and static analysis. A dedicated `.trunk/config.yaml` file sets up various linters (ansible-lint, checkov, markdownlint, shellcheck, shfmt, and more) to maintain high code quality.
 
 ## Project Structure
 
