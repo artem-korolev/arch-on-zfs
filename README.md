@@ -106,7 +106,7 @@ Workstation Forge leverages a modular structure based on Ansible roles and playb
 
 ### Linting and Code Quality
 
-Workstation Forge uses [Trunk.io](https://docs.trunk.io) for linting and static code analysis. The configuration is defined in `.trunk/config.yaml`, which includes settings for various tools:
+Workstation Forge uses [Trunk.io](https://trunk.io) for linting and static code analysis. The configuration is defined in `.trunk/config.yaml`, which includes settings for various tools:
 
 - **Linters Enabled:**
   ansible-lint, checkov, git-diff-check, markdownlint, prettier, shellcheck, shfmt, trufflehog, yamllint
