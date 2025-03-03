@@ -41,7 +41,7 @@ Workstation Forge leverages a modular structure based on Ansible roles and playb
   Each role focuses on a specific area (e.g., development tools, system security, power management), ensuring that the playbooks remain idempotent and robust across repeated executions.
 
 - **Linting and Code Quality:**
-  The project integrates [Trunk.io](https://docs.trunk.io/cli) for linting and static analysis. A dedicated `.trunk/config.yaml` file sets up various linters (ansible-lint, checkov, markdownlint, shellcheck, shfmt, and more) to maintain high code quality.
+  The project integrates [Trunk.io](https://docs.trunk.io) for linting and static analysis. A dedicated `.trunk/config.yaml` file sets up various linters (ansible-lint, checkov, markdownlint, shellcheck, shfmt, and more) to maintain high code quality.
 
 ## Project Structure
 
