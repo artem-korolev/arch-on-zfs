@@ -242,6 +242,8 @@
     "scilab",
     "seccomp",
     "setopt",
+    "shellcheck",
+    "shfmt",
     "skanlite",
     "solvespace",
     "sooperlooper",

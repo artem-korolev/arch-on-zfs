@@ -6,182 +6,179 @@
 
 # Workstation Forge
 
-<!-- TOC tocDepth:2..4 chapterDepth:2..6 -->
+<!-- TOC tocDepth:2..3 chapterDepth:2..6 -->
 
-- [Run Ansible project](#run-ansible-project)
-  - [Workstation](#workstation)
-  - [Update AWS CLI tools](#update-aws-cli-tools)
-  - [Power management](#power-management)
-    - [Check for hibernate support](#check-for-hibernate-support)
-    - [Secure Boot and kernel lockdown](#secure-boot-and-kernel-lockdown)
-    - [Configure power management (Hibernate or alternative solution)](#configure-power-management-hibernate-or-alternative-solution)
-    - [Shutdown on critical battery power with upower (when Hibernate is unavailable)](#shutdown-on-critical-battery-power-with-upower-when-hibernate-is-unavailable)
-    - [Troubleshooting](#troubleshooting)
-- [Contribute](#contribute)
-  - [Install GPT engineer](#install-gpt-engineer)
+- [Overview](#overview)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Linting and Code Quality](#linting-and-code-quality)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [Roadmap](#roadmap)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
 
 <!-- /TOC -->
 
-## Run Ansible project
+Originally developed and rigorously tested on **Ubuntu Studio 24.04** — which enhances its capabilities with creative studio software and specific system configurations — the project also offers quality support for Fedora (tested on Workstation 41). Note that while Ubuntu Studio delivers a comprehensive suite of creative tools, Fedora currently includes a more limited selection. A separate playbook is provided for creative studio installations, and plans are underway to replicate the full Ubuntu Studio setup on Fedora/OpenSUSE in future releases.
 
-Run everything as root
+## Overview
+
+Workstation Forge leverages a modular structure based on Ansible roles and playbooks, ensuring a highly scalable, maintainable, and adaptable environment. Key features include:
+
+- **Versatile Development Environment:**
+  Set up a workstation optimized for programming, debugging, and profiling with support for technologies including C/C++, Clang, Bazel, CMake, Meson, Python, Java, Node.js, and Rust.
+
+- **Scientific Publishing Ready:**
+  In addition to development tools, the workstation is configured to support scientific publishing workflows—featuring LaTeX, TexStudio, and complementary applications to create and edit scholarly articles and books.
+
+- **Multi-Distribution Support:**
+  Developed and extensively tested on Ubuntu Studio 24.04, the project also supports Fedora (tested on Workstation 41). _Note:_ Fedora currently offers a limited range of creative studio tools compared to Ubuntu Studio, with plans to expand this support in future playbooks.
+
+- **Modular and Idempotent Design:**
+  Each role focuses on a specific area (e.g., development tools, system security, power management), ensuring that the playbooks remain idempotent and robust across repeated executions.
+
+- **Linting and Code Quality:**
+  The project integrates [Trunk.io](https://docs.trunk.io/cli) for linting and static analysis. A dedicated `.trunk/config.yaml` file sets up various linters (ansible-lint, checkov, markdownlint, shellcheck, shfmt, and more) to maintain high code quality.
+
+## Project Structure
 
 ```bash
-apt install ansible-core
+├── playbooks/
+│ ├── workstation.yml # Main playbook to initialize and configure the workstation
+│ ├── configure_power_management.yml
+│ ├── secure_workstation.yml
+│ ├── creative_studio.yml # Playbook for installing creative studio tools (Ubuntu Studio has all of this and much more)
+│ └── ... # Other orchestration playbooks
+├── roles/
+│ ├── awscli/ # AWS CLI and SAM CLI installation and updates
+│ ├── bazel/ # Bazel and related tooling installation
+│ ├── docker/ # Docker installation and configuration
+│ ├── nvidia_driver/ # NVIDIA driver installation for various distros
+│ ├── security_audit/ # Security tools and hardening measures
+│ ├── creative_studio/ # Creative studio applications (extensive on Ubuntu Studio)
+│ ├── development/ # Development tools for C/C++, Clang, CMake, Meson, Python, Java, Node.js, Rust
+│ ├── power_management/ # Hibernate and power management configuration
+│ ├── users/ # User creation and configuration
+│ └── ... # Additional roles (e.g., VPN, math, neovim, etc.)
+├── group_vars/
+│ └── all.yml # Common variables used across playbooks and roles
+│ └── fedora.yml # Fedora specific variables
+│ └── ubuntu.yml # Ubuntu specific variables
+│ └── ... # other distribution specific variables
+├── .trunk/config.yaml # Trunk.io configuration for linting and formatting
+└── README.md # Project overview and documentation
 ```
 
-### Workstation
+## Getting Started
+
+### Prerequisites
+
+- **Ansible:** Version 2.9 or higher is recommended.
+- **Python:** Python 3.x should be installed on your control node.
+- **Trunk.io:** For linting and static analysis, ensure you have [Trunk](https://docs.trunk.io/cli) installed.
+- **Target Systems:** A supported Linux distribution such as Ubuntu Studio 24.04 or Fedora Workstation 41.
+
+### Installation
+
+1. **Clone the Repository:**
+
+   ```bash
+   git clone <https://github.com/artem-korolev/workstation_forge.git>
+   cd workstation-forge
+   ```
+
+2. **Review and Customize Variables:**
+
+   Update the variables in `group_vars/all.yml` (and any distribution-specific files) to suit your environment and preferences.
+
+3. **Run the Main Playbook:**
+
+   Execute the main playbook to initialize and configure your workstation:
+
+   ```bash
+   ansible-playbook playbooks/workstation.yml
+   ```
+
+   _Note: Adjust the inventory as needed if deploying to remote hosts._
+
+### Linting and Code Quality
+
+Workstation Forge uses [Trunk.io](https://docs.trunk.io) for linting and static code analysis. The configuration is defined in `.trunk/config.yaml`, which includes settings for various tools:
+
+- **Linters Enabled:**
+  ansible-lint, checkov, git-diff-check, markdownlint, prettier, shellcheck, shfmt, trufflehog, yamllint
+
+- **Runtimes Configured:**
+  go, node, and python
+
+To run linting checks, simply execute:
+
+```bash
+trunk_io check -a
+```
+
+This will ensure your code adheres to best practices and helps catch issues early.
+
+## Usage
+
+Workstation Forge is designed to be modular. You can run specific playbooks or roles for targeted tasks. For example, to run the security audit:
+
+To install full set of software and configure workstation to be secure:
 
 ```bash
 ansible-playbook playbooks/workstation.yml
 ```
 
-### Update AWS CLI tools
+Or use specific playbooks for your needs:
 
 ```bash
-ansible-playbook playbooks/update_awscli.yml
+ansible-playbook playbooks/security_audit.yml
 ```
 
-### Power management
+Refer to the inline documentation within each role for additional details on usage and customization.
 
-Sleep mode is working just perfect in all Linux systems usually, so there is
-no reason to configure anything related to this one. But you may have a problem
-setting up Hibernate. And configuring power management can be complex in general
-and it takes significant time.
-
-I want to have slightly different setups for laptops and workstations PC.
-For a workstations I want to have so called hybrid sleep, when system goes
-into Sleep and Hibernate at same time, so when power is lost accidentally,
-it will be restored from Hibernate, otherwise it wakes up quick using Sleep.
-
-And for laptops I do not need hybrid sleep. Workstation can have a separate SDD
-for swap partitions, so I do not care much about SDD drive life, which is not
-true for laptops, and laptops usually have batteries, so accidental loss of
-power working slightly different for them. So for laptops I want this kind of
-behavior: wake up system from sleep mode, when battery is on critical level and
-immediately put machine into Hibernate mode.
-
-For all of that I creates a separate ansible playbook
-`playbooks/configure_power_management.yml`
-
-There are few notes, before you start running anything, it is better to
-ensure, that you will achieve expectable result. So start reading first.
-
-It is highly possible, that you might want to reinstall your system
-in order to get good defaults, if you do not configure BIOS properly before
-installation. My suggestion is to experiment with different installation
-options / bios settings and figure out the best fit for you. Of course
-it is possible to reconfigure everything in already installed system.
-It is just matter of time and expertise level. Sometimes its easier
-to reinstall, especially when you have automated provisioning and configuration
-management for your system like this project, for example.
-
-#### Check for hibernate support
-
-I do the same in my ansible playbook
+Each role have its own tag, so if you want to install only particular application run it like this (this is helpful, when you test or add new roles; that way you can run specific roles):
 
 ```bash
-root# cat /sys/power/state
-
-Output:
-freeze mem disk
+ansible-playbook playbooks/workstation_software.yml --tags "vscode"
 ```
 
-If you see **disk** in `/sys/power/state`, then you for sure have hibernate
-support in your kernel and it can be (or already is) enabled in your system.
+## Contributing
 
-#### Secure Boot and kernel lockdown
+Contributions are welcome! If you would like to add new features, fix bugs, or improve documentation, please follow these guidelines:
 
-If **disk** is actually missing in `/sys/power/state`, then most probably
-kernel locks it down, because of Secure Boot. Or maybe you just do not have
-S4 support in your ACPI hardware. First of all - its not critical, I do provide
-alternative power management setup for such system in my Ansible project.
+1. Fork the repository.
+2. Create a new branch for your feature or fix.
+3. Ensure your changes follow the established style and conventions.
+4. Submit a pull request with a detailed description of your changes.
 
-I use Ubuntu Studio 24.04 on ZFS with encryption. And its kernel locks down
-hibernate feature, whenever Secure Boot is enabled in BIOS.
+For major changes, please open an issue first to discuss what you would like to change.
 
-So, if you have it enabled, then disable it, if you want hibernate work for
-you.
+## Roadmap
 
-Maybe your kernel do not lock down hibernate feature even with Secure Boot
-enabled in the system, then just no worries and continue with setting it up.
+Planned improvements and future enhancements include:
 
-#### Configure power management (Hibernate or alternative solution)
+- **Refactoring Common Tasks:**
+  Consolidate repeated operations (e.g., repository and key management) into shared modules or roles.
+- **Enhanced Documentation:**
+  Adding detailed README files to individual roles and expanding inline comments for easier maintenance.
 
-Now, when you know your system
+- **Automated Testing:**
+  Integrating testing frameworks such as Molecule to ensure quality and reliability.
 
-```bash
-ansible-playbook playbooks/configure_power_management.yml
-```
+- **Dynamic Configuration:**
+  Externalizing version numbers and URLs to central configuration files to ease updates.
 
-#### Shutdown on critical battery power with upower (when Hibernate is unavailable)
+- **Expanding Creative Studio Support:**
+  Fedora currently offers a limited range of creative studio tools compared to Ubuntu Studio. A dedicated playbook to replicate the full Ubuntu Studio creative setup on Fedora/OpenSUSE is planned as a future enhancement.
 
-I created a small service that runs every 10 seconds and checks
-Since we are now logging directly to systemd via journalctl, you can use the following command to tail the service logs in real-time:
+## License
 
-bash
-Copy code
-journalctl -u shutdown-on-critical-battery.service -f
-This will show the log output for the shutdown-on-critical-battery.service and continuously update in real-time (like tail -f).
+This project is licensed under the [MIT License](LICENSE).
 
-If you want to include logs from the current boot only, you can add the -b option:
+## Acknowledgments
 
-bash
-Copy code
-journalctl -u shutdown-on-critical-battery.service -b -f
-This will limit the output to logs from the current boot and follow the output in real-time.
-
-#### Troubleshooting
-
-Before making system stable I had lots of issues with hibernate. Its hard to get information
-about reason why system got freeze or when it went power off accidentally.
-
-But at least its relatively easy to get information, when your system were properly
-shutdown:
-
-```bash
-last -x shutdown | head -n 1
-```
-
-or something like this:
-
-```bash
-journalctl -b -1 | grep -i shutdown
-journalctl -b -1 --no-pager | grep -i shutdown
-journalctl -b -1 | grep -i 'poweroff'
-```
-
-Check logs from force-hibernate.service/timer:
-
-```bash
-systemctl list-timers --all
-journalctl -b 0
-journalctl -u force-hibernate.service --no-pager --output=short-iso
-journalctl -u force-hibernate.timer --no-pager --output=short-iso
-```
-
-and when running **/usr/local/bin/force-hibernate.sh** script (or its modified
-copy) manually, then you can read its logs like that:
-
-```bash
-journalctl -t force-hibernate
-```
-
-Check logs from **hibernate.target** itself:
-
-```bash
-journalctl -u hibernate.target --no-pager --output=short-iso
-```
-
-System can go to proper shutdown instead of hibernate, because of different reasons
-and other system configurations. So its important to see, if system were properly shutdown.
-
-## Contribute
-
-### Install GPT engineer
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install gpt-engineer
-```
+Thanks to the community and contributors for providing insights and best practices that helped shape this project. Special thanks to the Ansible and Trunk.io communities for their excellent documentation and tools that keep our project robust and maintainable.
