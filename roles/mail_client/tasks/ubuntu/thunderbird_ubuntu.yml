@@ -1,4 +1,11 @@
 # Step 1: Ensure Snap version of Thunderbird is removed
+- name: Install Thunderbird
+  ansible.builtin.package:
+    name: thunderbird
+    state: absent
+  tags:
+    - mail_client
+
 - name: Remove Snap version of Thunderbird if installed
   ansible.builtin.command:
     cmd: snap remove thunderbird
