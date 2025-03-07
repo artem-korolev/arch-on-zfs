@@ -1,1 +1,5 @@
+## Local Users
 regular_user_groups: cdrom,dip,plugdev,lpadmin,audio,users
+
+## Thunderbird
+thunderbird_mozilla_ppa: false

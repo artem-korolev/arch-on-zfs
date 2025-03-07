@@ -1,45 +1,14 @@
-# Step 1: Ensure Snap version of Thunderbird is removed
-- name: Install Thunderbird
-  ansible.builtin.package:
-    name: thunderbird
-    state: absent
+---
+- name: Configure System to Install Thunderbird from Mozilla PPA
+  ansible.builtin.include_tasks: ubuntu/thunderbird_ppa.yml
+  when:
+    - thunderbird_mozilla_ppa
   tags:
     - mail_client
 
-- name: Remove Snap version of Thunderbird if installed
-  ansible.builtin.command:
-    cmd: snap remove thunderbird
-  register: remove_snap
-  failed_when: remove_snap.rc not in [0, 1] # Ignore error if Snap is not installed
-  changed_when: remove_snap.rc == 0
-  tags:
-    - mail_client
-
-# Step 2: Add Mozilla Team PPA
-- name: Add Mozilla Team PPA for Thunderbird
-  ansible.builtin.apt_repository:
-    repo: ppa:mozillateam/ppa
-    state: present
-  tags:
-    - mail_client
-
-# Step 3: Update package cache
-- name: Update apt package cache
-  ansible.builtin.apt:
-    update_cache: true
-  tags:
-    - mail_client
-
-# Step 4: Configure APT priority for Mozilla PPA (optional but recommended)
-- name: Create APT preferences for Mozilla PPA
-  ansible.builtin.copy:
-    dest: /etc/apt/preferences.d/mozillateam-thunderbird
-    content: |
-      Package: *
-      Pin: release o=LP-PPA-mozillateam
-      Pin-Priority: 501
-    owner: root
-    group: root
-    mode: "0644"
+- name: Configure System to Install Thunderbird from Snap
+  ansible.builtin.include_tasks: ubuntu/thunderbird_snap.yml
+  when:
+    - not thunderbird_mozilla_ppa
   tags:
     - mail_client

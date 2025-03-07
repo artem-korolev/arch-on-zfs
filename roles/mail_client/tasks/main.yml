@@ -1,7 +1,8 @@
 ---
 - name: Prepare Ubuntu system for Mozilla Thunderbird installation
   ansible.builtin.include_tasks: ubuntu/thunderbird_ubuntu.yml
-  when: ansible_facts['distribution'] == "Ubuntu"
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
   tags:
     - mail_client
 

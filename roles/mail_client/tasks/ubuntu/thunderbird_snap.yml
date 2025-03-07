@@ -1,0 +1,30 @@
+# Step 1: Ensure Snap version of Thunderbird is removed
+- name: Install Thunderbird
+  ansible.builtin.package:
+    name: thunderbird
+    state: absent
+  tags:
+    - mail_client
+
+# Remove APT preferences file for Mozilla PPA
+- name: Remove APT preferences file for Mozilla PPA
+  ansible.builtin.file:
+    path: /etc/apt/preferences.d/mozillateam-thunderbird
+    state: absent
+  tags:
+    - mail_client
+
+# Remove Mozilla Team PPA for Thunderbird
+- name: Remove Mozilla Team PPA for Thunderbird
+  ansible.builtin.apt_repository:
+    repo: ppa:mozillateam/ppa
+    state: absent
+  tags:
+    - mail_client
+
+# Update apt package cache after removing the PPA
+- name: Update apt package cache
+  ansible.builtin.apt:
+    update_cache: true
+  tags:
+    - mail_client

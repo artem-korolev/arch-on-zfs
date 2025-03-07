@@ -1,6 +1,8 @@
 ---
 - name: Workstation Software Installation
   hosts: localhost
+  vars_files:
+    - "group_vars/{{ ansible_facts['distribution'] | lower | replace(' ', '_') }}.yml"
   become: true
   gather_facts: true
   roles:
