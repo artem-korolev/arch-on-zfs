@@ -6,6 +6,12 @@
     - jdk
 
 - name: OpenJDK
+  ansible.builtin.include_tasks: ubuntu/jdk_ubuntu.yml
+  when: ansible_facts['distribution'] == "Pop!_OS"
+  tags:
+    - jdk
+
+- name: OpenJDK
   ansible.builtin.include_tasks: fedora/jdk_fedora.yml
   when: ansible_facts['distribution'] == "Fedora"
   tags:

@@ -3,6 +3,10 @@
   ansible.builtin.include_tasks: ubuntu/sublime_ubuntu.yml
   when: ansible_facts['distribution'] == "Ubuntu"
 
+- name: Prepare Ubuntu system for Sublime Merge installation
+  ansible.builtin.include_tasks: ubuntu/sublime_ubuntu.yml
+  when: ansible_facts['distribution'] == "Pop!_OS"
+
 - name: Prepare Fedora system for Sublime Merge installation
   ansible.builtin.include_tasks: fedora/sublime_fedora.yml
   when: ansible_facts['distribution'] == "Fedora"
@@ -14,7 +18,7 @@
 - name: Inform about unsupported OS
   ansible.builtin.debug:
     msg: "Sublime Merge role does not support this OS: {{ ansible_facts['distribution'] }}"
-  when: ansible_facts['distribution'] not in ["Ubuntu", "Fedora", "openSUSE Tumbleweed"]
+  when: ansible_facts['distribution'] not in ["Pop!_OS", "Ubuntu", "Fedora", "openSUSE Tumbleweed"]
 
 - name: Install Sublime Merge
   ansible.builtin.package:

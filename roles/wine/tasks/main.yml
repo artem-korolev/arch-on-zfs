@@ -6,6 +6,12 @@
     - wine
 
 - name: WineHQ
+  ansible.builtin.include_tasks: ubuntu/ubuntu.yml
+  when: ansible_facts['distribution'] == "Pop!_OS"
+  tags:
+    - wine
+
+- name: WineHQ
   ansible.builtin.include_tasks: fedora/fedora.yml
   when: ansible_facts['distribution'] == "Fedora"
   tags:
@@ -14,6 +20,6 @@
 - name: Inform about unsupported OS
   ansible.builtin.debug:
     msg: "WineHQ role does not support this OS: {{ ansible_facts['distribution'] }}"
-  when: ansible_facts['distribution'] not in ["Ubuntu", "Fedora"]
+  when: ansible_facts['distribution'] not in ["Pop!_OS", "Ubuntu", "Fedora"]
   tags:
     - wine

@@ -5,6 +5,12 @@
   tags:
     - vscode
 
+- name: Prepare Ubuntu system for VSCode installation
+  ansible.builtin.include_tasks: ubuntu/vscode_ubuntu.yml
+  when: ansible_facts['distribution'] == "Pop!_OS"
+  tags:
+    - vscode
+
 - name: Prepare Fedora system for VSCode installation
   ansible.builtin.include_tasks: fedora/vscode_fedora.yml
   when: ansible_facts['distribution'] == "Fedora"
@@ -20,7 +26,7 @@
 - name: Unsupported distro message
   ansible.builtin.debug:
     msg: VSCode role does not support this OS
-  when: ansible_facts['distribution'] not in ["Ubuntu", "Fedora", "openSUSE Tumbleweed"]
+  when: ansible_facts['distribution'] not in ["Pop!_OS", "Ubuntu", "Fedora", "openSUSE Tumbleweed"]
   tags:
     - vscode
 

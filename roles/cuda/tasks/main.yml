@@ -4,6 +4,11 @@
   when: ansible_facts['distribution'] == "Ubuntu"
   tags: [cuda]
 
+- name: CUDA Toolkit Ubuntu installation
+  ansible.builtin.include_tasks: ubuntu/cuda_ubuntu.yml
+  when: ansible_facts['distribution'] == "Pop!_OS"
+  tags: [cuda]
+
 - name: CUDA Toolkit Fedora installation
   ansible.builtin.include_tasks: fedora/cuda_fedora.yml
   when: ansible_facts['distribution'] == "Fedora"
@@ -17,5 +22,5 @@
 - name: Fail if the OS is unsupported
   ansible.builtin.debug:
     msg: Brave role does not support this OS
-  when: ansible_facts['distribution'] not in ["Ubuntu", "Fedora", "openSUSE Tumbleweed"]
+  when: ansible_facts['distribution'] not in ["Pop!_OS", "Ubuntu", "Fedora", "openSUSE Tumbleweed"]
   tags: [cuda]

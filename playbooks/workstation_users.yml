@@ -2,7 +2,7 @@
 - name: Workstation Users Initialization
   hosts: localhost
   vars_files:
-    - "group_vars/{{ ansible_facts['distribution'] | lower | replace(' ', '_') }}.yml"
+    - "group_vars/{{ ansible_facts['distribution'] | lower | replace(' ', '_') | replace('!', '') }}.yml"
   become: true
   gather_facts: true
   roles:

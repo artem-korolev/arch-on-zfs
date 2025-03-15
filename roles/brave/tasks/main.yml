@@ -3,6 +3,10 @@
   ansible.builtin.include_tasks: ubuntu/brave_ubuntu.yml
   when: ansible_facts['distribution'] == "Ubuntu"
 
+- name: Prepare Ubuntu system for Brave installation
+  ansible.builtin.include_tasks: ubuntu/brave_ubuntu.yml
+  when: ansible_facts['distribution'] == "Pop!_OS"
+
 - name: Prepare Fedora system for Brave installation
   ansible.builtin.include_tasks: fedora/brave_fedora.yml
   when: ansible_facts['distribution'] == "Fedora"
@@ -14,7 +18,7 @@
 - name: Fail if the OS is unsupported
   ansible.builtin.debug:
     msg: Brave role does not support this OS
-  when: ansible_facts['distribution'] not in ["Ubuntu", "Fedora", "openSUSE Tumbleweed"]
+  when: ansible_facts['distribution'] not in ["Pop!_OS", "Ubuntu", "Fedora", "openSUSE Tumbleweed"]
 
 - name: Install Brave browser package
   ansible.builtin.package:

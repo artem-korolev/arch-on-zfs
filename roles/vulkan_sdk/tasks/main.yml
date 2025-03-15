@@ -5,8 +5,16 @@
   tags:
     - vulkan_sdk
 
+- name: Vulkan SDK Install (Ubuntu)
+  ansible.builtin.include_tasks: ubuntu/vulkan_sdk_ubuntu.yml
+  when: ansible_facts['distribution'] == "Pop!_OS"
+  tags:
+    - vulkan_sdk
+
 - name: Vulkan SDK Install (Tarball)
   ansible.builtin.include_tasks: others/vulkan_sdk_others.yml
-  when: ansible_facts['distribution'] != "Ubuntu"
+  when:
+    - ansible_facts['distribution'] != "Ubuntu"
+    - ansible_facts['distribution'] != "Pop!_OS"
   tags:
     - vulkan_sdk

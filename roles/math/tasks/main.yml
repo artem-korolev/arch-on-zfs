@@ -5,6 +5,12 @@
   tags:
     - math
 
+- name: Ubuntu math packages
+  ansible.builtin.include_tasks: ubuntu/math_ubuntu.yml
+  when: ansible_facts['distribution'] == "Pop!_OS"
+  tags:
+    - math
+
 - name: Fedora math packages
   ansible.builtin.include_tasks: fedora/math_fedora.yml
   when: ansible_facts['distribution'] == "Fedora"
